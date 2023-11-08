@@ -12,6 +12,8 @@ class AddComplaint extends StatefulWidget {
 class _AddComplaintState extends State<AddComplaint> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text('aku'),
+    );
   }
 }
