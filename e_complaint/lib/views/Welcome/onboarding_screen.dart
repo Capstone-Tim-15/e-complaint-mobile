@@ -15,16 +15,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingPage> onboardingPages = [
     OnboardingPage(
       deskripsi: 'Mari Berpartisipasi dalam penyaluran pelayanan publik',
-      imagePath: 'assets/images/Saly-1.png',
+      imagePath: 'assets/images/icon1.png',
     ),
     OnboardingPage(
       deskripsi:
           'Laporkan masalah dan ajukan pengaduan masalah yang Anda alami',
-      imagePath: 'assets/images/logo.png',
+      imagePath: 'assets/images/icon2.png',
     ),
     OnboardingPage(
       deskripsi: 'Sampaikan aspirasi Anda dengan mengajukan keluhan',
-      imagePath: 'assets/images/logo.png',
+      imagePath: 'assets/images/icon3.png',
     ),
   ];
 
@@ -46,12 +46,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
           ),
           Positioned(
-            bottom: 20,
+            bottom: 100,
             left: 0,
             right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: _buildPageIndicator(),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment
+                      .spaceBetween, // Mengatur agar tombol "Next" berada di sisi kanan
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: _buildPageIndicator(),
+                      ),
+                    ),
+                    if (_currentPage == onboardingPages.length - 1)
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: Text('Next'),
+                        style: ButtonStyle(
+                          padding: MaterialStatePropertyAll(
+                            EdgeInsets.only(right: 20),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           )
         ],
@@ -64,12 +88,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     for (int i = 0; i < onboardingPages.length; i++) {
       indicators.add(
         Container(
-          width: 8.0,
-          height: 8.0,
+          width: 12.0,
+          height: 12.0,
           margin: EdgeInsets.symmetric(horizontal: 8.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _currentPage == i ? Colors.blue : Colors.grey,
+            border: Border.all(
+              color: Colors.white,
+              width: 2.0,
+            ),
+            color: _currentPage == i ? Colors.white : Colors.transparent,
           ),
         ),
       );
@@ -81,8 +109,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 class OnboardingPage extends StatelessWidget {
   final String deskripsi;
   final String imagePath;
+  final bool isLastPage;
 
-  OnboardingPage({required this.deskripsi, required this.imagePath});
+  OnboardingPage({
+    required this.deskripsi,
+    required this.imagePath,
+    this.isLastPage = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +129,7 @@ class OnboardingPage extends StatelessWidget {
             imagePath,
             width: 350,
           ),
+          const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.only(top: 40, right: 60, left: 60),
             child: Text(
@@ -106,6 +140,13 @@ class OnboardingPage extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           // Tampilkan tombol Mulai di halaman terakhir
+          if (isLastPage)
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              child: Text('Mulai'),
+            ),
         ],
       ),
     );
