@@ -12,8 +12,33 @@ class AddComplaint extends StatefulWidget {
 class _AddComplaintState extends State<AddComplaint> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('aku'),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+            //tombol kembali
+
+            // nama
+
+            // tombol keluar
+            ),
+        body: Container(
+          child: Column(
+            children: [
+              // profil pengguna
+
+              // kolom keluhan
+
+              // preview gambar keluhan
+
+              // crud gambar
+
+              //dropdown kategori
+
+              //tompol posting
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
