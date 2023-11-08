@@ -1,4 +1,4 @@
-import 'package:e_complaint/views/Welcome_Screen/splash_screen.dart';
+import 'package:e_complaint/views/Welcome/spalsh_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
