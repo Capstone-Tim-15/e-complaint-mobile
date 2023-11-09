@@ -1,3 +1,5 @@
+import 'package:e_complaint/views/Chatbot/components/body.dart';
+import 'package:e_complaint/views/Chatbot/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/fa6_solid.dart';
@@ -10,17 +12,11 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  Color kPrimaryColor = const Color(0xFF0073E6);
-  Color kAppbarbg = const Color(0xFFFFFFFF);
-  Color kBodyBg = const Color(0xFFE4E4E4);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: Container(
-        color: kBodyBg,
-      ),
+      body: const ChatbotBody(),
     );
   }
 
