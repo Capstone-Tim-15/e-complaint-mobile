@@ -43,7 +43,8 @@ dependencies:
   image_picker: ^1.0.4
   file_picker: ^6.1.1
   another_flutter_splash_screen: ^1.2.0
-  introduction_screen: ^3.1.12
+  flutter_native_splash: ^2.3.5
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
