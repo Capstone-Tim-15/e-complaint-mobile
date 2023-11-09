@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
       useMaterial3: true,
     ),
     home: LoginPage(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -47,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         color: Color(0xFF191C1D),
                         fontSize: 57,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Nunito',
                         fontWeight: FontWeight.w400,
                         height: 0.02,
                         letterSpacing: -0.25,
@@ -55,45 +57,54 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 30),
                     Container(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Belum mempunyai akun?',
-                            style: TextStyle(
-                              color: Color(0xFF191C1D),
-                              fontSize: 14,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                              height: 0.10,
-                              letterSpacing: 0.10,
-                            ),
+                        child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Belum mempunyai akun?',
+                          style: TextStyle(
+                            color: Color(0xFF191C1D),
+                            fontSize: 14,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w500,
+                            height: 0.10,
+                            letterSpacing: 0.10,
                           ),
-                          Text(
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            //logika
+                          },
+                          child: Text(
                             ' Buat akun disini',
                             style: TextStyle(
-                              color: Color(0xFF001945),
+                              color: Color(0xFF990000),
                               fontSize: 14,
-                              fontFamily: 'Roboto',
+                              fontFamily: 'Nunito',
                               fontWeight: FontWeight.w500,
                               height: 0.10,
                               letterSpacing: 0.10,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
+                        )
+                      ],
+                    )),
                   ],
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 4),
               TextField(
                 controller: usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Username",
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Color(0xFFEC7B73),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
