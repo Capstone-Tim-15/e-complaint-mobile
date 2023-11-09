@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const OnboardingScreen(), // Route awal
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterScreen(),
-        // '/home ': (context) => ThirdPage(),
+        '/home ': (context) => HomePage(),
         // '/news': (context) => ThirdPage(),
       },
     );

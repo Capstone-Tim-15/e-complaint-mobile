@@ -1,7 +1,4 @@
-
 import 'package:flutter/material.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -123,24 +120,32 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: !isPasswordVisible,
               ),
               SizedBox(height: 20),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        rememberMe = value!;
-                      });
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/register');
                     },
+                    child: Text(
+                      'Lupa Kata Sandi? ',
+                    ),
                   ),
-                  Text('Ingat Saya'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: rememberMe,
+                        onChanged: (value) {
+                          setState(() {
+                            rememberMe = value!;
+                          });
+                        },
+                      ),
+                      Text('Ingat Saya'),
+                    ],
+                  ),
                 ],
-              ),
-              TextButton(
-                onPressed: () {
-                  // Implement 'Lupa Kata Sandi' logic here
-                },
-                child: Text('Lupa Kata Sandi'),
               ),
               SizedBox(
                 height: 100,
@@ -149,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Implement login logic here
+                    Navigator.pushNamed(context, '/home');
                   },
                   child: Text('Login'),
                 ),
@@ -161,4 +166,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
