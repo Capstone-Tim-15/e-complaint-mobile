@@ -1,10 +1,10 @@
-import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
-import 'package:e_complaint/views/Welcome/onboarding_page4.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'onboarding_page1.dart';
 import 'onboarding_page2.dart';
 import 'onboarding_page3.dart';
+import 'onboarding_page4.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -53,6 +53,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         activeDotColor: Colors.white,
                         dotColor: Colors.white,
                         paintStyle: PaintingStyle.stroke,
+                        dotHeight: 15,
+                        dotWidth: 15,
                         strokeWidth: 1)),
                 // next button
                 SizedBox(

@@ -1,6 +1,7 @@
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'views/Register/register_dart.dart';
 import 'views/Welcome/onboarding_screen.dart';
 // import 'views/Welcome/spalsh_screen.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const OnboardingScreen(), // Route awal
         '/login': (context) => const LoginScreen(),
-        // '/resgister': (context) => ThirdPage(),
+        '/register': (context) => const RegisterScreen(),
         // '/home ': (context) => ThirdPage(),
         // '/news': (context) => ThirdPage(),
       },

@@ -29,17 +29,17 @@ class IntroPage4 extends StatelessWidget {
           ),
           //Text logo
           Container(
-            margin: const EdgeInsets.only(top: 70),
+            margin: const EdgeInsets.only(top: 50, bottom: 110),
             child: Image.asset(
               'assets/images/text_gov.png',
               width: 300,
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 90),
+            // margin: const EdgeInsets.only(top: 100),
             child: Image.asset(
               'assets/images/intro4.png',
-              width: 300,
+              width: 350,
             ),
           ),
           // button register
@@ -49,18 +49,18 @@ class IntroPage4 extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
               },
+              style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFFEC7B73),
+                  padding: const EdgeInsets.symmetric(horizontal: 140),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(150, 40)),
               child: const Text(
                 "Register",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: const Color(0xFFEC7B73),
-                padding: const EdgeInsets.symmetric(horizontal: 130),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
