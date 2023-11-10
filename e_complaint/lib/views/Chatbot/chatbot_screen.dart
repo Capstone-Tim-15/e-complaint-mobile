@@ -2,7 +2,6 @@ import 'package:e_complaint/views/Chatbot/components/body.dart';
 import 'package:e_complaint/views/Chatbot/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/fa6_solid.dart';
 
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
@@ -26,7 +25,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       backgroundColor: kAppbarbg,
       title: Row(
         children: [
-          BackButton(
+          const BackButton(
             color: kPrimaryColor,
           ),
           Padding(
@@ -40,8 +39,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                 ),
               ),
               child: IconButton(
-                icon: Iconify(
-                  Fa6Solid.robot,
+                icon: const Iconify(
+                  kchatBotIcon,
                   color: kPrimaryColor,
                   size: 15,
                 ),

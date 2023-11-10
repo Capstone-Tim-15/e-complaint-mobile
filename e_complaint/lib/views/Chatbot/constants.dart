@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:e_complaint/viewModels/env/env.dart';
+import 'package:iconify_flutter/icons/fa6_solid.dart';
 
-Color kPrimaryColor = const Color(0xFF0073E6);
-Color kAppbarbg = const Color(0xFFFFFFFF);
-Color kBodyBg = const Color(0xFFE4E4E4);
+const kPrimaryColor = Color(0xFFEC7B73);
+const kAppbarbg = Color(0xFFFFFFFF);
+const kBodyBg = Color(0xFFE4E4E4);
+const kDefaultPadding = 20.0;
+const kchatBotIcon = Fa6Solid.robot;
 
 String apiKey = Env.apiKey;
