@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -64,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            //logika
+                            Navigator.pushNamed(context, '/register');
                           },
                           child: Text(
                             ' Buat akun disini',
@@ -83,7 +85,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 4),
               TextField(
                 controller: usernameController,
                 decoration: const InputDecoration(
@@ -123,13 +124,27 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  SizedBox(
+                    height: 10,
+                  ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/register');
+                      Navigator.pushNamed(context, '/forgotpwd');
                     },
                     child: Text(
                       'Lupa Kata Sandi? ',
+                      style: TextStyle(
+                        color: Color(0xFF3F484A),
+                        fontSize: 16,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w500,
+                        //height: 0.06,
+                        letterSpacing: 0.50,
+                      ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -142,13 +157,23 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         },
                       ),
-                      Text('Ingat Saya'),
+                      Text(
+                        'Ingat Saya',
+                        style: TextStyle(
+                          color: Color(0xFF3F484A),
+                          fontSize: 16,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w500,
+                          //height: 0.06,
+                          letterSpacing: 0.50,
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
               SizedBox(
-                height: 100,
+                height: 150,
               ),
               SizedBox(
                 width: double.infinity,
@@ -156,6 +181,10 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFEC7B73), // Warna latar belakang (merah)
+                    onPrimary: Colors.white, // Warna teks (putih)
+                  ),
                   child: Text('Login'),
                 ),
               )

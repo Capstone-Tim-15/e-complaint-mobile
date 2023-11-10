@@ -1,5 +1,7 @@
 import 'package:e_complaint/views/Home/home_screen.dart';
+import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
+import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'views/Register/register_dart.dart';
@@ -20,8 +22,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
+        // useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterScreen(),
         '/home ': (context) => HomePage(),
+        '/forgotpwd': (context) => ForgotPassword(),
+        '/resetpwd': (context) => ResetPassword(),
         // '/news': (context) => ThirdPage(),
       },
     );
