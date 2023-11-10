@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 import 'package:e_complaint/views/Welcome/spalsh_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -19,12 +21,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const SplashScreen(), // Route awal
+         '/': (context) => const SplashScreen(), // Route awal
         //  '/onboarding': (context) => SecondPage(),
         // '/login': (context) => ThirdPage(),
         // '/resgister': (context) => ThirdPage(),
         // '/home ': (context) => ThirdPage(),
         // '/news': (context) => ThirdPage(),
+        //'/addcomplaint':(context) => const AddComplaint(),
       },
     );
   }
