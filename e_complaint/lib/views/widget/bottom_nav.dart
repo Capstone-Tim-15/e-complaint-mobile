@@ -15,7 +15,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-        indicatorColor: Colors.white,
+        indicatorColor: const Color.fromARGB(255, 255, 219, 207),
         height: 52,
         backgroundColor: Colors.white,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
@@ -28,45 +28,41 @@ class _BottomNavigationState extends State<BottomNavigation> {
         destinations: const [
           NavigationDestination(
               selectedIcon: ImageIcon(
-                size: 32,
-                color: Color.fromARGB(255, 224, 34, 22),
-                AssetImage('assets/icons/icon_home.png'),
+                size: 24,
+                AssetImage('assets/icons/icon_home_hover.png'),
               ),
               icon: ImageIcon(
-                size: 32,
+                size: 24,
                 AssetImage('assets/icons/icon_home.png'),
               ),
               label: 'Home'),
           NavigationDestination(
               selectedIcon: ImageIcon(
-                size: 32,
-                color: Color.fromARGB(255, 224, 34, 22),
-                AssetImage('assets/icons/icon_search.png'),
+                size: 24,
+                AssetImage('assets/icons/icon_search_hover.png'),
               ),
               icon: ImageIcon(
-                size: 32,
+                size: 24,
                 AssetImage('assets/icons/icon_search.png'),
               ),
               label: 'Search'),
           NavigationDestination(
               selectedIcon: ImageIcon(
-                size: 32,
-                color: Color.fromARGB(255, 224, 34, 22),
-                AssetImage('assets/icons/icon_notification.png'),
+                size: 24,
+                AssetImage('assets/icons/icon_notification_hover.png'),
               ),
               icon: ImageIcon(
-                size: 32,
+                size: 24,
                 AssetImage('assets/icons/icon_notification.png'),
               ),
               label: 'Notification'),
           NavigationDestination(
               selectedIcon: ImageIcon(
-                size: 32,
-                color: Color.fromARGB(255, 224, 34, 22),
-                AssetImage('assets/icons/icon_profile.png'),
+                size: 24,
+                AssetImage('assets/icons/icon_profile_hover.png'),
               ),
               icon: ImageIcon(
-                size: 32,
+                size: 24,
                 AssetImage('assets/icons/icon_profile.png'),
               ),
               label: 'Profile'),
