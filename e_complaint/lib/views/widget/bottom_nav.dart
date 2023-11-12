@@ -68,6 +68,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               label: 'Profile'),
         ],
       ),
+      //test
       body: <Widget>[
         const NewsScreen(),
         const NewsScreen(),
