@@ -27,7 +27,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       color: Color(0xFF212121),
                       fontSize: 32,
                       fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w600,
                       height: 1.2,
                     ),
                   ),
@@ -38,7 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       color: Color(0xFF212121),
                       fontSize: 32,
                       fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w600,
                       height: 1.2,
                     ),
                   ),
@@ -52,7 +52,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       color: Colors.black,
                       fontSize: 14,
                       fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       height: 1.4,
                     ),
                   ),
@@ -63,7 +63,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       color: Colors.black,
                       fontSize: 14,
                       fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       height: 1.4,
                     ),
                   ),
@@ -83,7 +83,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 100, left: 100, right: 100),
+                padding: const EdgeInsets.only(top: 150, left: 100, right: 100),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
@@ -91,9 +91,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       Navigator.pushNamed(context, '/resetpwd');
                     },
                     style: ElevatedButton.styleFrom(
-                      primary:
-                          Color(0xFFEC7B73), // Warna latar belakang (merah)
-                      onPrimary: Colors.white, // Warna teks (putih)
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFFEC7B73), // Warna teks (putih)
                     ),
                     child: Text('Selanjutnya'),
                   ),

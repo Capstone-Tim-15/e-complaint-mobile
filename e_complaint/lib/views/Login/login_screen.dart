@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -39,159 +37,195 @@ class _LoginPageState extends State<LoginPage> {
                       'Halo!',
                       style: TextStyle(
                         color: Color(0xFF191C1D),
-                        fontSize: 57,
+                        fontSize: 54,
                         fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         height: 0.02,
-                        letterSpacing: -0.25,
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     Container(
-                        child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Belum mempunyai akun?',
-                          style: TextStyle(
-                            color: Color(0xFF191C1D),
-                            fontSize: 14,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w500,
-                            height: 0.10,
-                            letterSpacing: 0.10,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
-                          child: Text(
-                            ' Buat akun disini',
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Belum mempunyai akun?',
                             style: TextStyle(
-                              color: Color(0xFF990000),
+                              color: Color(0xFF191C1D),
                               fontSize: 14,
                               fontFamily: 'Nunito',
-                              fontWeight: FontWeight.w500,
-                              height: 0.10,
-                              letterSpacing: 0.10,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
-                        )
-                      ],
-                    )),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/register');
+                            },
+                            child: Text(
+                              ' Buat akun disini',
+                              style: TextStyle(
+                                  color: Color(0xFF990000),
+                                  fontSize: 14,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-              TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  labelText: "Username",
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Color(0xFFEC7B73),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isPasswordVisible = !isPasswordVisible;
-                      });
-                    },
-                  ),
-                ),
-                obscureText: !isPasswordVisible,
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/forgotpwd');
-                    },
-                    child: Text(
-                      'Lupa Kata Sandi? ',
-                      style: TextStyle(
-                        color: Color(0xFF3F484A),
-                        fontSize: 16,
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w500,
-                        //height: 0.06,
-                        letterSpacing: 0.50,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Checkbox(
-                        value: rememberMe,
-                        onChanged: (value) {
-                          setState(() {
-                            rememberMe = value!;
-                          });
-                        },
-                      ),
-                      Text(
-                        'Ingat Saya',
-                        style: TextStyle(
-                          color: Color(0xFF3F484A),
-                          fontSize: 16,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          //height: 0.06,
-                          letterSpacing: 0.50,
+              const SizedBox(height: 4),
+              Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: const InputDecoration(
+                        labelText: "Username",
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Color(0xFFEC7B73),
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 150,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFEC7B73), // Warna latar belakang (merah)
-                    onPrimary: Colors.white, // Warna teks (putih)
-                  ),
-                  child: Text('Login'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Username harus diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Kata Sandi',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                        ),
+                      ),
+                      obscureText: !isPasswordVisible,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Password harus diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/forgotpwd');
+                          },
+                          child: Text(
+                            'Lupa Kata Sandi?',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: rememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  rememberMe = value!;
+                                });
+                              },
+                            ),
+                            Text(
+                              'Ingat Saya',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 175,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (Form.of(context).validate()) {
+                            _handleLogin();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFFEC7B73),
+                        ),
+                        child: Text('Login'),
+                      ),
+                    )
+                  ],
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _handleLogin() {
+    // Implementasi logika login di sini
+    String username = usernameController.text;
+    String password = passwordController.text;
+
+    // Contoh logika sederhana, Anda harus menggantinya dengan logika yang sesuai
+    if (username == 'user' && password == 'password') {
+      // Login berhasil, lanjutkan dengan navigasi ke halaman beranda
+      Navigator.pushNamed(context, '/home');
+    } else {
+      // Tampilkan pesan kesalahan atau tindakan yang sesuai
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Login Gagal'),
+          content: Text('Username atau password salah.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
