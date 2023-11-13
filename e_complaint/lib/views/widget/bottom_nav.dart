@@ -1,5 +1,4 @@
-
-import 'package:e_complaint/views/Home/news_screen.dart';
+import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -16,6 +15,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
+        elevation: 20,
         indicatorColor: const Color.fromARGB(255, 255, 219, 207),
         height: 52,
         backgroundColor: Colors.white,
@@ -71,12 +71,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
       //test
       body: <Widget>[
-        const NewsScreen(),
-        const NewsScreen(),
-        const NewsScreen(),
-        const NewsScreen(),
+        const HomePage(),
+        const HomePage(),
+        const HomePage(),
+        const HomePage(),
       ][currentPageIndex],
     );
   }
 }
-
