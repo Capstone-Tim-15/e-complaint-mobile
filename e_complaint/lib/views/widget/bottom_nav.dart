@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Home/news_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -68,12 +69,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
               label: 'Profile'),
         ],
       ),
-      //test
       body: <Widget>[
-        // const NewsScreen(),
-        // const NewsScreen(),
-        // const NewsScreen(),
-        // const NewsScreen(),
+        HomePage(),
+        HomePage(),
+        HomePage(),
+        HomePage(),
       ][currentPageIndex],
     );
   }
