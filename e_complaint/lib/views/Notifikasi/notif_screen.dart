@@ -1,11 +1,12 @@
+import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Notifikasi());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Notifikasi extends StatelessWidget {
+  const Notifikasi({super.key});
 
   // This widget is the root of your application.
   @override
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.red, fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ),
+        bottomNavigationBar: BottomNavigation(),
         body: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
