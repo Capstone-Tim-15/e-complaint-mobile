@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 50,
+                height: 150,
               ),
               Container(
                 width: 265,
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                       'Halo!',
                       style: TextStyle(
                         color: Color(0xFF191C1D),
-                        fontSize: 54,
+                        fontSize: 57,
                         fontFamily: 'Nunito',
                         fontWeight: FontWeight.w600,
                         height: 0.02,
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Color(0xFF990000),
                                   fontSize: 14,
                                   fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w700,
                                   decoration: TextDecoration.underline),
                             ),
                           )
@@ -79,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 4),
               Form(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     TextFormField(
                       controller: passwordController,
@@ -165,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                             Text(
                               'Ingat Saya',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontFamily: 'Nunito',
                                 fontWeight: FontWeight.w600,
                               ),
@@ -175,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     SizedBox(
-                      height: 175,
+                      height: 220,
                     ),
                     SizedBox(
                       width: double.infinity,

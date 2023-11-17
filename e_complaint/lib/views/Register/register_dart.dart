@@ -1,20 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-void main(List<String> args) {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HalamanDaftar(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
 
 class HalamanDaftar extends StatefulWidget {
   const HalamanDaftar({super.key});
@@ -26,16 +13,26 @@ class HalamanDaftar extends StatefulWidget {
 class _HalamanDaftarState extends State<HalamanDaftar> {
   final _formKey = GlobalKey<FormState>(); // Kunci global untuk form
 
-  bool ingatkanSaya = false;
   bool obscureTextKataSandi = true;
   bool obscureTextKonfirmasiKS = true;
 
-  TextEditingController conNama = TextEditingController();
+  TextEditingController name = TextEditingController();
   TextEditingController conNoTelp = TextEditingController();
   TextEditingController conEmail = TextEditingController();
   TextEditingController conUsername = TextEditingController();
   TextEditingController conKataSandi = TextEditingController();
   TextEditingController conKonfirmasiKS = TextEditingController();
+  final Dio _dio = Dio();
+
+  Future<Response> register(String name, String conNoTelp, String conEmail) {
+    return _dio.post(
+      '34.128.69.15:8000/user/register',
+      // data: {
+      //   'name': username,
+      //   'otp': password,
+      // },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,23 +46,45 @@ class _HalamanDaftarState extends State<HalamanDaftar> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Halo!",
-                  style: TextStyle(fontSize: 40),
+                SizedBox(
+                  height: 80,
                 ),
-                SizedBox(height: 16),
+                Text(
+                  'Halo!',
+                  style: TextStyle(
+                    color: Color(0xFF191C1D),
+                    fontSize: 57,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 Row(
                   children: [
-                    Text("Sudah mempunya akun?"),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text("Masuk Disini"),
+                    Text(
+                      "Sudah mempunya akun?",
+                      style: TextStyle(
+                          color: Color(0xFF191C1D),
+                          fontSize: 16,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w600),
+                    ),
+                    GestureDetector(
+                      child: Text(" Masuk Disini",
+                          style: TextStyle(
+                              color: Color(0xFF990000),
+                              fontSize: 16,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline)),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 50),
                 TextFormField(
-                  controller: conNama,
+                  controller: name,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Nama",
@@ -177,18 +196,7 @@ class _HalamanDaftarState extends State<HalamanDaftar> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
-                CheckboxListTile(
-                  title: Text("Ingat Saya"),
-                  value: ingatkanSaya,
-                  onChanged: (newValue) {
-                    setState(() {
-                      ingatkanSaya = newValue!;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
-                SizedBox(height: 16),
+                SizedBox(height: 90),
                 Container(
                   width: double.infinity,
                   height: 35,
@@ -200,9 +208,9 @@ class _HalamanDaftarState extends State<HalamanDaftar> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.orange, // Warna oranye
+                      backgroundColor: Color(0xFFEC7B73), // Warna oranye
                     ),
-                    child: Text("Masuk"),
+                    child: Text("Buat Akun"),
                   ),
                 ),
               ],
