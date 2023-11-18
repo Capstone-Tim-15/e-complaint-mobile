@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // '/resgister': (context) => ThirdPage(),
         // '/home ': (context) => ThirdPage(),
         // '/news': (context) => ThirdPage(),
-        //'/addcomplaint':(context) => const AddComplaint(),
+        // '/addcomplaint':(context) => const AddComplaint(),
       },
     );
   }
