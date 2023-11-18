@@ -1,3 +1,5 @@
+
+import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
@@ -35,7 +37,9 @@ class MyApp extends StatelessWidget {
         '/forgotpwd': (context) => ForgotPassword(),
         '/resetpwd': (context) => ResetPassword(),
         '/notifikasi': (context) => Notifikasi(),
+
         // '/news': (context) => ThirdPage(),
+        // '/addcomplaint':(context) => const AddComplaint(),
       },
     );
   }
