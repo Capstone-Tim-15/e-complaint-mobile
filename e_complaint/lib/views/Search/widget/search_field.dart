@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/Search/result.page.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
@@ -22,6 +23,12 @@ class SearchField extends StatelessWidget {
         child: TextField(
           controller: controller,
           textInputAction: TextInputAction.search,
+          onSubmitted: (value) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ResultPage()),
+            );
+          },
           decoration: const InputDecoration(
             border: InputBorder.none,
             hintText: "Cari keluhan atau berita",
