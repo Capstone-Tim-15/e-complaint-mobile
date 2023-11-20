@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/Home/component/news/news_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,7 +9,9 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          toolbarHeight: 48,
           backgroundColor: const Color.fromARGB(255, 255, 219, 207),
           title: Container(
             padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
@@ -35,11 +38,12 @@ class HomePage extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
-                Image.asset('assets/images/icon_question.png')
+                Image.asset('assets/icons/icon_question.png')
               ],
             ),
           ),
         ),
+        body: SingleChildScrollView(child: NewsScreen()),
         floatingActionButton: Material(
           elevation: 4,
           color: Colors.transparent,
@@ -49,7 +53,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {},
             backgroundColor: Color.fromARGB(255, 236, 123, 115),
             child: Icon(Icons.add),
-            mini: true,
+            // mini: true,
           ),
         ),
       ),
