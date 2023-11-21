@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
         // useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: '/addcomplaint',
       routes: {
         '/': (context) => const OnboardingScreen(), // Route awal
         '/login': (context) => const LoginPage(),
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         '/notifikasi': (context) => Notifikasi(),
 
         // '/news': (context) => ThirdPage(),
-        // '/addcomplaint':(context) => const AddComplaint(),
+        '/addcomplaint':(context) => const AddComplaint(),
       },
     );
   }

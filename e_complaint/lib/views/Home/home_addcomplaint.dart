@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:e_complaint/views/Home/addcomplaint_location.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -277,63 +278,36 @@ class _AddComplaintState extends State<AddComplaint> {
                   height: 20,
                 ),
                 // Tombol untuk menambahkan lokasi
-                Container(
-                  padding: EdgeInsets.only(left: 10),
+                 Container(
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: Colors
-                            .red, // Sesuaikan dengan warna ikon yang diinginkan
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ComplaintLocation()),
+                            );
+                          },
+                          icon: Icon(Icons.location_on_outlined)),
+                      Text(
+                        'Tambahkan Alamat',
+                        style: TextStyle(color: textColor),
                       ),
                       const SizedBox(
                           width:
                               8), // Berikan sedikit jarak antara ikon dan TextField
-                      Expanded(
-                        child: TextField(
-                          maxLines: 3,
-                          cursorColor: Colors.red,
-                          style: TextStyle(
-                              color: Colors
-                                  .black), // Tambahkan warna teks jika diperlukan
-                          decoration: InputDecoration(
-                            hintText: 'Masukan Alamat',
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(255, 237, 109, 94),
-                            ),
-                            fillColor: Color.fromARGB(255, 255, 237, 233),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 249, 200, 197),
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 239, 167, 167),
-                                width: 2.0,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 25,
-                              horizontal: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
+
 
                 const SizedBox(
                   height: 20,
                 ),
                 // Dropdown untuk memilih kategori keluhan
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -353,7 +327,7 @@ class _AddComplaintState extends State<AddComplaint> {
                             'Pilih Kategori',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color.fromARGB(255, 249, 171, 167),
+                              color: textColor,
                             ),
                           ),
                           value: selectedValue,
