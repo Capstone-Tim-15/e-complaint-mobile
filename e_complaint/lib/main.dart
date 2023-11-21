@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
         // useMaterial3: true,
       ),
-      initialRoute: '/addcomplaint',
+      initialRoute: '/',
       routes: {
         '/': (context) => const OnboardingScreen(), // Route awal
         '/login': (context) => const LoginPage(),
