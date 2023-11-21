@@ -340,7 +340,7 @@ class _AddComplaintState extends State<AddComplaint> {
                           items: category
                               .map<DropdownMenuItem<CategoryName>>(
                                 (e) => DropdownMenuItem(
-                                  child: Text((e?.name ?? '').toString()),
+                                  child: Text((e.name ?? '').toString()),
                                   value: e,
                                 ),
                               )
