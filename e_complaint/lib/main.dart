@@ -1,16 +1,27 @@
+import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Home/home_screen.dart';
+import 'package:e_complaint/views/Login/account_success.dart';
+import 'package:e_complaint/views/Login/change_password.dart';
 import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'views/Register/register_dart.dart';
 import 'views/Welcome/onboarding_screen.dart';
 // import 'views/Welcome/spalsh_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => RegistrationProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -35,6 +46,8 @@ class MyApp extends StatelessWidget {
         '/forgotpwd': (context) => ForgotPassword(),
         '/resetpwd': (context) => ResetPassword(),
         '/notifikasi': (context) => Notifikasi(),
+        '/succesRegister': (context) => AccountSuccess(),
+        '/succes-change-password': (context) => PasswordSucces(),
         // '/news': (context) => ThirdPage(),
       },
     );
