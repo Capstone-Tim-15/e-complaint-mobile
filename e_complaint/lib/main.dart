@@ -9,7 +9,7 @@ import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'views/Register/register_dart.dart';
+import 'views/Register/register.dart';
 import 'views/Welcome/onboarding_screen.dart';
 // import 'views/Welcome/spalsh_screen.dart';
 
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
         // useMaterial3: true,
       ),

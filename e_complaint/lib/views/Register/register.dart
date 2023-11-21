@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,16 +7,6 @@ import 'package:provider/provider.dart';
 class HalamanDaftar extends StatelessWidget {
   const HalamanDaftar({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RegistrationProvider(),
-      child: _HalamanDaftarContent(),
-    );
-  }
-}
-
-class _HalamanDaftarContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registrationProvider = Provider.of<RegistrationProvider>(context);
@@ -43,9 +35,10 @@ class _HalamanDaftarContent extends StatelessWidget {
                 TextFormField(
                   controller: registrationProvider.name,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Nama",
-                  ),
+                      border: OutlineInputBorder(),
+                      labelText: "Nama",
+                      helperStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                   validator: (value) =>
                       registrationProvider.validateField(value, "Nama"),
                 ),
@@ -53,9 +46,9 @@ class _HalamanDaftarContent extends StatelessWidget {
                 TextFormField(
                   controller: registrationProvider.phone,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Nomor Telepon",
-                  ),
+                      border: OutlineInputBorder(),
+                      labelText: "Nomor Telepon",
+                      helperStyle: TextStyle()),
                   validator: (value) => registrationProvider.validateField(
                       value, "Nomor Telepon"),
                 ),

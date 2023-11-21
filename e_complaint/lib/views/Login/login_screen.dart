@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,6 +14,22 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
   bool rememberMe = false;
+  final Dio _dio = Dio();
+
+  Future<Response> login(String username, String password) {
+    return _dio.post(
+      'http://34.128.69.15:8000/user/login', // Tambahkan skema URL yang benar
+      data: {
+        'username': username,
+        'password': password,
+      },
+    );
+  }
+
+  Future<void> saveOtp(String jwt) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('jwt', jwt);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +84,12 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               ' Buat akun disini',
                               style: TextStyle(
-                                  color: Color(0xFF990000),
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.underline),
+                                color: Color(0xFF990000),
+                                fontSize: 14,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           )
                         ],
@@ -179,9 +198,21 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          if (Form.of(context).validate()) {
-                            _handleLogin();
+                        onPressed: () async {
+                          var response = await login(
+                            usernameController.text,
+                            passwordController.text,
+                          );
+                          if (response.statusCode == 200) {
+                            //akan disimpan di acces token / local storage
+                            //akan diarahkan ke halaman selanjutnya
+                            String jwt = response.data[
+                                'token']; // Ganti 'token' dengan nama yang benar
+                            await saveOtp(jwt);
+                            Navigator.pushReplacementNamed(context, '/home');
+                          } else {
+                            // Tampilkan pesan kesalahan atau lakukan penanganan kesalahan lainnya
+                            print('Login failed: ${response.statusCode}');
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -199,32 +230,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  void _handleLogin() {
-    // Implementasi logika login di sini
-    String username = usernameController.text;
-    String password = passwordController.text;
-
-    // Contoh logika sederhana, Anda harus menggantinya dengan logika yang sesuai
-    if (username == 'user' && password == 'password') {
-      // Login berhasil, lanjutkan dengan navigasi ke halaman beranda
-      Navigator.pushNamed(context, '/home');
-    } else {
-      // Tampilkan pesan kesalahan atau tindakan yang sesuai
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Login Gagal'),
-          content: Text('Username atau password salah.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
   }
 }

@@ -26,8 +26,10 @@ class IntroPage1 extends StatelessWidget {
             child: const Text(
               "Mari Berpartisipasi dalam penyaluran pelayanan publik",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 14,
                 color: Colors.white,
+                fontWeight: FontWeight.w600,
+                height: 0,
               ),
               textAlign: TextAlign.justify,
             ),
