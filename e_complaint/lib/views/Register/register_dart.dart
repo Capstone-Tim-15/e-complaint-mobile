@@ -10,20 +10,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HalamanDaftar(),
+      home: RegisterScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class HalamanDaftar extends StatefulWidget {
-  const HalamanDaftar({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<HalamanDaftar> createState() => _HalamanDaftarState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _HalamanDaftarState extends State<HalamanDaftar> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>(); // Kunci global untuk form
 
   bool ingatkanSaya = false;
