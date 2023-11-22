@@ -36,9 +36,7 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Center(
-                child: SearchField(controller: _searchController)
-              ),
+              Center(child: SearchField(controller: _searchController)),
               const SizedBox(
                 height: 40,
               ),
@@ -55,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CustomElevatedButton( 
+                  CustomElevatedButton(
                     text: 'Kekerasan',
                     onPressed: () {
                       // Handle button press
@@ -145,10 +143,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemCount: newsItems.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {
-                      // Handle your callback
-                      print('Card tapped');
-                    },
+                    onTap: () {},
                     child: Card(
                       margin: const EdgeInsets.all(20),
                       shape: RoundedRectangleBorder(
@@ -180,13 +175,13 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
+                            padding: const EdgeInsets.only(left: 8.0, bottom: 8),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 newsItems[index]['title'],
                                 style: const TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 textAlign: TextAlign.left,
