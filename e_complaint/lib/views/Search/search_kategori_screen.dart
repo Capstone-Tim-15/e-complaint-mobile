@@ -55,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CustomElevatedButton(
+                  CustomElevatedButton( 
                     text: 'Kekerasan',
                     onPressed: () {
                       // Handle button press

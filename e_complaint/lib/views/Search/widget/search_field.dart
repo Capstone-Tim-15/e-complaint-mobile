@@ -1,4 +1,4 @@
-import 'package:e_complaint/views/Search/result.page.dart';
+import 'package:e_complaint/views/Search/result/result.page.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
