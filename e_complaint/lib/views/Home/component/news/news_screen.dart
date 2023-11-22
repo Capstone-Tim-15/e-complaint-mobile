@@ -1,6 +1,5 @@
 import 'package:e_complaint/views/Home/news_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -14,10 +13,10 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        PersistentNavBarNavigator.pushNewScreen(
-          context,
-          screen: NewsDetail(),
-          withNavBar: false,
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(
+            builder: (_) => const NewsDetail(),
+          ),
         );
       },
       child: Container(
