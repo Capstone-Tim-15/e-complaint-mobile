@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:e_complaint/views/Home/addcomplaint_location.dart';
+import 'package:e_complaint/views/Home/addcomplaint_location_two.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -286,7 +287,8 @@ class _AddComplaintState extends State<AddComplaint> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ComplaintLocation()),
+                                  // builder: (context) => ComplaintLocation()),
+                                  builder: (context) => LocationTwo()),
                             );
                           },
                           icon: Icon(Icons.location_on_outlined)),
