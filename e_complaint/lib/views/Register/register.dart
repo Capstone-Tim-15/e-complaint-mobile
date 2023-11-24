@@ -11,6 +11,7 @@ class HalamanDaftar extends StatelessWidget {
   Widget build(BuildContext context) {
     final registrationProvider = Provider.of<RegistrationProvider>(context);
 
+    TextEditingController conpassword = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -21,17 +22,46 @@ class HalamanDaftar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 80),
+                SizedBox(height: 175),
                 Text(
                   'Halo!',
                   style: TextStyle(
                     color: Color(0xFF191C1D),
                     fontSize: 57,
                     fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
+                    height: 0.02,
+                    letterSpacing: -0.25,
                   ),
                 ),
-                SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text(
+                      "Sudah mempunya akun?",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        height: 0.08,
+                        fontSize: 16,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      child: Text(
+                        "Masuk Disini",
+                        style: TextStyle(
+                          color: Color(0xFF990000),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          height: 0.08,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
                 TextFormField(
                   controller: registrationProvider.name,
                   decoration: InputDecoration(
@@ -93,8 +123,26 @@ class HalamanDaftar extends StatelessWidget {
                   validator: (value) =>
                       registrationProvider.validateField(value, "Kata Sandi"),
                 ),
-                SizedBox(height: 90),
-                Container(
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: conpassword,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Konfirmasi Kata Sandi",
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        registrationProvider.togglePasswordVisibility();
+                      },
+                      icon: Icon(
+                        registrationProvider.obscureTextKataSandi
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 50),
+                SizedBox(
                   width: double.infinity,
                   height: 35,
                   child: ElevatedButton(

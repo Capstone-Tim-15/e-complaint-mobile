@@ -50,7 +50,7 @@ class AccountSuccess extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: () {
-                    //Navigator
+                    Navigator.pushNamed(context, '/login');
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFEC7B73),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<Response> login(String username, String password) {
     return _dio.post(
-      'http://34.128.69.15:8000/user/login', // Tambahkan skema URL yang benar
+      'http://34.128.69.15:8000/user/login', // Sesuaikan dengan skema URL yang benar
       data: {
         'username': username,
         'password': password,
@@ -26,9 +28,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> saveOtp(String jwt) async {
+  Future<void> saveOtp(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('jwt', jwt);
+    await prefs.setString('token', token);
   }
 
   @override
@@ -57,11 +59,12 @@ class _LoginPageState extends State<LoginPage> {
                         color: Color(0xFF191C1D),
                         fontSize: 57,
                         fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         height: 0.02,
+                        letterSpacing: -0.25,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Container(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -72,9 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                             'Belum mempunyai akun?',
                             style: TextStyle(
                               color: Color(0xFF191C1D),
-                              fontSize: 14,
+                              fontSize: 16,
                               fontFamily: 'Nunito',
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           GestureDetector(
@@ -85,9 +88,9 @@ class _LoginPageState extends State<LoginPage> {
                               ' Buat akun disini',
                               style: TextStyle(
                                 color: Color(0xFF990000),
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
@@ -199,29 +202,53 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          var response = await login(
-                            usernameController.text,
-                            passwordController.text,
-                          );
-                          if (response.statusCode == 200) {
-                            //akan disimpan di acces token / local storage
-                            //akan diarahkan ke halaman selanjutnya
-                            String jwt = response.data[
-                                'token']; // Ganti 'token' dengan nama yang benar
-                            await saveOtp(jwt);
-                            Navigator.pushReplacementNamed(context, '/home');
-                          } else {
-                            // Tampilkan pesan kesalahan atau lakukan penanganan kesalahan lainnya
-                            print('Login failed: ${response.statusCode}');
+                          try {
+                            var response = await login(
+                              usernameController.text,
+                              passwordController.text,
+                            );
+
+                            if (response.statusCode == 200) {
+                              // Assuming response is in the format you provided
+                              Map<String, dynamic> responseData = response.data;
+
+                              // Check if 'meta' field indicates success
+                              if (responseData['meta']['success'] == true) {
+                                // Extract token from the 'results' field
+                                String? token =
+                                    responseData['results']['token'];
+
+                                if (token != null) {
+                                  // Save token to Shared Preferences
+                                  await saveOtp(token);
+
+                                  // Navigate to the home page
+                                  Navigator.pushNamed(context, '/home');
+                                } else {
+                                  print('Token is null in the response');
+                                  // Handle the case where the token is null
+                                }
+                              } else {
+                                print(
+                                    'Login failed: ${responseData['meta']['message']}');
+                                // Handle login failure here
+                              }
+                            } else {
+                              print('Login failed: ${response.statusCode}');
+                              // Handle login failure here
+                            }
+                          } catch (error) {
+                            print('Error during login: $error');
+                            // Handle other errors during login
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Color(0xFFEC7B73),
                         ),
-                        child: Text('Login'),
+                        child: Text('Masuk'),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

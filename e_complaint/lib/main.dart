@@ -1,3 +1,4 @@
+import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/account_success.dart';
@@ -18,6 +19,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
       ],
       child: const MyApp(),
     ),
@@ -41,9 +43,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const OnboardingScreen(), // Route awal
-        '/login': (context) => const LoginPage(),
+        '/login': (context) => LoginPage(),
         '/register': (context) => const HalamanDaftar(),
-        '/home ': (context) => HomePage(),
+        '/home': (context) => HomePage(),
         '/forgotpwd': (context) => ForgotPassword(),
         '/resetpwd': (context) => ResetPassword(),
         '/notifikasi': (context) => Notifikasi(),
