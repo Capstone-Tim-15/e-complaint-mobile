@@ -53,8 +53,12 @@ dependencies:
   another_flutter_splash_screen: ^1.2.0
   flutter_native_splash: ^2.3.5
   smooth_page_indicator: ^1.1.0
+<<<<<<< HEAD
   persistent_bottom_nav_bar: ^5.0.2
 
+=======
+  gap: ^3.0.1
+>>>>>>> parent of 3060b12 (fixed profile detail)
 
 dev_dependencies:
   flutter_test:
