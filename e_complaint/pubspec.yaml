@@ -45,6 +45,7 @@ dependencies:
   another_flutter_splash_screen: ^1.2.0
   flutter_native_splash: ^2.3.5
   smooth_page_indicator: ^1.1.0
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -88,7 +89,6 @@ flutter:
     - family: Nunito
       fonts:
         - asset: assets/fonts/Nunito/Nunito.ttf
-          weight: 700
         # - asset: fonts/Nunito/Nunito-italic.ttf
         # - asset: fonts/Nunito/static/Nunito-italic.ttf
 
