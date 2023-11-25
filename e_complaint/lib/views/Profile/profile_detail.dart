@@ -1,22 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
-
-void main() {
-  runApp(const Apps());
-}
-
-class Apps extends StatelessWidget {
-  const Apps({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Profiledetail(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
 
 class Profiledetail extends StatefulWidget {
   const Profiledetail({super.key});
@@ -113,13 +96,13 @@ class _ProfiledetailState extends State<Profiledetail> {
               ],
             ),
           ),
-          Gap(10),
+          SizedBox(height: 10),
           // nama
           Container(
             height: 45,
             padding:
                 const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
@@ -140,7 +123,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Gap(5),
+                    SizedBox(height: 5),
                     SizedBox(
                       child: Icon(
                         Icons.arrow_forward_ios_rounded,
@@ -157,7 +140,7 @@ class _ProfiledetailState extends State<Profiledetail> {
             height: 45,
             padding:
                 const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -179,7 +162,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      Gap(5),
+                      SizedBox(height: 5),
                       SizedBox(
                         child: Icon(
                           Icons.arrow_forward_ios_rounded,
@@ -197,7 +180,7 @@ class _ProfiledetailState extends State<Profiledetail> {
             height: 45,
             padding:
                 const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -219,7 +202,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      Gap(5),
+                      SizedBox(height: 5),
                       SizedBox(
                         child: Icon(
                           Icons.arrow_forward_ios_rounded,
@@ -277,7 +260,7 @@ class _ProfiledetailState extends State<Profiledetail> {
             height: 45,
             padding:
                 const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -299,7 +282,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      Gap(5),
+                      SizedBox(height: 5),
                       SizedBox(
                         child: Icon(
                           Icons.arrow_forward_ios_rounded,
@@ -317,7 +300,7 @@ class _ProfiledetailState extends State<Profiledetail> {
             height: 45,
             padding:
                 const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -339,7 +322,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      Gap(5),
+                      SizedBox(height: 5),
                       SizedBox(
                         child: Icon(
                           Icons.arrow_forward_ios_rounded,
