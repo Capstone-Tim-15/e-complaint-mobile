@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:dio/dio.dart';
+import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,6 +17,22 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
   bool rememberMe = false;
+  final Dio _dio = Dio();
+
+  Future<Response> login(String username, String password) {
+    return _dio.post(
+      'http://34.128.69.15:8000/user/login', // Sesuaikan dengan skema URL yang benar
+      data: {
+        'username': username,
+        'password': password,
+      },
+    );
+  }
+
+  Future<void> saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 50,
+                height: 150,
               ),
               Container(
                 width: 265,
@@ -37,13 +58,14 @@ class _LoginPageState extends State<LoginPage> {
                       'Halo!',
                       style: TextStyle(
                         color: Color(0xFF191C1D),
-                        fontSize: 54,
+                        fontSize: 57,
                         fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         height: 0.02,
+                        letterSpacing: -0.25,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Container(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -54,9 +76,9 @@ class _LoginPageState extends State<LoginPage> {
                             'Belum mempunyai akun?',
                             style: TextStyle(
                               color: Color(0xFF191C1D),
-                              fontSize: 14,
+                              fontSize: 16,
                               fontFamily: 'Nunito',
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           GestureDetector(
@@ -66,11 +88,12 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               ' Buat akun disini',
                               style: TextStyle(
-                                  color: Color(0xFF990000),
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                  decoration: TextDecoration.underline),
+                                color: Color(0xFF990000),
+                                fontSize: 16,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           )
                         ],
@@ -79,7 +102,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 4),
               Form(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     TextFormField(
                       controller: passwordController,
@@ -165,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                             Text(
                               'Ingat Saya',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontFamily: 'Nunito',
                                 fontWeight: FontWeight.w600,
                               ),
@@ -175,23 +197,65 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     SizedBox(
-                      height: 175,
+                      height: 220,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          if (Form.of(context).validate()) {
-                            _handleLogin();
+                        onPressed: () async {
+                          try {
+                            var response = await login(
+                              usernameController.text,
+                              passwordController.text,
+                            );
+
+                            if (response.statusCode == 200) {
+                              // Assuming response is in the format you provided
+                              Map<String, dynamic> responseData = response.data;
+
+                              // Check if 'meta' field indicates success
+                              if (responseData['meta']['success'] == true) {
+                                // Extract token from the 'results' field
+                                String? token =
+                                    responseData['results']['token'];
+
+                                if (token != null) {
+                                  // Save token to Shared Preferences
+                                  await saveToken(token);
+
+                                  // Navigate to the home page and remove all previous routes
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottomNavigation()), // Gantilah dengan halaman beranda yang sesuai
+                                    (Route<dynamic> route) => false,
+                                  );
+                                } else {
+                                  print('Token is null in the response');
+                                  // Handle the case where the token is null
+                                }
+                              } else {
+                                print(
+                                    'Login failed: ${responseData['meta']['message']}');
+                                // Handle login failure here
+                              }
+                            } else {
+                              print('Login failed: ${response.statusCode}');
+                              // Handle login failure here
+                            }
+                          } catch (error) {
+                            print('Error during login: $error');
+                            // Handle other errors during login
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Color(0xFFEC7B73),
                         ),
-                        child: Text('Login'),
+                        child: Text('Masuk'),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -200,32 +264,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  void _handleLogin() {
-    // Implementasi logika login di sini
-    String username = usernameController.text;
-    String password = passwordController.text;
-
-    // Contoh logika sederhana, Anda harus menggantinya dengan logika yang sesuai
-    if (username == 'user' && password == 'password') {
-      // Login berhasil, lanjutkan dengan navigasi ke halaman beranda
-      Navigator.pushNamed(context, '/home');
-    } else {
-      // Tampilkan pesan kesalahan atau tindakan yang sesuai
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Login Gagal'),
-          content: Text('Username atau password salah.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
   }
 }
