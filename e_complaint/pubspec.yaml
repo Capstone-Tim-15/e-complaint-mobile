@@ -83,6 +83,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets\image\jk.jpeg
+    - assets\image\loc.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

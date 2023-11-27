@@ -1,17 +1,26 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:e_complaint/views/Home/addcomplaint_location.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:video_player/video_player.dart';
 
 class AddComplaint extends StatefulWidget {
-  const AddComplaint({super.key});
+  const AddComplaint({
+    super.key,
+    required this.selectedLocation,
+    required this.selectedLocation2,
+  });
+
+  final String selectedLocation;
+  final String selectedLocation2;
 
   @override
   State<AddComplaint> createState() => _AddComplaintState();
 }
 
 class _AddComplaintState extends State<AddComplaint> {
+  bool isJalanSelected = false;
   // Daftar kategori keluhan
   List<CategoryName> category = [
     CategoryName(id: 1, name: "Kekerasan"),
@@ -39,6 +48,13 @@ class _AddComplaintState extends State<AddComplaint> {
   String nama = 'Jeon Jungkook';
   String imagePath = 'assets/image/jk.jpeg';
   Color textColor = Color.fromARGB(255, 249, 171, 167);
+
+  void handleLocationSelection() {
+    // Lakukan logika pemilihan lokasi, dan kemudian atur nilai isJalanSelected
+    setState(() {
+      isJalanSelected = true; // Mengubah nilai menjadi kebalikannya
+    });
+  }
 
   // Fungsi untuk memilih gambar dari galeri
   Future<void> _pickImage(ImageSource source) async {
@@ -276,51 +292,44 @@ class _AddComplaintState extends State<AddComplaint> {
                 ),
                 // Tombol untuk menambahkan lokasi
                 Container(
-                  padding: EdgeInsets.only(left: 10),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: Colors
-                            .red, // Sesuaikan dengan warna ikon yang diinginkan
+                      IconButton(
+                        onPressed: () {
+                          // Panggil fungsi handleLocationSelection saat tombol ditekan
+                          handleLocationSelection();
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ComplaintLocation(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.location_on_outlined),
                       ),
-                      const SizedBox(
-                          width:
-                              8), // Berikan sedikit jarak antara ikon dan TextField
-                      Expanded(
-                        child: TextField(
-                          maxLines: 3,
-                          cursorColor: Colors.red,
+                      Visibility(
+                        visible: !isJalanSelected,
+                        child: Text(
+                          'Tambahkan Alamat',
                           style: TextStyle(
-                              color: Colors
-                                  .black), // Tambahkan warna teks jika diperlukan
-                          decoration: InputDecoration(
-                            hintText: 'Masukan Alamat',
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(255, 237, 109, 94),
-                            ),
-                            fillColor: Color.fromARGB(255, 255, 237, 233),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 249, 200, 197),
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 239, 167, 167),
-                                width: 2.0,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 25,
-                              horizontal: 16.0,
-                            ),
+                            color: textColor,
+                            fontSize: 17,
                           ),
                         ),
+                      ),
+                      Visibility(
+                        visible: isJalanSelected,
+                        child: Text(
+                          '${widget.selectedLocation2 ?? ''}, ${widget.selectedLocation ?? ''}',
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
                       ),
                     ],
                   ),
@@ -331,7 +340,7 @@ class _AddComplaintState extends State<AddComplaint> {
                 ),
                 // Dropdown untuk memilih kategori keluhan
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -351,7 +360,7 @@ class _AddComplaintState extends State<AddComplaint> {
                             'Pilih Kategori',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color.fromARGB(255, 249, 171, 167),
+                              color: textColor,
                             ),
                           ),
                           value: selectedValue,
@@ -364,7 +373,7 @@ class _AddComplaintState extends State<AddComplaint> {
                           items: category
                               .map<DropdownMenuItem<CategoryName>>(
                                 (e) => DropdownMenuItem(
-                                  child: Text((e?.name ?? '').toString()),
+                                  child: Text((e.name ?? '').toString()),
                                   value: e,
                                 ),
                               )
