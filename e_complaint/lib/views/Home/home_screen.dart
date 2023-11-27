@@ -1,4 +1,4 @@
-import 'package:e_complaint/views/Home/news_screen.dart';
+import 'package:e_complaint/views/Home/component/news/news_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +9,9 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          toolbarHeight: 48,
           backgroundColor: const Color.fromARGB(255, 255, 219, 207),
           title: Container(
             padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
