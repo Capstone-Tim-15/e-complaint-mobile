@@ -1,3 +1,4 @@
+import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
@@ -25,6 +26,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
       ],
       child: const MyApp(),
     ),
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
         // useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: '/addcomplaint',
       routes: {
         '/': (context) => const OnboardingScreen(), // Route awal
         '/login': (context) => LoginPage(),
