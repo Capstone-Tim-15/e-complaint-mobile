@@ -41,8 +41,10 @@ class _ComplaintLocationState extends State<ComplaintLocation> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        AddComplaint(selectedLocation: '', selectedLocation2: '',)), // Ganti HalamanTujuan dengan halaman yang diinginkan
+                    builder: (context) => AddComplaint(
+                          selectedLocation: '',
+                          selectedLocation2: '',
+                        )), // Ganti HalamanTujuan dengan halaman yang diinginkan
               );
             },
             icon: Icon(Icons.arrow_back)),
@@ -223,13 +225,17 @@ class _UtamaLocationState extends State<UtamaLocation> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
+                          print(selectedLocation);
                           setState(() {
                             isJalanSelected = true;
                           });
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddComplaint(selectedLocation: '', selectedLocation2: '',),
+                              builder: (context) => AddComplaint(
+                                selectedLocation: '',
+                                selectedLocation2: '',
+                              ),
                             ),
                           );
                         },

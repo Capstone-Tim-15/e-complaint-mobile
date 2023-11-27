@@ -49,12 +49,12 @@ dependencies:
   build_runner: ^2.4.6
   http: ^1.1.0
   flutter_chat_bubble: ^2.0.2
-  video_player: ^2.8.1
   another_flutter_splash_screen: ^1.2.0
   flutter_native_splash: ^2.3.5
   smooth_page_indicator: ^1.1.0
   persistent_bottom_nav_bar: ^5.0.2
   gap: ^3.0.1
+  video_player: ^2.8.1
 
 
 dev_dependencies:

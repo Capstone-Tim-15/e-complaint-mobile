@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/views/Home/addcomplaint_location.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 // import 'package:video_player/video_player.dart';
 
 class AddComplaint extends StatefulWidget {
@@ -103,6 +106,8 @@ class _AddComplaintState extends State<AddComplaint> {
 
   @override
   Widget build(BuildContext context) {
+    final complaintProvider = Provider.of<AddComplaintProvider>(context);
+    print(complaintProvider.selectedLocation);
     return MaterialApp(
       theme: ThemeData(
         iconTheme: const IconThemeData(
@@ -311,7 +316,7 @@ class _AddComplaintState extends State<AddComplaint> {
                       Visibility(
                         visible: !isJalanSelected,
                         child: Text(
-                          'Tambahkan Alamat',
+                          complaintProvider.selectedLocation,
                           style: TextStyle(
                             color: textColor,
                             fontSize: 17,
