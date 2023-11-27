@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         '/notifikasi': (context) => Notifikasi(),
 
         // '/news': (context) => ThirdPage(),
-        '/addcomplaint':(context) => const AddComplaint(),
+        '/addcomplaint':(context) => const AddComplaint(selectedLocation: '', selectedLocation2: '',),
       },
     );
   }

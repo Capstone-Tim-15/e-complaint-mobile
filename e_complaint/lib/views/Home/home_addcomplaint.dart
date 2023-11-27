@@ -3,19 +3,26 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:e_complaint/views/Home/addcomplaint_location.dart';
-import 'package:e_complaint/views/Home/addcomplaint_location_two.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 class AddComplaint extends StatefulWidget {
-  const AddComplaint({super.key});
+  const AddComplaint({
+    super.key,
+    required this.selectedLocation,
+    required this.selectedLocation2,
+  });
+
+  final String selectedLocation;
+  final String selectedLocation2;
 
   @override
   State<AddComplaint> createState() => _AddComplaintState();
 }
 
 class _AddComplaintState extends State<AddComplaint> {
+  bool isJalanSelected = false;
   // Daftar kategori keluhan
   List<CategoryName> category = [
     CategoryName(id: 1, name: "Kekerasan"),
@@ -43,6 +50,13 @@ class _AddComplaintState extends State<AddComplaint> {
   String nama = 'Jeon Jungkook';
   String imagePath = 'assets/image/jk.jpeg';
   Color textColor = Color.fromARGB(255, 249, 171, 167);
+
+  void handleLocationSelection() {
+    // Lakukan logika pemilihan lokasi, dan kemudian atur nilai isJalanSelected
+    setState(() {
+      isJalanSelected = true; // Mengubah nilai menjadi kebalikannya
+    });
+  }
 
   // Fungsi untuk memilih gambar dari galeri
   Future<void> _pickImage(ImageSource source) async {
@@ -279,30 +293,49 @@ class _AddComplaintState extends State<AddComplaint> {
                   height: 20,
                 ),
                 // Tombol untuk menambahkan lokasi
-                 Container(
+                Container(
                   child: Row(
                     children: [
                       IconButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  // builder: (context) => ComplaintLocation()),
-                                  builder: (context) => LocationTwo()),
-                            );
-                          },
-                          icon: Icon(Icons.location_on_outlined)),
-                      Text(
-                        'Tambahkan Alamat',
-                        style: TextStyle(color: textColor),
+                        onPressed: () {
+                          // Panggil fungsi handleLocationSelection saat tombol ditekan
+                          handleLocationSelection();
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ComplaintLocation(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.location_on_outlined),
+                      ),
+                      Visibility(
+                        visible: !isJalanSelected,
+                        child: Text(
+                          'Tambahkan Alamat',
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: isJalanSelected,
+                        child: Text(
+                          '${widget.selectedLocation2 ?? ''}, ${widget.selectedLocation ?? ''}',
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 17,
+                          ),
+                        ),
                       ),
                       const SizedBox(
-                          width:
-                              8), // Berikan sedikit jarak antara ikon dan TextField
+                        width: 8,
+                      ),
                     ],
                   ),
                 ),
-
 
                 const SizedBox(
                   height: 20,
