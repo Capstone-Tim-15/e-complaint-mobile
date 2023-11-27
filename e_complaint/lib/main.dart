@@ -43,9 +43,8 @@ class MyApp extends StatelessWidget {
         '/resetpwd': (context) => ResetPassword(),
         '/notifikasi': (context) => Notifikasi(),
         '/chatbot': (context) => const ChatBotScreen(),
-
         // '/news': (context) => ThirdPage(),
-        // '/addcomplaint':(context) => const AddComplaint(),
+        '/addcomplaint':(context) => const AddComplaint(selectedLocation: '', selectedLocation2: '',),
 
       },
     );
