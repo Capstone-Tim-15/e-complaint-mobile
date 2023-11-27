@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:dio/dio.dart';
+import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> saveOtp(String token) async {
+  Future<void> saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
   }
@@ -220,10 +221,16 @@ class _LoginPageState extends State<LoginPage> {
 
                                 if (token != null) {
                                   // Save token to Shared Preferences
-                                  await saveOtp(token);
+                                  await saveToken(token);
 
-                                  // Navigate to the home page
-                                  Navigator.pushNamed(context, '/home');
+                                  // Navigate to the home page and remove all previous routes
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottomNavigation()), // Gantilah dengan halaman beranda yang sesuai
+                                    (Route<dynamic> route) => false,
+                                  );
                                 } else {
                                   print('Token is null in the response');
                                   // Handle the case where the token is null

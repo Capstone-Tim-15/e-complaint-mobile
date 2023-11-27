@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color.fromARGB(255, 255, 219, 207),
         title: Container(
           padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
