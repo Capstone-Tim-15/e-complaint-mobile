@@ -319,7 +319,7 @@ class _AddComplaintState extends State<AddComplaint> {
                           complaintProvider.selectedLocation,
                           style: TextStyle(
                             color: textColor,
-                            fontSize: 17,
+                           
                           ),
                         ),
                       ),
@@ -329,7 +329,7 @@ class _AddComplaintState extends State<AddComplaint> {
                           '${widget.selectedLocation2 ?? ''}, ${widget.selectedLocation ?? ''}',
                           style: TextStyle(
                             color: textColor,
-                            fontSize: 17,
+                           
                           ),
                         ),
                       ),

@@ -1,5 +1,7 @@
+import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ComplaintLocation extends StatefulWidget {
   const ComplaintLocation({super.key});
@@ -125,6 +127,8 @@ class _UtamaLocationState extends State<UtamaLocation> {
 
   @override
   Widget build(BuildContext context) {
+    final complaintProvider = Provider.of<AddComplaintProvider>(context);
+    print(complaintProvider.selectedLocation);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 240, 77, 77),
@@ -225,7 +229,11 @@ class _UtamaLocationState extends State<UtamaLocation> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
-                          print(selectedLocation);
+                          print(
+                              'Nilai yang dipilih: ${widget.selectedLocation}');
+                          print('Nilai yang dipilih: ${jalanList[index]}');
+                          String locationSelected = '${widget.selectedLocation} , ${jalanList[index]}';
+                          complaintProvider.updateSelectedLocation(locationSelected);
                           setState(() {
                             isJalanSelected = true;
                           });
