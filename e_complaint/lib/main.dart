@@ -1,4 +1,3 @@
-
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
@@ -38,12 +37,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: 'E-Complaint',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
@@ -65,7 +60,6 @@ class MyApp extends StatelessWidget {
 
         // '/news': (context) => ThirdPage(),
         // '/addcomplaint':(context) => const AddComplaint(),
-
       },
     );
   }
