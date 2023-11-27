@@ -21,8 +21,11 @@ class IntroPage4 extends StatelessWidget {
               child: const Text(
                 "Masuk",
                 style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFFEC7B73),
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  height: 0.10,
+                  letterSpacing: 0.10,
                 ),
               ),
             ),
@@ -44,7 +47,7 @@ class IntroPage4 extends StatelessWidget {
           ),
           // button register
           Container(
-            margin: const EdgeInsets.only(top: 100),
+            margin: const EdgeInsets.only(top: 120),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/register');

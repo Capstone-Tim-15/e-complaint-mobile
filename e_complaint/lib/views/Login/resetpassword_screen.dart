@@ -18,7 +18,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 100, left: 20, right: 20),
+        padding: EdgeInsets.only(top: 150, left: 20, right: 20),
         child: Form(
           // Tambahkan Form widget di sini
           key: _formKey,
@@ -115,7 +115,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 //   return null;
                 // },
               ),
-              SizedBox(height: 130),
+              SizedBox(height: 250),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -153,12 +153,13 @@ void _showVerificationDialog(BuildContext context) {
           borderRadius: BorderRadius.circular(10.0),
         ),
         title: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Kami telah mengirimkan kode verifikasi melalui email yang anda masukkan',
-              textAlign: TextAlign.center,
-            ),
+          child: Text(
+            'Kami telah mengirimkan kode verifikasi melalui email yang anda masukkan',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 16,
+                fontWeight: FontWeight.w700),
           ),
         ),
         content: Column(

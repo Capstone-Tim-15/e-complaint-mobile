@@ -424,6 +424,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   frontend_server_client:
     dependency: transitive
     description:
@@ -433,6 +434,16 @@ packages:
     source: hosted
     version: "3.2.0"
   glob:
+=======
+  gap:
+    dependency: "direct main"
+    description:
+      name: gap
+      sha256: f19387d4e32f849394758b91377f9153a1b41d79513ef7668c088c77dbc6955d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
+>>>>>>> parent of 3060b12 (fixed profile detail)
   html:
     dependency: transitive
     description:
