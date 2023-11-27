@@ -57,9 +57,10 @@ class MyApp extends StatelessWidget {
         '/succesRegister': (context) => AccountSuccess(),
         '/succes-change-password': (context) => PasswordSucces(),
         '/chatbot': (context) => const ChatBotScreen(),
-        // '/news': (context) => ThirdPage(),
-        '/addcomplaint':(context) => const AddComplaint(selectedLocation: '', selectedLocation2: '',),
-
+        '/addcomplaint': (context) => const AddComplaint(
+              selectedLocation: '',
+              selectedLocation2: '',
+            ),
       },
     );
   }
