@@ -1,5 +1,9 @@
+
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
+import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
+import 'package:e_complaint/views/Home/home_addcomplaint.dart';
+
 import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/account_success.dart';
 import 'package:e_complaint/views/Login/change_password.dart';
@@ -7,6 +11,7 @@ import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
+
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,10 +35,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      title: 'E-Complaint',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -50,9 +58,14 @@ class MyApp extends StatelessWidget {
         '/forgotpwd': (context) => ForgotPassword(),
         '/resetpwd': (context) => ResetPassword(),
         '/notifikasi': (context) => Notifikasi(),
+
         '/succesRegister': (context) => AccountSuccess(),
         '/succes-change-password': (context) => PasswordSucces(),
+        '/chatbot': (context) => const ChatBotScreen(),
+
         // '/news': (context) => ThirdPage(),
+        // '/addcomplaint':(context) => const AddComplaint(),
+
       },
     );
   }

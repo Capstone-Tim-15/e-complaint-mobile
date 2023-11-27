@@ -1,5 +1,8 @@
+
 import 'package:e_complaint/views/Home/news_screen.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
+import 'package:e_complaint/views/Home/component/news/news_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,6 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
