@@ -1,5 +1,5 @@
+import 'package:e_complaint/views/History_Pengaduan/component/detail_pengaduan.dart';
 import 'package:flutter/material.dart';
-import 'package:praktikum/view/detail_pengaduan.dart';
 
 class selesai_page extends StatelessWidget {
   const selesai_page({super.key});
