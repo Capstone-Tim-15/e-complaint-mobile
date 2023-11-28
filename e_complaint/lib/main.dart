@@ -3,6 +3,7 @@ import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
+import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 import 'views/Register/register_dart.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const OnboardingScreen(), // Route awal
+        '/': (context) => const BottomNavigation(), // Route awal
         '/login': (context) => const LoginPage(),
         '/register': (context) => const HalamanDaftar(),
         '/home ': (context) => HomePage(),
