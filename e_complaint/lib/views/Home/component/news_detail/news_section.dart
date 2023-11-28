@@ -1,3 +1,6 @@
+
+import 'package:e_complaint/views/Home/click_comment.dart';
+
 import 'package:flutter/material.dart';
 
 class NewsSection extends StatefulWidget {
@@ -127,7 +130,14 @@ class _NewsSectionState extends State<NewsSection> {
                 width: 8,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FullScreenCommentPage(),
+                    ),
+                  );
+                },
                 child: Image.asset('assets/icons/icon_comment.png'),
               ),
               const SizedBox(

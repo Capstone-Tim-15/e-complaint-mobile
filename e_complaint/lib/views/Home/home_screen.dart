@@ -1,7 +1,6 @@
 
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:e_complaint/views/Home/component/news/news_screen.dart';
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
