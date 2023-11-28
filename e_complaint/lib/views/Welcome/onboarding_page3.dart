@@ -21,13 +21,19 @@ class IntroPage3 extends StatelessWidget {
             ),
           ),
           // text
-          Container(
-            margin: const EdgeInsets.only(top: 80, right: 40, left: 40),
+          SizedBox(
+            height: 100,
+          ),
+          SizedBox(
+            width: 299,
+            //margin: const EdgeInsets.only(top: 80, right: 40, left: 40),
             child: const Text(
               "Sampaikan aspirasi Anda dengan mengajukan keluhan",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 14,
                 color: Colors.white,
+                fontWeight: FontWeight.w600,
+                height: 0,
               ),
               textAlign: TextAlign.justify,
             ),

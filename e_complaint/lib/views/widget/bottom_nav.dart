@@ -1,4 +1,5 @@
 import 'package:e_complaint/views/Home/home_screen.dart';
+
 import 'package:flutter/material.dart';
 import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
 
@@ -80,13 +81,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         ],
       ),
-      context,
-      controller: _controller,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      backgroundColor: Colors.white,
-      navBarStyle: NavBarStyle.style7,
-      navBarHeight: 52,
+
+      body: <Widget>[
+        HomePage(),
+        HomePage(),
+        HomePage(),
+        HomePage(),
+      ][currentPageIndex],
+
     );
   }
 }

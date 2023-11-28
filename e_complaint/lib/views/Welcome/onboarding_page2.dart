@@ -19,14 +19,19 @@ class IntroPage2 extends StatelessWidget {
               height: 300,
             ),
           ),
+          SizedBox(
+            height: 120,
+          ),
           // text
-          Container(
-            margin: const EdgeInsets.only(top: 98, right: 40, left: 40),
+          SizedBox(
+            width: 267,
             child: const Text(
               "Laporkan masalah dan ajukan pengaduan masalah yang Anda alami",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 14,
                 color: Colors.white,
+                fontWeight: FontWeight.w600,
+                height: 0,
               ),
               textAlign: TextAlign.justify,
             ),
