@@ -1,7 +1,7 @@
+import 'package:e_complaint/views/History_Pengaduan/component/diproses.dart';
+import 'package:e_complaint/views/History_Pengaduan/component/selesai.dart';
+import 'package:e_complaint/views/History_Pengaduan/component/terkirim.dart';
 import 'package:flutter/material.dart';
-import 'package:praktikum/view/diproses.dart';
-import 'package:praktikum/view/selesai.dart';
-import 'package:praktikum/view/terkirim.dart';
 
 class riwayat_pengaduan_page extends StatefulWidget {
   const riwayat_pengaduan_page({super.key});
