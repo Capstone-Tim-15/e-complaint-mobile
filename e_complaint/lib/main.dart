@@ -15,6 +15,7 @@ import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'views/Register/register.dart';
 import 'views/Welcome/onboarding_screen.dart';
@@ -44,26 +45,83 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
-        // useMaterial3: true,
       ),
-      initialRoute: '/addcomplaint',
-      routes: {
-        '/': (context) => const OnboardingScreen(), // Route awal
-        '/login': (context) => LoginPage(),
-        '/register': (context) => const HalamanDaftar(),
-        '/home': (context) => BottomNavigation(),
-        '/forgotpwd': (context) => ForgotPassword(),
-        '/resetpwd': (context) => ResetPassword(),
-        '/notifikasi': (context) => Notifikasi(),
+      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(
+                builder: (context) => const OnboardingScreen());
+          case '/login':
+            return MaterialPageRoute(builder: (context) => LoginPage());
+          case '/register':
+            return MaterialPageRoute(
+                builder: (context) => const HalamanDaftar());
+          case '/forgotpwd':
+            return MaterialPageRoute(builder: (context) => ForgotPassword());
+          case '/resetpwd':
+            return MaterialPageRoute(builder: (context) => ResetPassword());
+          case '/succesRegister':
+            return MaterialPageRoute(builder: (context) => AccountSuccess());
+          case '/succes-change-password':
+            return MaterialPageRoute(builder: (context) => PasswordSucces());
+          case '/home':
+            return MaterialPageRoute(
+              builder: (context) => FutureBuilder<bool>(
+                future: hasValidToken(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Menampilkan indikator loading jika sedang menunggu hasil pemeriksaan token
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError || !snapshot.data!) {
+                    // Redirect ke halaman login jika token tidak valid
+                    return LoginPage();
+                  } else {
+                    // Lanjut ke halaman home jika token valid
+                    return BottomNavigation();
+                  }
+                },
+              ),
+            );
+          case '/notifikasi':
+            return MaterialPageRoute(builder: (context) => Notifikasi());
 
-        '/succesRegister': (context) => AccountSuccess(),
-        '/succes-change-password': (context) => PasswordSucces(),
-        '/chatbot': (context) => const ChatBotScreen(),
-        '/addcomplaint': (context) => const AddComplaint(
-              selectedLocation: '',
-              selectedLocation2: '',
-            ),
+          case '/chatbot':
+            return MaterialPageRoute(
+                builder: (context) => const ChatBotScreen());
+          case '/addcomplaint':
+            return MaterialPageRoute(
+              builder: (context) => const AddComplaint(
+                selectedLocation: '',
+                selectedLocation2: '',
+              ),
+            );
+          default:
+            return MaterialPageRoute(builder: (context) => UnknownRoutePage());
+        }
       },
+    );
+  }
+
+  // Fungsi ini dapat Anda sesuaikan sesuai dengan cara Anda menyimpan dan memeriksa token
+  Future<bool> hasValidToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jwtToken = prefs.getString('token');
+    // Implementasi pemeriksaan token di sini
+    return jwtToken != null && jwtToken.isNotEmpty;
+  }
+} // Misalnya, dapat menggunakan Shared Preferences atau penyimpanan lokal lainnya
+
+class UnknownRoutePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('404 - Halaman tidak ditemukan'),
+      ),
+      body: Center(
+        child: Text('Halaman tidak ditemukan'),
+      ),
     );
   }
 }
