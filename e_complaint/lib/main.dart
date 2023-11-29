@@ -1,3 +1,4 @@
+import 'package:e_complaint/models/user_profile.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
@@ -29,13 +30,21 @@ void main() {
         ChangeNotifierProvider(create: (context) => LoginProvider()),
         ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final UserProfile user = UserProfile(
+    name: 'Jelita Salsabila',
+    profileImageUrl:
+        'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
+    coverImageUrl:
+        'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
+    email: 'JelitaS@gmail.com',
+    phoneNumber: '080987278935',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +94,8 @@ class MyApp extends StatelessWidget {
             );
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
-
+//case '/profile':
+//return MaterialPageRoute(builder: (context) => UserProfile(name: 'Jelita Salsabila', profileImageUrl: 'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg', coverImageUrl: 'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg', email: 'JelitaS@gmail.com', phoneNumber: '080987278935'),)
           case '/chatbot':
             return MaterialPageRoute(
                 builder: (context) => const ChatBotScreen());
