@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:e_complaint/models/user_profile.dart';
+import 'package:e_complaint/views/widget/card_contact_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profil_page/src/models/user_profile.dart';
-import 'package:flutter_profil_page/src/widgets/card_contact_widget.dart';
 
 class profile_image_widget extends StatelessWidget {
   const profile_image_widget({
