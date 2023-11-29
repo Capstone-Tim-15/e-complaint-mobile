@@ -1,6 +1,5 @@
 import 'package:e_complaint/views/Search/result/result_berita_page.dart';
 import 'package:e_complaint/views/Search/result/result_keluhan_page.dart';
-import 'package:e_complaint/views/Search/widget/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 

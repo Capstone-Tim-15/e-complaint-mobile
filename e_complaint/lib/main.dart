@@ -4,6 +4,7 @@ import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Search/result/result.page.dart';
+import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
 import 'package:flutter/material.dart';
 import 'views/Search/search_kategori_screen.dart';
 import 'views/Register/register_dart.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const SearchPage(), // Route awal
+        '/': (context) => const IntroPage1(), // Route awal
         '/login': (context) => const LoginPage(),
         '/register': (context) => const HalamanDaftar(),
         '/home ': (context) => HomePage(),
