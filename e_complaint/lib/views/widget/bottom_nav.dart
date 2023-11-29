@@ -1,7 +1,7 @@
 import 'package:e_complaint/views/Home/home_screen.dart';
+import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 
 import 'package:flutter/material.dart';
-import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -11,84 +11,72 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  late PersistentTabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
-  }
-
-  List<Widget> _buildScreens() {
-    return [
-      HomePage(),
-      HomePage(),
-      HomePage(),
-      HomePage(),
-    ];
-  }
-
-  List<PersistentBottomNavBarItem> _navBarsItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const ImageIcon(
-          AssetImage('assets/icons/icon_home.png'),
-        ),
-        activeColorPrimary: const Color.fromARGB(255, 255, 219, 207),
-        activeColorSecondary: Colors.black,
-        inactiveColorPrimary: Colors.black,
-        iconSize: 24,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const ImageIcon(
-          AssetImage('assets/icons/icon_search.png'),
-        ),
-        activeColorPrimary: const Color.fromARGB(255, 255, 219, 207),
-        activeColorSecondary: Colors.black,
-        inactiveColorPrimary: Colors.black,
-        iconSize: 24,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const ImageIcon(
-          AssetImage('assets/icons/icon_notification.png'),
-        ),
-        activeColorPrimary: const Color.fromARGB(255, 255, 219, 207),
-        activeColorSecondary: Colors.black,
-        inactiveColorPrimary: Colors.black,
-        iconSize: 24,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const ImageIcon(
-          AssetImage('assets/icons/icon_profile.png'),
-        ),
-        activeColorPrimary: const Color.fromARGB(255, 255, 219, 207),
-        activeColorSecondary: Colors.black,
-        inactiveColorPrimary: Colors.black,
-        iconSize: 24,
-      ),
-    ];
-  }
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      decoration: NavBarDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey, // Warna bayangan
-            blurRadius: 8, // Radius blur bayangan
-            offset: Offset(0, 2), // Posisi bayangan (x, y)
-          ),
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        elevation: 20,
+        indicatorColor: const Color.fromARGB(255, 255, 219, 207),
+        height: 52,
+        backgroundColor: Colors.white,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const [
+          NavigationDestination(
+              selectedIcon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_home_hover.png'),
+              ),
+              icon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_home.png'),
+              ),
+              label: 'Home'),
+          NavigationDestination(
+              selectedIcon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_search_hover.png'),
+              ),
+              icon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_search.png'),
+              ),
+              label: 'Search'),
+          NavigationDestination(
+              selectedIcon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_notification_hover.png'),
+              ),
+              icon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_notification.png'),
+              ),
+              label: 'Notification'),
+          NavigationDestination(
+              selectedIcon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_profile_hover.png'),
+              ),
+              icon: ImageIcon(
+                size: 24,
+                AssetImage('assets/icons/icon_profile.png'),
+              ),
+              label: 'Profile'),
         ],
       ),
-
       body: <Widget>[
         HomePage(),
         HomePage(),
-        HomePage(),
+        Notifikasi(),
         HomePage(),
       ][currentPageIndex],
-
     );
   }
 }
