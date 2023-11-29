@@ -36,6 +36,19 @@ class _ResultBeritaState extends State<ResultBerita> {
       'save': 5,
       'shares': 6,
     },
+    {
+      'userName': 'Arif Setiawan',
+      'userImage': 'https://picsum.photos/200/300.jpg',
+      'postDate': DateTime.now().subtract(const Duration(days: 1)),
+      'address': 'Jl Bangka Raya',
+      'postDescription':
+          'Kurikulum di SMK Negeri Batam perlu pembaruan. Perkembangan teknologi terbaru perlu diintegrasikan. Kami harap ada perbaikan segera. Terima kasih!',
+      'postImage': 'https://picsum.photos/200',
+      'likes': 10,
+      'comments': 5,
+      'save': 5,
+      'shares': 3,
+    },
   ];
   @override
   Widget build(BuildContext context) {
