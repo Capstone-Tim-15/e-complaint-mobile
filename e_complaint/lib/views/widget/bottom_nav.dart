@@ -1,5 +1,9 @@
 import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
+import 'package:e_complaint/views/Profile/profile_detail.dart';
+import 'package:e_complaint/views/Profile/profile_page.dart';
+import 'package:e_complaint/views/Search/search_kategori_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
@@ -73,9 +77,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
       body: <Widget>[
         HomePage(),
-        HomePage(),
+        SearchPage(),
         Notifikasi(),
-        HomePage(),
+        Profiledetail(),
       ][currentPageIndex],
     );
   }

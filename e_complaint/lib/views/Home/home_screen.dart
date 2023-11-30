@@ -48,7 +48,9 @@ class HomePage extends StatelessWidget {
         shadowColor: Color.fromARGB(255, 236, 123, 115),
         shape: CircleBorder(),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/addcomplaint');
+          },
           backgroundColor: Color.fromARGB(255, 236, 123, 115),
           child: Icon(Icons.add),
           // mini: true,
