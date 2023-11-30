@@ -12,6 +12,10 @@ import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
+import 'package:e_complaint/views/Search/result/result.page.dart';
+import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
+import 'package:flutter/material.dart';
+import 'views/Search/search_kategori_screen.dart';
 
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
