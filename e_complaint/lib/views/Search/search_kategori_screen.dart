@@ -33,7 +33,8 @@ class _SearchPageState extends State<SearchPage> {
     {
       'image': 'assets/images/news2.png',
       'source': 'Source: suarabatam.id',
-      'title': 'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
+      'title':
+          'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
     },
   ];
 
@@ -298,7 +299,8 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0, bottom: 8),
+                            padding:
+                                const EdgeInsets.only(left: 8.0, bottom: 8),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
