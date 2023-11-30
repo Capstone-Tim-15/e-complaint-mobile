@@ -13,31 +13,37 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 255, 219, 207),
         title: Container(
           padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 12,
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/circle_avatar.png',
-                    fit: BoxFit.cover,
-                    width: 24,
-                    height: 24,
+          child: SafeArea(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 12,
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/circle_avatar.png',
+                      fit: BoxFit.cover,
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                 ),
-              ),
-              const Text(
-                'GOV-Complaint',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Nunito',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400),
-              ),
-              Image.asset('assets/icons/icon_question.png')
-            ],
+                const Text(
+                  'GOV-Complaint',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Nunito',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400),
+                ),
+                Image.asset(
+                  'assets/icons/icon_chatbot.png',
+                  width: 10,
+                  height: 10,
+                )
+              ],
+            ),
           ),
         ),
       ),

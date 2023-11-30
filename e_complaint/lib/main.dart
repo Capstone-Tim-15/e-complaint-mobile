@@ -12,6 +12,8 @@ import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
+import 'package:e_complaint/views/Profile/profile_detail.dart';
+import 'package:e_complaint/views/Profile/profile_page.dart';
 import 'package:e_complaint/views/Search/result/result.page.dart';
 import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/',
+      initialRoute: '/home',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
@@ -98,8 +100,13 @@ class MyApp extends StatelessWidget {
             );
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
-//case '/profile':
-//return MaterialPageRoute(builder: (context) => UserProfile(name: 'Jelita Salsabila', profileImageUrl: 'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg', coverImageUrl: 'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg', email: 'JelitaS@gmail.com', phoneNumber: '080987278935'),)
+          case '/profile':
+            return MaterialPageRoute(
+                builder: (context) => UserProfilePage(
+                      user: user,
+                    ));
+          case '/profile-detail':
+            return MaterialPageRoute(builder: (context) => Profiledetail());
           case '/chatbot':
             return MaterialPageRoute(
                 builder: (context) => const ChatBotScreen());
