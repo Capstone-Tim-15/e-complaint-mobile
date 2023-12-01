@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:e_complaint/models/user_profile.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
+import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 
 // import 'package:e_complaint/views/Home/home_screen.dart';
@@ -61,7 +64,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
@@ -107,6 +110,9 @@ class MyApp extends StatelessWidget {
                     ));
           case '/profile-detail':
             return MaterialPageRoute(builder: (context) => Profiledetail());
+          case '/riwayat-pengaduan':
+            return MaterialPageRoute(
+                builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
             return MaterialPageRoute(
                 builder: (context) => const ChatBotScreen());

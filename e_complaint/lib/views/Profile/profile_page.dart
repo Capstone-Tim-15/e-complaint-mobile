@@ -19,8 +19,9 @@ class UserProfilePage extends StatelessWidget {
         title: Text(
           'Profil',
           style: TextStyle(
-            color: Colors.deepOrangeAccent,
-          ),
+              color: Colors.deepOrangeAccent,
+              fontSize: 32,
+              fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
         elevation: 1,

@@ -37,10 +37,13 @@ class HomePage extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
-                Image.asset(
-                  'assets/icons/icon_chatbot.png',
-                  width: 10,
-                  height: 10,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/chatbot');
+                  },
+                  child: Image.asset(
+                    'assets/icons/icon_chatbot.png',
+                  ),
                 )
               ],
             ),

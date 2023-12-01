@@ -31,7 +31,22 @@ class _ProfiledetailState extends State<Profiledetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Detail'),
+        title: Text('Profile Detail'),
+        backgroundColor:
+            Colors.white, // Mengatur warna background AppBar menjadi putih
+        iconTheme: IconThemeData(color: Colors.orange),
+        toolbarTextStyle: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black, // Mengatur warna teks title menjadi hitam
+            fontSize: 18.0, // Mengatur ukuran teks title
+          ),
+        ).bodyText2,
+        titleTextStyle: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black, // Mengatur warna teks title menjadi hitam
+            fontSize: 18.0, // Mengatur ukuran teks title
+          ),
+        ).headline6,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
