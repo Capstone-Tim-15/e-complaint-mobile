@@ -52,7 +52,7 @@ class detailPengaduan_page extends StatelessWidget {
                       width: 25,
                     ),
                     Image.asset(
-                      'assets/Contact.png',
+                      'assets/images/Contact.png',
                       width: 50,
                       height: 130,
                     ),
@@ -73,9 +73,6 @@ class detailPengaduan_page extends StatelessWidget {
                             fontSize: 24,
                           ),
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
                         const Text(
                           'Jalan Engku Putri, Kota Batam',
                           style: TextStyle(fontSize: 14.5, color: Colors.red),
@@ -93,7 +90,7 @@ class detailPengaduan_page extends StatelessWidget {
                   ],
                 ),
                 const Padding(
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.only(left: 12, right: 12),
                   child: Text(
                     'Saya telah Menghubungi layanan pelanggan anda beberapa kali, tetapi tidak ada tanggapan bantuan yang memadai terkait masalah dengan akun saya. ',
                     style: TextStyle(
@@ -103,12 +100,11 @@ class detailPengaduan_page extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
-                  width: 50,
+                  height: 10,
                 ),
                 Column(
                   children: [
-                    Image.asset('assets/Ling.png'),
+                    Image.asset('assets/images/news1.png'),
                   ],
                 ),
                 const SizedBox(
@@ -203,7 +199,7 @@ class detailPengaduan_page extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Image.asset(
-                              'assets/Contact.png',
+                              'assets/images/Contact.png',
                               width: 45,
                               height: 90,
                             ),

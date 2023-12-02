@@ -1,8 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:e_complaint/models/user_profile.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
+import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
+import 'package:e_complaint/views/Home/click_comment.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 
 // import 'package:e_complaint/views/Home/home_screen.dart';
@@ -12,6 +16,8 @@ import 'package:e_complaint/views/Login/forgotpassword_screen.dart';
 import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
+import 'package:e_complaint/views/Profile/profile_detail.dart';
+import 'package:e_complaint/views/Profile/profile_page.dart';
 import 'package:e_complaint/views/Search/result/result.page.dart';
 import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
 import 'package:flutter/material.dart';
@@ -98,11 +104,25 @@ class MyApp extends StatelessWidget {
             );
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
-//case '/profile':
-//return MaterialPageRoute(builder: (context) => UserProfile(name: 'Jelita Salsabila', profileImageUrl: 'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg', coverImageUrl: 'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg', email: 'JelitaS@gmail.com', phoneNumber: '080987278935'),)
+          case '/comment':
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
+          case '/profile':
+            return MaterialPageRoute(
+                builder: (context) => UserProfilePage(
+                      user: user,
+                    ));
+          case '/profile-detail':
+            return MaterialPageRoute(builder: (context) => Profiledetail());
+          case '/riwayat-pengaduan':
+            return MaterialPageRoute(
+                builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
             return MaterialPageRoute(
                 builder: (context) => const ChatBotScreen());
+          case '/comment':
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => const AddComplaint(

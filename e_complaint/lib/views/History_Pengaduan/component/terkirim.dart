@@ -36,7 +36,7 @@ class terkirim_page extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(
-                                'assets/Contact.png',
+                                'assets/images/Contact.png',
                                 width: 45,
                                 height: 90,
                               ),

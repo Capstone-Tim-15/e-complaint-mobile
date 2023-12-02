@@ -88,6 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/icon_chatbot.png
     - assets\image\jk.jpeg
     - assets\image\loc.png
   #   - images/a_dot_ham.jpeg

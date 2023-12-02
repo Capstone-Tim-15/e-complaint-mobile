@@ -40,6 +40,7 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           shadowColor: const Color.fromARGB(255, 248, 248, 248),
           backgroundColor: const Color.fromARGB(255, 255, 253, 253),
           title: Row(
@@ -49,9 +50,7 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                 iconSize: 25,
                 icon: const Icon(Icons.arrow_back),
                 color: const Color.fromARGB(255, 255, 0, 0),
-                onPressed: () {
-                  // Implement back button functionality
-                },
+                onPressed: () {},
               ),
               const Text(
                 "Riwayat Pengaduan",

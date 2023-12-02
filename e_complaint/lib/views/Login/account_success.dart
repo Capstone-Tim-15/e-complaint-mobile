@@ -66,7 +66,7 @@ class AccountSuccess extends StatelessWidget {
                         letterSpacing: 0.2,
                       )),
                   child: const Text(
-                    "Halaman Utama",
+                    "Login",
                   ),
                 ),
               ),

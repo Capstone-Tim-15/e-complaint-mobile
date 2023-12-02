@@ -66,7 +66,9 @@ class _NewsDetailState extends State<NewsDetail> {
                     width: 16,
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/comment');
+                    },
                     child: const Text(
                       'Tambahkan Komentar',
                       style: TextStyle(

@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class keluar extends StatelessWidget {
@@ -11,7 +12,7 @@ class keluar extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10, right: 20),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.deepOrangeAccent,
+          color: Color(0xFFEC7B73),
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
@@ -29,7 +30,10 @@ class keluar extends StatelessWidget {
               style: TextStyle(fontSize: 18, color: Colors.white),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => LoginPage()));
+          },
         ),
       ),
     );
