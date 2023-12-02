@@ -20,7 +20,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: Column(
               children: [
                 Column(
-                  children: [
+                  children: const [
                     Text(
                       'Bantu kami',
                       textAlign: TextAlign.center,

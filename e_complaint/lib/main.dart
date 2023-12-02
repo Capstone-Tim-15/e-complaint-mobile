@@ -6,6 +6,7 @@ import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
+import 'package:e_complaint/views/Home/click_comment.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 
 // import 'package:e_complaint/views/Home/home_screen.dart';
@@ -103,6 +104,9 @@ class MyApp extends StatelessWidget {
             );
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
+          case '/comment':
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/profile':
             return MaterialPageRoute(
                 builder: (context) => UserProfilePage(
@@ -116,6 +120,9 @@ class MyApp extends StatelessWidget {
           case '/chatbot':
             return MaterialPageRoute(
                 builder: (context) => const ChatBotScreen());
+          case '/comment':
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => const AddComplaint(

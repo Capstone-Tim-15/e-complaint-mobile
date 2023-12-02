@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -12,7 +13,19 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   bool _obscure = true;
   bool _obscureConfirm = true;
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController konfirmasipasController = TextEditingController();
   final _formKey = GlobalKey<FormState>(); // Tambahkan ini
+  final Dio _dio = Dio();
+  Future<Response> login(String password, String konfirmasiPassword) {
+    return _dio.put(
+      '34.128.69.15:8000/user/reset-password', // Sesuaikan dengan skema URL yang benar
+      data: {
+        'newPassword': password,
+        'confirmNewPassword': konfirmasiPassword,
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
