@@ -126,6 +126,7 @@ class HalamanDaftar extends StatelessWidget {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: conpassword,
+                  obscureText: registrationProvider.obscureTextkonKataSandi,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Konfirmasi Kata Sandi",
@@ -134,7 +135,7 @@ class HalamanDaftar extends StatelessWidget {
                         registrationProvider.togglePasswordVisibility();
                       },
                       icon: Icon(
-                        registrationProvider.obscureTextKataSandi
+                        registrationProvider.obscureTextkonKataSandi
                             ? Icons.visibility_off
                             : Icons.visibility,
                       ),

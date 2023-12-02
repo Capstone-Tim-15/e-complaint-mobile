@@ -21,7 +21,6 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.1.0 <4.0.0"
 
-
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
@@ -43,19 +42,26 @@ dependencies:
   shared_preferences: ^2.2.2
   image_picker: ^1.0.4
   file_picker: ^6.1.1
-  iconify_flutter: ^0.0.5
   envied: ^0.5.1
   envied_generator: ^0.5.1
   build_runner: ^2.4.6
   http: ^1.1.0
   flutter_chat_bubble: ^2.0.2
-  video_player: ^2.8.1
   another_flutter_splash_screen: ^1.2.0
   flutter_native_splash: ^2.3.5
   smooth_page_indicator: ^1.1.0
+  faker: ^2.1.0
+  flutter_svg: ^1.1.5
+  dropdown_search: ^5.0.6
+
+  sqflite: ^2.3.0
+  path: ^1.8.3
+
   persistent_bottom_nav_bar: ^5.0.2
   gap: ^3.0.1
-
+  video_player: ^2.8.1
+  indexed: ^0.0.8
+  iconify_flutter: ^0.0.5
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/icon_chatbot.png
     - assets\image\jk.jpeg
     - assets\image\loc.png
   #   - images/a_dot_ham.jpeg

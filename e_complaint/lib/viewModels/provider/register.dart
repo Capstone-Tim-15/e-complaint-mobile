@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class RegistrationProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   bool obscureTextKataSandi = true;
+  bool obscureTextkonKataSandi = true;
 
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -38,6 +39,7 @@ class RegistrationProvider extends ChangeNotifier {
 
   void togglePasswordVisibility() {
     obscureTextKataSandi = !obscureTextKataSandi;
+    obscureTextkonKataSandi = !obscureTextkonKataSandi;
     notifyListeners();
   }
 

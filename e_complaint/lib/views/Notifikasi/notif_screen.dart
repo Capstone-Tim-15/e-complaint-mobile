@@ -19,7 +19,6 @@ class Notifikasi extends StatelessWidget {
               color: Colors.red, fontSize: 18, fontWeight: FontWeight.w500),
         ),
       ),
-      bottomNavigationBar: BottomNavigation(),
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Column(

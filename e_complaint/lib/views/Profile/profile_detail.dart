@@ -31,7 +31,22 @@ class _ProfiledetailState extends State<Profiledetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Detail'),
+        title: Text('Profile Detail'),
+        backgroundColor:
+            Colors.white, // Mengatur warna background AppBar menjadi putih
+        iconTheme: IconThemeData(color: Colors.orange),
+        toolbarTextStyle: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black, // Mengatur warna teks title menjadi hitam
+            fontSize: 18.0, // Mengatur ukuran teks title
+          ),
+        ).bodyText2,
+        titleTextStyle: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black, // Mengatur warna teks title menjadi hitam
+            fontSize: 18.0, // Mengatur ukuran teks title
+          ),
+        ).headline6,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -175,86 +190,6 @@ class _ProfiledetailState extends State<Profiledetail> {
             ),
           ),
           const Divider(color: Colors.black),
-          //jenis
-          Container(
-            height: 45,
-            padding:
-                const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Jenis Kelamin",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Jenis",
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      SizedBox(
-                        child: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(color: Colors.black),
-          //tgl lahir
-          Container(
-            height: 45,
-            padding:
-                const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Tanggal Lahir",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Tanggal",
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      // Gap(5),
-                      SizedBox(
-                        child: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(color: Colors.black),
           //no hp
           Container(
             height: 45,
@@ -335,46 +270,6 @@ class _ProfiledetailState extends State<Profiledetail> {
             ),
           ),
           const Divider(color: Colors.black),
-          //alamat (jadi header)
-          Container(
-            height: 45,
-            padding:
-                const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: const Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Alamat",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(color: Colors.black),
-          //alamat
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: 16, top: 10, right: 16),
-            child: const Text(
-              "Alamat",
-              style: TextStyle(
-                fontFamily: "Nunito",
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          )
         ],
       ),
     );

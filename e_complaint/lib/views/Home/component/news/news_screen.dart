@@ -1,6 +1,7 @@
 import 'package:e_complaint/views/Home/news_detail_screen.dart';
 import 'package:flutter/material.dart';
 
+
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
 
@@ -13,10 +14,12 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+      
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
             builder: (_) => const NewsDetail(),
           ),
+
         );
       },
       child: Container(
