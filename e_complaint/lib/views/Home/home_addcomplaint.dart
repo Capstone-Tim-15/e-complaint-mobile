@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/views/Home/addcomplaint_location.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../models/complaint.dart';
 // import 'package:video_player/video_player.dart';
 
 class AddComplaint extends StatefulWidget {
@@ -23,6 +26,9 @@ class AddComplaint extends StatefulWidget {
 }
 
 class _AddComplaintState extends State<AddComplaint> {
+  TextEditingController complaintTextFieldController = TextEditingController();
+  TextEditingController contentTextFieldController = TextEditingController();
+
   bool isJalanSelected = false;
   // Daftar kategori keluhan
   List<CategoryName> category = [
@@ -59,6 +65,36 @@ class _AddComplaintState extends State<AddComplaint> {
     });
   }
 
+  void postComplaint(Complaint newComplaint) async {
+    try {
+      final Dio dio = Dio();
+
+      final response = await dio.post(
+        'https://34.128.69.15:8000/complaint', // Replace with your actual API endpoint
+        data: {
+          'title': newComplaint.title,
+          'content': newComplaint.content,
+          'category_id': newComplaint.categoryId,
+          'attachment': newComplaint.attachment,
+          'status': newComplaint.status
+          // Add other complaint attributes as needed
+        },
+        options: Options(
+          headers: {
+            'Authorization':
+                'Bearer your_access_token', // Add your authorization header if needed
+          },
+        ),
+      );
+
+      // Handle the response as needed
+      print(response.data);
+    } catch (e) {
+      // Handle errors
+      print('Error posting complaint: $e');
+    }
+  }
+
   // Fungsi untuk memilih gambar dari galeri
   Future<void> _pickImage(ImageSource source) async {
     try {
@@ -84,7 +120,7 @@ class _AddComplaintState extends State<AddComplaint> {
       );
       if (pickedFile != null) {
         _videoPlayerController =
-            VideoPlayerController.file(File(pickedFile.path!))
+            VideoPlayerController.file(File(pickedFile.path))
               ..initialize().then((_) {
                 setState(() {});
                 _videoPlayerController!.play();
@@ -162,6 +198,7 @@ class _AddComplaintState extends State<AddComplaint> {
                 TextField(
                   maxLines: 3,
                   cursorColor: Colors.red,
+                  controller: complaintTextFieldController,
                   decoration: InputDecoration(
                     hintText: 'Tulis keluhan anda...',
                     hintStyle: TextStyle(
@@ -319,17 +356,15 @@ class _AddComplaintState extends State<AddComplaint> {
                           complaintProvider.selectedLocation,
                           style: TextStyle(
                             color: textColor,
-                           
                           ),
                         ),
                       ),
                       Visibility(
                         visible: isJalanSelected,
                         child: Text(
-                          '${widget.selectedLocation2 ?? ''}, ${widget.selectedLocation ?? ''}',
+                          '${widget.selectedLocation2}, ${widget.selectedLocation}',
                           style: TextStyle(
                             color: textColor,
-                           
                           ),
                         ),
                       ),
@@ -401,6 +436,36 @@ class _AddComplaintState extends State<AddComplaint> {
                   child: ElevatedButton(
                     onPressed: () {
                       // Logika yang dijalankan saat tombol ditekan.
+                      // Membuat objek Complaint dengan nilai dari formulir
+                         Complaint newComplaint = Complaint(
+                        categoryId: selectedValue?.id?.toString() ?? '0',
+
+                        title: complaintTextFieldController
+                            .text, // Ganti dengan controller baru
+                        status: "Null",
+                        content: contentTextFieldController
+                            .text, // Ganti dengan controller baru
+                        attachment: _imageFile?.path ?? '',
+                      );
+
+                      // Sekarang Anda dapat menggunakan objek newComplaint sesuai kebutuhan
+                      // Contoh: complaintProvider.postComplaint(newComplaint);
+
+                      // Reset formulir setelah posting
+                      complaintTextFieldController
+                          .clear(); // Ganti dengan controller baru
+                      contentTextFieldController
+                          .clear(); // Ganti dengan controller baru
+                      setState(() {
+                        _imageFile = null;
+                        _imageName = null;
+                        _videoPlayerController?.dispose();
+                        _videoPlayerController = null;
+                        _videoPath = null;
+                        _videoName = null;
+                        selectedValue = null;
+                        isJalanSelected = false;
+                      });
                     },
                     child: const Text(
                       'Posting',
