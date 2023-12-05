@@ -50,7 +50,9 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                 iconSize: 25,
                 icon: const Icon(Icons.arrow_back),
                 color: const Color.fromARGB(255, 255, 0, 0),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
               ),
               const Text(
                 "Riwayat Pengaduan",
@@ -73,9 +75,6 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: const Row(
@@ -101,9 +100,9 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                         TabBar(
                           isScrollable: true,
                           labelPadding:
-                              const EdgeInsets.symmetric(horizontal: 8),
+                              const EdgeInsets.symmetric(horizontal: 100),
                           controller: _controller,
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           indicatorColor: Colors.blue,
                           unselectedLabelColor: Colors.black,
                           labelColor: Colors.black,
