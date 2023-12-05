@@ -1,6 +1,6 @@
 import 'package:e_complaint/models/chat_message.dart';
 import 'package:e_complaint/viewModels/services/chatbot.dart';
-import 'package:e_complaint/views/Chatbot/constants.dart';
+import 'package:e_complaint/views/Chatbot/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -198,11 +198,12 @@ class _ChatbotBodyState extends State<ChatbotBody> {
     });
 
     try {
-      final result = await ChatbotService.getAnswer(
+      final result = await ChatbotService.getRecommendation(
         question: _controller.value.text,
       );
       setState(() {
-        chatMessage.add(ChatMessage(text: result.choices[0].text, isSender: false));
+        chatMessage
+            .add(ChatMessage(text: result.results.recommendation, isSender: false));
         isLoading = false;
       });
     } catch (e) {
