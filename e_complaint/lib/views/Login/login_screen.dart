@@ -34,6 +34,11 @@ class _LoginPageState extends State<LoginPage> {
     await prefs.setString('token', token);
   }
 
+  Future<void> saveName(String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -221,9 +226,12 @@ class _LoginPageState extends State<LoginPage> {
                                   String? token =
                                       responseData['results']['token'];
 
-                                  if (token != null) {
+                                  String? name =
+                                      responseData['results']['name'];
+                                  if (token != null && name != null) {
                                     // Save token to Shared Preferences
                                     await saveToken(token);
+                                    await saveName(name);
 
                                     // Navigate to the home page and remove all previous routes
                                     Navigator.pushAndRemoveUntil(

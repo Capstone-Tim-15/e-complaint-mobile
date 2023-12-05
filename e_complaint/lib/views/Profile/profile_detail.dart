@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profiledetail extends StatefulWidget {
   const Profiledetail({super.key});
@@ -11,6 +12,28 @@ class Profiledetail extends StatefulWidget {
 class _ProfiledetailState extends State<Profiledetail> {
   String coverImagePath = 'assets/images/news_image.jpg';
   String profileImagePath = 'assets/images/user.png';
+
+  late String name = '';
+  late String email = '';
+  late String phone = '';
+  late String imageUrl = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile();
+  }
+
+Future<void> getProfile() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  setState(() {
+    name = prefs.getString('name') ?? '';
+    email = prefs.getString('email') ?? '';
+    phone = prefs.getString('phone') ?? '';
+    imageUrl = prefs.getString('imageUrl') ?? '';
+  });
+}
+
 
   Future<void> _pickImage(ImageSource source, bool isCoverImage) async {
     final picker = ImagePicker();
@@ -131,7 +154,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                 Row(
                   children: [
                     Text(
-                      "Nama",
+                      name,
                       style: TextStyle(
                         fontFamily: "Nunito",
                         fontSize: 16,
@@ -210,7 +233,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                   Row(
                     children: [
                       Text(
-                        "Nomor",
+                        phone,
                         style: TextStyle(
                           fontFamily: "Nunito",
                           fontSize: 16,
@@ -250,7 +273,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                   Row(
                     children: [
                       Text(
-                        "Email",
+                        email,
                         style: TextStyle(
                           fontFamily: "Nunito",
                           fontSize: 16,
