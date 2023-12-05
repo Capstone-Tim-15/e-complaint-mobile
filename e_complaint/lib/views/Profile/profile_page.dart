@@ -5,12 +5,60 @@ import 'package:e_complaint/views/widget/keluar_widget.dart';
 import 'package:e_complaint/views/widget/profile_image_widget.dart';
 import 'package:e_complaint/views/widget/status_pengaduan_widget.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class UserProfilePage extends StatelessWidget {
-  final UserProfile user;
+import '../../viewModels/provider/profile.dart';
 
-  UserProfilePage({required this.user});
+class UserProfilePage extends StatefulWidget {
+  @override
+  _UserProfilePageState createState() => _UserProfilePageState();
+}
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  UserProfile? user; // Change UserProfile to be nullable
+  late String userName;
+  final ProfileProvider _profileProvider = ProfileProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserProfile();
+  }
+
+  Future<void> saveProfile(
+      String name, String email, String phone, String imageUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', name);
+    await prefs.setString('email', email);
+    await prefs.setString('phone', phone);
+    await prefs.setString('imageUrl', imageUrl);
+  }
+
+  Future<void> fetchUserProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userName = prefs.getString('name') ?? '';
+    String jwt = prefs.getString('token') ?? '';
+
+    try {
+      Map<String, dynamic> userData =
+          await _profileProvider.getUserByName(userName, jwt);
+
+      setState(() {
+        user = UserProfile(
+          name: userData['results']['name'],
+          profileImageUrl: userData['results']['imageUrl'] ?? '',
+          coverImageUrl: userData['results']['coverImageUrl'] ?? '',
+          email: userData['results']['email'] ?? '',
+          phoneNumber: userData['results']['phone'] ?? '',
+        );
+        this.userName = userName;
+        saveProfile(
+            user!.name, user!.email, user!.phoneNumber, user!.profileImageUrl);
+      });
+    } catch (error) {
+      print('Error fetching user profile: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +67,10 @@ class UserProfilePage extends StatelessWidget {
         title: Text(
           'Profil',
           style: TextStyle(
-              color: Colors.deepOrangeAccent,
-              fontSize: 32,
-              fontWeight: FontWeight.bold),
+            color: Colors.deepOrangeAccent,
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 1,
@@ -37,7 +86,7 @@ class UserProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            profile_image_widget(user: user),
+            if (user != null) ProfileImageWidget(user: user!),
             SizedBox(
               height: 10,
             ),

@@ -1,12 +1,11 @@
 import 'package:e_complaint/models/user_profile.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_profil_page/src/models/user_profile.dart';
 
-class Card_Contact extends StatelessWidget {
-  const Card_Contact({
-    super.key,
+class CardContact extends StatelessWidget {
+  const CardContact({
+    Key? key,
     required this.user,
-  });
+  }) : super(key: key);
 
   final UserProfile user;
 
@@ -20,9 +19,7 @@ class Card_Contact extends StatelessWidget {
             height: 206,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
+              borderRadius: BorderRadius.circular(12.0),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -40,7 +37,7 @@ class Card_Contact extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    'Jelita Salsabila',
+                    user.name,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

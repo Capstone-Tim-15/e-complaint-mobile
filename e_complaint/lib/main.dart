@@ -108,10 +108,7 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
                 builder: (context) => FullScreenCommentPage());
           case '/profile':
-            return MaterialPageRoute(
-                builder: (context) => UserProfilePage(
-                      user: user,
-                    ));
+            return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
             return MaterialPageRoute(builder: (context) => Profiledetail());
           case '/riwayat-pengaduan':

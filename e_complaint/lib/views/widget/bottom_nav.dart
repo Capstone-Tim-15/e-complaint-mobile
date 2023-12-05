@@ -7,6 +7,7 @@ import 'package:e_complaint/views/Search/search_kategori_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -16,16 +17,9 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final UserProfile user = UserProfile(
-    name: 'Jelita Salsabila',
-    profileImageUrl:
-        'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
-    coverImageUrl:
-        'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
-    email: 'JelitaS@gmail.com',
-    phoneNumber: '080987278935',
-  );
+
   int currentPageIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +83,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         HomePage(),
         SearchPage(),
         Notifikasi(),
-        UserProfilePage(user: user),
+        UserProfilePage(),
       ][currentPageIndex],
     );
   }
