@@ -13,40 +13,39 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 255, 219, 207),
         title: Container(
           padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
-          child: SafeArea(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 12,
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/circle_avatar.png',
-                      fit: BoxFit.cover,
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                ),
-                const Text(
-                  'GOV-Complaint',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Nunito',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/chatbot');
-                  },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 12,
+                child: ClipOval(
                   child: Image.asset(
-                    'assets/icons/icon_chatbot.png',
+                    'assets/images/circle_avatar.png',
+                    fit: BoxFit.cover,
+                    width: 24,
+                    height: 24,
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              const Text(
+                'GOV-Complaint',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Nunito',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/chatbot');
+                },
+                child: Image.asset(
+                  'assets/icons/icon_chatbot.png',
+                ),
+              )
+            ],
           ),
         ),
       ),
