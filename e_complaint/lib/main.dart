@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/',
+      initialRoute: '/riwayat-pengaduan',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':

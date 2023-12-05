@@ -16,7 +16,7 @@ class CardContact extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Container(
-            height: 206,
+            height: 226,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12.0),
@@ -71,7 +71,7 @@ class CardContact extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 7, right: 45, left: 45),
                   child: Container(
-                    color: Colors.deepOrangeAccent,
+                    color: Colors.grey.withOpacity(0.5),
                     height: 2,
                   ),
                 ),
@@ -85,7 +85,7 @@ class CardContact extends StatelessWidget {
                     style: TextStyle(color: Colors.deepOrangeAccent),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 100),
               ],
             ),
           ),
