@@ -40,7 +40,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
             padding: const EdgeInsets.all(kDefaultPadding),
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: chatMessage.length + recommendedQuestions.length,
+              itemCount: chatbotMessage.length + recommendedQuestions.length,
               itemBuilder: (context, index) {
                 if (index < recommendedQuestions.length) {
                   return Padding(
@@ -82,11 +82,11 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: chatMessage[chatIndex].isSender
+                        mainAxisAlignment: chatbotMessage[chatIndex].isSender
                             ? MainAxisAlignment.end
                             : MainAxisAlignment.start,
                         children: [
-                          if (!chatMessage[chatIndex].isSender)
+                          if (!chatbotMessage[chatIndex].isSender)
                             Container(
                               width: 50,
                               height: 50,
@@ -108,28 +108,28 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                             ),
                           Expanded(
                             child: ChatBubble(
-                              backGroundColor: chatMessage[chatIndex].isSender
+                              backGroundColor: chatbotMessage[chatIndex].isSender
                                   ? kPrimaryColor
                                   : Colors.white,
-                              alignment: chatMessage[chatIndex].isSender
+                              alignment: chatbotMessage[chatIndex].isSender
                                   ? Alignment.topRight
                                   : Alignment.topLeft,
                               clipper: ChatBubbleClipper1(
-                                type: chatMessage[chatIndex].isSender
+                                type: chatbotMessage[chatIndex].isSender
                                     ? BubbleType.sendBubble
                                     : BubbleType.receiverBubble,
                               ),
                               child: Text(
-                                chatMessage[chatIndex].text,
+                                chatbotMessage[chatIndex].text,
                                 style: TextStyle(
-                                  color: chatMessage[chatIndex].isSender
+                                  color: chatbotMessage[chatIndex].isSender
                                       ? Colors.white
                                       : Colors.black,
                                 ),
                               ),
                             ),
                           ),
-                          if (chatMessage[chatIndex].isSender)
+                          if (chatbotMessage[chatIndex].isSender)
                             Container(
                               width: 50,
                               height: 50,
@@ -177,8 +177,8 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                   ),
                   onPressed: () {
                     setState(() {
-                      chatMessage
-                          .add(ChatMessage(text: _controller.text, isSender: true));
+                      chatbotMessage.add(
+                          ChatBotMessage(text: _controller.text, isSender: true));
                       _getRecommendation();
                       _controller.clear();
                     });
@@ -202,8 +202,8 @@ class _ChatbotBodyState extends State<ChatbotBody> {
         question: _controller.value.text,
       );
       setState(() {
-        chatMessage
-            .add(ChatMessage(text: result.results.recommendation, isSender: false));
+        chatbotMessage.add(
+            ChatBotMessage(text: result.results.recommendation, isSender: false));
         isLoading = false;
       });
     } catch (e) {
