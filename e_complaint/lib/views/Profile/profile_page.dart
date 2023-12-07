@@ -64,7 +64,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Profil',
           style: TextStyle(
             color: Colors.deepOrangeAccent,
@@ -87,23 +87,23 @@ class _UserProfilePageState extends State<UserProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (user != null) ProfileImageWidget(user: user!),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            arsip_berita(),
-            SizedBox(
+            const arsip_berita(),
+            const SizedBox(
               height: 20,
             ),
-            status_pengaduan(),
-            SizedBox(
+            const status_pengaduan(),
+            const SizedBox(
               height: 30,
             ),
-            faq(),
-            SizedBox(
+            const faq(),
+            const SizedBox(
               height: 20,
             ),
-            keluar(),
-            SizedBox(
+            const keluar(),
+            const SizedBox(
               height: 15,
             ),
           ],

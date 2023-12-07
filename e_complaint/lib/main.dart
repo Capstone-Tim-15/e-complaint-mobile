@@ -69,13 +69,11 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(
-                builder: (context) => const OnboardingScreen());
+            return MaterialPageRoute(builder: (context) => const LoginPage());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
-            return MaterialPageRoute(
-                builder: (context) => const HalamanDaftar());
+            return MaterialPageRoute(builder: (context) => const HalamanDaftar());
           case '/forgotpwd':
             return MaterialPageRoute(builder: (context) => ForgotPassword());
           case '/resetpwd':
@@ -105,21 +103,17 @@ class MyApp extends StatelessWidget {
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
-            return MaterialPageRoute(
-                builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
             return MaterialPageRoute(builder: (context) => Profiledetail());
           case '/riwayat-pengaduan':
-            return MaterialPageRoute(
-                builder: (context) => riwayat_pengaduan_page());
+            return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
-            return MaterialPageRoute(
-                builder: (context) => const ChatBotScreen());
+            return MaterialPageRoute(builder: (context) => const ChatBotScreen());
           case '/comment':
-            return MaterialPageRoute(
-                builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => const AddComplaint(

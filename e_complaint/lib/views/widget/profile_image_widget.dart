@@ -54,8 +54,9 @@ class ProfileImageWidget extends StatelessWidget {
                             child: Center(
                               child: CircleAvatar(
                                 radius: 50,
+                                // ignore: unnecessary_null_comparison
                                 backgroundImage: user.profileImageUrl != null
-                                    ? NetworkImage(user.profileImageUrl!)
+                                    ? NetworkImage(user.profileImageUrl)
                                     : null,
                               ),
                             ),
