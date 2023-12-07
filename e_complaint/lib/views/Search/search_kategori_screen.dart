@@ -33,8 +33,7 @@ class _SearchPageState extends State<SearchPage> {
     {
       'image': 'assets/images/news2.png',
       'source': 'Source: suarabatam.id',
-      'title':
-          'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
+      'title': 'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
     },
   ];
 
@@ -105,47 +104,49 @@ class _SearchPageState extends State<SearchPage> {
                     child: Indexed(
                       index: 1,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 50.0, top: 33),
-                        child: Container(
-                          width: 360,
-                          height: 180,
-                          padding: const EdgeInsets.only(left: 8.0, right: 8),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            border: Border(
-                              bottom: BorderSide(color: Colors.red),
-                              left: BorderSide(color: Colors.red),
-                              right: BorderSide(color: Colors.red),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              const Divider(),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: searchHistory.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(searchHistory[index]),
-                                        InkWell(
-                                          child: const Text(
-                                            'Hapus',
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                          onTap: () {},
-                                        )
-                                      ],
-                                    ),
-                                    onTap: () {},
-                                  );
-                                },
+                        padding: const EdgeInsets.only(top: 34.0),
+                        child: Center(
+                          child: Container(
+                            width: 360,
+                            height: 180,
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                bottom: BorderSide(color: Colors.red),
+                                left: BorderSide(color: Colors.red),
+                                right: BorderSide(color: Colors.red),
                               ),
-                            ],
+                            ),
+                            child: Column(
+                              children: [
+                                const Divider(),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: searchHistory.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(searchHistory[index]),
+                                          InkWell(
+                                            child: const Text(
+                                              'Hapus',
+                                              style: TextStyle(color: Colors.red),
+                                            ),
+                                            onTap: () {},
+                                          )
+                                        ],
+                                      ),
+                                      onTap: () {},
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -299,8 +300,7 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, bottom: 8),
+                            padding: const EdgeInsets.only(left: 8.0, bottom: 8),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(

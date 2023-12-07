@@ -11,84 +11,81 @@ class CardContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Container(
-            height: 226,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Container(
+        height: 210,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 18,
-                ),
-                Center(
-                  child: Text(
-                    user.name,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30, left: 30),
-                  child: Container(
-                    color: Colors.black,
-                    height: 1,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                buildInfoRow('Email', user.email),
-                SizedBox(
-                  height: 10,
-                ),
-                buildInfoRow('Telephone', user.phoneNumber),
-                SizedBox(
-                  height: 25,
-                ),
-                Center(
-                  child: Text("Halo"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 7, right: 45, left: 45),
-                  child: Container(
-                    color: Colors.grey.withOpacity(0.5),
-                    height: 2,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/profile-detail');
-                  },
-                  child: Text(
-                    "Lihat detail profil",
-                    style: TextStyle(color: Colors.deepOrangeAccent),
-                  ),
-                ),
-                SizedBox(height: 100),
-              ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 18,
             ),
-          ),
+            Center(
+              child: Text(
+                user.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 30, left: 30),
+              child: Container(
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            buildInfoRow('Email', user.email),
+            const SizedBox(
+              height: 10,
+            ),
+            buildInfoRow('Telephone', user.phoneNumber),
+            const SizedBox(
+              height: 25,
+            ),
+            const Center(
+              child: Text("Halo"),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 45, left: 45),
+              child: Container(
+                color: Colors.grey.withOpacity(0.5),
+                height: 2,
+              ),
+            ),
+            const SizedBox(height: 10),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/profile-detail');
+                },
+                child: const Text(
+                  "Lihat detail profil",
+                  style: TextStyle(color: Colors.deepOrangeAccent),
+                ))
+          ],
         ),
       ),
     );
@@ -98,31 +95,27 @@ class CardContact extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  '$label',
-                  style: TextStyle(fontSize: 16),
-                ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                label,
+                style: const TextStyle(fontSize: 16),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Center(
-                child: Text(
-                  value,
-                  style: TextStyle(fontSize: 16),
-                ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Center(
+              child: Text(
+                value,
+                style: const TextStyle(fontSize: 16),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
