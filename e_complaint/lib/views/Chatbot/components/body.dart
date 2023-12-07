@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatbotBody extends StatefulWidget {
   const ChatbotBody({Key? key}) : super(key: key);
@@ -25,10 +26,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
     'Chat dengan CS GOV Complaints',
   ];
 
-  @override
-  void initState() {
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -197,9 +195,13 @@ class _ChatbotBodyState extends State<ChatbotBody> {
       isLoading = true;
     });
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwtToken = prefs.getString('token') ?? '';
+
     try {
       final result = await ChatbotService.getRecommendation(
         question: _controller.value.text,
+        jwt: jwtToken
       );
       setState(() {
         chatbotMessage.add(

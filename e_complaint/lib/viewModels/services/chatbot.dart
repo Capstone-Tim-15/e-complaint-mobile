@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:e_complaint/models/openai.dart';
-import 'package:e_complaint/views/Chatbot/components/constants.dart';
 import 'package:http/http.dart' as http;
 
 class ChatbotService {
   static Future<AiModel> getRecommendation({
     required String question,
+    required String jwt,
   }) async {
     late AiModel aiData = AiModel(
       meta: Meta(success: true, message: ""),
@@ -21,13 +21,10 @@ class ChatbotService {
 
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        // BEARER MASI PERLU DIUBAH
-        "Authorization": "Bearer "
+        "Authorization": "Bearer $jwt"
       };
 
-      final data = jsonEncode({
-       "message": question
-      });
+      final data = jsonEncode({"message": question});
 
       var response = await http.post(
         url,
