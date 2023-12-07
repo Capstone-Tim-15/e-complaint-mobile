@@ -17,7 +17,7 @@ class ChatbotService {
     );
 
     try {
-      var url = Uri.parse('https://api.openai.com/v1/chat/completions');
+      var url = Uri.parse('https://api.govcomplain.my.id/ai');
 
       Map<String, String> headers = {
         "Content-Type": "application/json",
