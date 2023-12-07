@@ -12,7 +12,7 @@ class Complaint {
     required this.content,
     required this.attachment,
   });
-
+  
   // Metode untuk mengonversi objek ke map untuk dikirim sebagai formulir
   Map<String, dynamic> toMap() {
     return {
