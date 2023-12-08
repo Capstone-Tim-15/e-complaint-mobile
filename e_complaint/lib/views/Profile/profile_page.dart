@@ -37,7 +37,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Future<void> fetchUserProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userName = prefs.getString('name') ?? '';
-    String jwt = prefs.getString('token') ?? '';
+    String jwt = prefs.getString('bearerToken') ?? '';
 
     try {
       Map<String, dynamic> userData =
