@@ -25,9 +25,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
     fetchUserProfile();
   }
 
-  Future<void> saveProfile(
-      String name, String email, String phone, String imageUrl) async {
+  Future<void> saveProfile(String id, String username, String name, String email,
+      String phone, String imageUrl) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('id', id);
+    await prefs.setString('username', username);
     await prefs.setString('name', name);
     await prefs.setString('email', email);
     await prefs.setString('phone', phone);
@@ -45,6 +47,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
       setState(() {
         user = UserProfile(
+          id: userData['results']['id'],
+          username: userData['results']['username'],
           name: userData['results']['name'],
           profileImageUrl: userData['results']['imageUrl'] ?? '',
           coverImageUrl: userData['results']['coverImageUrl'] ?? '',
@@ -53,7 +57,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
         );
         this.userName = userName;
         saveProfile(
-            user!.name, user!.email, user!.phoneNumber, user!.profileImageUrl);
+          user!.id,
+          user!.username,
+          user!.name,
+          user!.email,
+          user!.phoneNumber,
+          user!.profileImageUrl,
+        );
       });
     } catch (error) {
       print('Error fetching user profile: $error');
