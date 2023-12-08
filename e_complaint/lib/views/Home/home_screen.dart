@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(child: NewsScreen()),
+      body: NewsScreen(),
       floatingActionButton: Material(
         elevation: 4,
         color: Colors.transparent,
