@@ -27,12 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'E-Complaint',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
-        // useMaterial3: true,
-      ),
+     
       initialRoute: '/',
       routes: {
         '/': (context) => const OnboardingScreen(), // Route awal
