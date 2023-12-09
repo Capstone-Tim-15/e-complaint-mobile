@@ -2,7 +2,7 @@
 
 import 'package:e_complaint/models/user_profile.dart';
 import 'package:e_complaint/viewModels/news_view_model.dart';
-import 'package:e_complaint/viewModels/provider/complaint.dart';
+// import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
@@ -41,7 +41,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
+        //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
         ChangeNotifierProvider(
           create: (_) => NewsViewModel(),
         ),
