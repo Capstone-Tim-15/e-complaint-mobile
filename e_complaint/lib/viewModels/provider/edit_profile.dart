@@ -18,13 +18,7 @@ class EditUserProvider with ChangeNotifier {
     String token,
     String password,
   ) async {
-    print('User ID: $userId');
-    print('User Name: $userName');
-    print('New Name: $newName');
-    print('New Phone Number: $newphoneNumber');
-    print('New Email: $newEmail');
-    print('Token: $token');
-    print('Token: ${passwordCtrl.text}');
+    
 
     String url = 'https://api.govcomplain.my.id/user/$userId';
     Map<String, dynamic> headers = {

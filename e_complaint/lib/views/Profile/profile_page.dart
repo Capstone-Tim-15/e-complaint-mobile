@@ -34,6 +34,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
     await prefs.setString('email', email);
     await prefs.setString('phone', phone);
     await prefs.setString('imageUrl', imageUrl);
+
+    // prefs.getKeys().forEach((key) {
+    //   print('$key: ${prefs.get(key)}');
+    // });
   }
 
   Future<void> fetchUserProfile() async {
@@ -65,6 +69,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
           user!.profileImageUrl,
         );
       });
+      prefs.getKeys().forEach((key) {
+        print('$key: ${prefs.get(key)}');
+      });
     } catch (error) {
       print('Error fetching user profile: $error');
     }
@@ -84,7 +91,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
         ),
         backgroundColor: Colors.white,
         elevation: 1,
-        iconTheme: IconThemeData(color: Colors.blue),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.amber,
+          ), // Replace with your desired icon
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.0),
           child: Container(

@@ -1,4 +1,8 @@
+import 'package:e_complaint/models/user_profile.dart';
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
+import 'package:e_complaint/viewModels/provider/profile_id.dart';
+import 'package:e_complaint/views/Profile/profile_edit_success.dart';
+import 'package:e_complaint/views/Profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +16,9 @@ class Profiledetail extends StatefulWidget {
 }
 
 class _ProfiledetailState extends State<Profiledetail> {
+  final ProfileIdProvider _profileIdProvider = ProfileIdProvider();
+  UserProfile? user; // Change UserProfile to be nullable
+  late String userName;
   late final EditUserProvider editUserProvider;
   String coverImagePath = 'assets/images/news_image.jpg';
   String profileImagePath = 'assets/images/user.png';
@@ -27,7 +34,7 @@ class _ProfiledetailState extends State<Profiledetail> {
   void initState() {
     super.initState();
     editUserProvider = context.read<EditUserProvider>();
-    getProfile();
+    fetchUserProfile();
   }
 
   Future<void> getProfile() async {
@@ -63,208 +70,222 @@ class _ProfiledetailState extends State<Profiledetail> {
       appBar: AppBar(
         title: const Text('Profile Detail'),
         backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.orange),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.amber,
+          ), // Replace with your desired icon
+          onPressed: () {
+            Navigator.pushNamed(context, '/profile');
+          },
+        ),
         toolbarTextStyle: const TextTheme(
           titleLarge: TextStyle(
-            color: Colors.black,
+            color: Colors.grey,
             fontSize: 18.0,
           ),
         ).bodyMedium,
         titleTextStyle: const TextTheme(
           titleLarge: TextStyle(
-            color: Colors.black,
+            color: Colors.grey,
             fontSize: 18.0,
           ),
         ).titleLarge,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          // image
-          SizedBox(
-            width: double.infinity,
-            height: 239,
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    _pickImage(ImageSource.gallery, true);
-                    print("Cover image ditekan, ubah gambar jika diperlukan");
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.grey,
-                      image: DecorationImage(
-                        image: AssetImage(coverImagePath),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _pickImage(ImageSource.gallery, false);
-                    print("Profile image ditekan, ubah gambar jika diperlukan");
-                  },
-                  child: Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      image: DecorationImage(
-                        image: AssetImage(profileImagePath),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    height: 18,
-                    width: 5000,
-                    alignment: Alignment.bottomCenter,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                    child: const Text(
-                      "Tekan untuk ubah",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          // nama
-          Container(
-            height: 45,
-            padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const Text(
-                  "Nama Lengkap",
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(color: Colors.black),
-          //bio
-          Container(
-            height: 45,
-            padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            // image
+            SizedBox(
+              width: double.infinity,
+              height: 239,
+              child: Stack(
+                alignment: Alignment.center,
                 children: <Widget>[
-                  Text(
-                    username,
-                    style: const TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    userId,
-                    style: const TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(color: Colors.black),
-          //no hp
-          Container(
-            height: 45,
-            padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    "No. Handphone",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    phone,
-                    style: const TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(color: Colors.black),
-          //email
-          Container(
-            height: 45,
-            padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    "Email",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        email,
-                        style: const TextStyle(
-                          fontFamily: "Nunito",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                  GestureDetector(
+                    onTap: () {
+                      _pickImage(ImageSource.gallery, true);
+                      print("Cover image ditekan, ubah gambar jika diperlukan");
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Colors.grey,
+                        image: DecorationImage(
+                          image: AssetImage(coverImagePath),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _pickImage(ImageSource.gallery, false);
+                      print("Profile image ditekan, ubah gambar jika diperlukan");
+                    },
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        image: DecorationImage(
+                          image: AssetImage(profileImagePath),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      height: 18,
+                      width: 5000,
+                      alignment: Alignment.bottomCenter,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Colors.grey.withOpacity(0.5),
+                      ),
+                      child: const Text(
+                        "Tekan untuk ubah",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          const Divider(color: Colors.black),
-          ElevatedButton(
-              onPressed: () {
-                showUpdateDialog(context);
-              },
-              child: const Text('Edit'))
-        ],
+            const SizedBox(height: 10),
+            // nama
+            Container(
+              height: 45,
+              padding:
+                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  const Text(
+                    "Nama Lengkap",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(color: Colors.grey),
+            //bio
+            Container(
+              height: 45,
+              padding:
+                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      "Username",
+                      style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      username,
+                      style: const TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Divider(color: Colors.grey),
+            //no hp
+            Container(
+              height: 45,
+              padding:
+                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      "No. Handphone",
+                      style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      phone,
+                      style: const TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Divider(color: Colors.grey),
+            //email
+            Container(
+              height: 45,
+              padding:
+                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      "Email",
+                      style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          email,
+                          style: const TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Divider(color: Colors.grey),
+            ElevatedButton(
+                onPressed: () {
+                  showUpdateDialog(context);
+                },
+                child: const Text('Edit'))
+          ],
+        ),
       ),
     );
   }
@@ -273,6 +294,7 @@ class _ProfiledetailState extends State<Profiledetail> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('token') ?? '';
 
+    // ignore: use_build_context_synchronously
     final editUserProvider = Provider.of<EditUserProvider>(context, listen: false);
     editUserProvider.nameCtrl.text = name;
     editUserProvider.phoneCtrl.text = phone;
@@ -295,6 +317,12 @@ class _ProfiledetailState extends State<Profiledetail> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  const Text(
+                    "Edit Profile",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   TextFormField(
                     controller: editUserProvider.nameCtrl,
                     decoration: const InputDecoration(labelText: 'Name'),
@@ -330,6 +358,7 @@ class _ProfiledetailState extends State<Profiledetail> {
                   TextFormField(
                     controller: editUserProvider.passwordCtrl,
                     decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a password';
@@ -358,9 +387,20 @@ class _ProfiledetailState extends State<Profiledetail> {
                             String password = editUserProvider.passwordCtrl.text;
                             EditUserProvider().updateUser(userId, username, newName,
                                 newPhoneNumber, newEmail, jwt, password);
-                            Navigator.of(context).pop();
+                            prefs.remove('id');
+                            prefs.setString('name', newName);
+                            prefs.remove('username');
+                            prefs.remove('email');
+                            prefs.remove('phone');
+                            prefs.remove('imageUrl');
+                            prefs.getKeys().forEach((key) {
+                              print('$key: ${prefs.get(key)}');
+                            });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => EditSuccess()),
+                            );
                           }
-                          getProfile();
                         },
                       ),
                     ],
@@ -372,5 +412,50 @@ class _ProfiledetailState extends State<Profiledetail> {
         );
       },
     );
+  }
+
+  Future<void> saveProfile(String id, String username, String name, String email,
+      String phone, String imageUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('id', id);
+    await prefs.setString('username', username);
+    await prefs.setString('name', name);
+    await prefs.setString('email', email);
+    await prefs.setString('phone', phone);
+    await prefs.setString('imageUrl', imageUrl);
+  }
+
+  Future<void> fetchUserProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString('id') ?? '';
+    String jwt = prefs.getString('token') ?? '';
+
+    try {
+      Map<String, dynamic> userData =
+          await _profileIdProvider.getUserByName(id, jwt);
+
+      setState(() {
+        user = UserProfile(
+          id: userData['results']['id'],
+          username: userData['results']['username'],
+          name: userData['results']['name'],
+          profileImageUrl: userData['results']['imageUrl'] ?? '',
+          coverImageUrl: userData['results']['coverImageUrl'] ?? '',
+          email: userData['results']['email'] ?? '',
+          phoneNumber: userData['results']['phone'] ?? '',
+        );
+        saveProfile(
+          user!.id,
+          user!.username,
+          user!.name,
+          user!.email,
+          user!.phoneNumber,
+          user!.profileImageUrl,
+        );
+        getProfile();
+      });
+    } catch (error) {
+      print('Error fetching user profile: $error');
+    }
   }
 }
