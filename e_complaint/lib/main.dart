@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:e_complaint/models/user_profile.dart';
+
+import 'package:e_complaint/viewModels/provider/complaint.dart';
+import 'package:e_complaint/viewModels/provider/edit_profile.dart';
+
 import 'package:e_complaint/viewModels/news_view_model.dart';
-// import 'package:e_complaint/viewModels/provider/complaint.dart';
+
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
@@ -55,15 +59,17 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final UserProfile user = UserProfile(
-    name: 'Jelita Salsabila',
-    profileImageUrl:
-        'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
-    coverImageUrl:
-        'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
-    email: 'JelitaS@gmail.com',
-    phoneNumber: '080987278935',
-  );
+  // final UserProfile user = UserProfile(
+  //   id: '',
+
+  //   name: 'Jelita Salsabila',
+  //   profileImageUrl:
+  //       'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
+  //   coverImageUrl:
+  //       'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
+  //   email: 'JelitaS@gmail.com',
+  //   phoneNumber: '080987278935',
+  // );
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +122,12 @@ class MyApp extends StatelessWidget {
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
-            return MaterialPageRoute(builder: (context) => Profiledetail());
+            return MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (_) => EditUserProvider(),
+                child: const Profiledetail(),
+              ),
+            );
           case '/riwayat-pengaduan':
             return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':

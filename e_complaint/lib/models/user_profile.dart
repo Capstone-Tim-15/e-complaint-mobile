@@ -1,4 +1,7 @@
 class UserProfile {
+  final String id;
+  final String username;
+
   final String name;
   final String profileImageUrl;
   final String coverImageUrl;
@@ -6,6 +9,8 @@ class UserProfile {
   final String phoneNumber;
 
   UserProfile({
+    required this.id,
+    required this.username,
     required this.name,
     required this.profileImageUrl,
     required this.coverImageUrl,

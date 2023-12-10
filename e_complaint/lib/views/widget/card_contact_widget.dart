@@ -37,7 +37,7 @@ class CardContact extends StatelessWidget {
               child: Text(
                 user.name,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 21,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -46,7 +46,7 @@ class CardContact extends StatelessWidget {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 30, left: 30),
+              padding: const EdgeInsets.only(right: 40, left: 40),
               child: Container(
                 color: Colors.black,
                 height: 1,
@@ -61,7 +61,7 @@ class CardContact extends StatelessWidget {
             ),
             buildInfoRow('Telephone', user.phoneNumber),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             const Center(
               child: Text("Halo"),
@@ -92,32 +92,35 @@ class CardContact extends StatelessWidget {
   }
 
   Widget buildInfoRow(String label, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                label,
-                style: const TextStyle(fontSize: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  label,
+                  style: const TextStyle(fontSize: 16),
+                ),
               ),
-            ),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Center(
-              child: Text(
-                value,
-                style: const TextStyle(fontSize: 16),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Center(
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 16),
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
