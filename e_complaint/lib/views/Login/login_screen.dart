@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<Response> login(String username, String password) {
     return _dio.post(
-      'http://34.128.69.15:8000/user/login', // Sesuaikan dengan skema URL yang benar
+      'https://api.govcomplain.my.id/user/login', // Sesuaikan dengan skema URL yang benar
       data: {
         'username': username,
         'password': password,
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
+    await prefs.setString('bearerToken', token);
   }
 
   Future<void> saveName(String name) async {

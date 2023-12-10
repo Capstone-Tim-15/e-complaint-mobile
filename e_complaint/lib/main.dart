@@ -1,9 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:e_complaint/models/user_profile.dart';
+
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
+
+import 'package:e_complaint/viewModels/news_view_model.dart';
+
 import 'package:e_complaint/viewModels/provider/login.dart';
+import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
@@ -22,6 +27,7 @@ import 'package:e_complaint/views/Profile/profile_page.dart';
 import 'package:e_complaint/views/Search/result/result.page.dart';
 import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'views/Search/search_kategori_screen.dart';
 
 import 'package:e_complaint/views/widget/bottom_nav.dart';
@@ -39,7 +45,13 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
+        //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
+        ChangeNotifierProvider(
+          create: (_) => NewsViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NewsProvider(bearerToken: 'token'),
+        ),
       ],
       child: MyApp(),
     ),
