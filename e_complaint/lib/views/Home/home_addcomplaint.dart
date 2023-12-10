@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:e_complaint/viewModels/provider/complaint.dart';
-import 'package:e_complaint/views/Home/addcomplaint_location.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../models/complaint.dart';
 // import 'package:video_player/video_player.dart';
 
 class AddComplaint extends StatefulWidget {
@@ -23,22 +24,22 @@ class AddComplaint extends StatefulWidget {
 }
 
 class _AddComplaintState extends State<AddComplaint> {
-  bool isJalanSelected = false;
-  // Daftar kategori keluhan
-  List<CategoryName> category = [
-    CategoryName(id: 1, name: "Kekerasan"),
-    CategoryName(id: 2, name: "Pelecehan"),
-    CategoryName(id: 3, name: "Bulliying"),
-    CategoryName(id: 4, name: "Sampah"),
-    CategoryName(id: 5, name: "Pungli"),
-    CategoryName(id: 6, name: "Infrastruktur"),
-    CategoryName(id: 7, name: "Umum"),
-    CategoryName(id: 8, name: "Pelayanan"),
-    CategoryName(id: 9, name: "Keamanan"),
-  ];
+   TextEditingController tulisKeluhanController = TextEditingController();
+  TextEditingController alamatController = TextEditingController();
 
-  // Kategori keluhan yang dipilih
-  CategoryName? selectedValue;
+  // Daftar kategori keluhan
+  List<String> _items = [
+    'Kekerasan',
+    'Pelecehan',
+    'Bulliying',
+    'Sampah',
+    'Pungli',
+    'Infrastruktur',
+    'Umum',
+    'Pelayanan',
+    'Keamanan',
+  ];
+  String _selectedItem = '';
 
   // File dan nama gambar untuk keluhan
   XFile? _imageFile;
@@ -52,11 +53,110 @@ class _AddComplaintState extends State<AddComplaint> {
   String imagePath = 'assets/image/jk.jpeg';
   Color textColor = Color.fromARGB(255, 249, 171, 167);
 
-  void handleLocationSelection() {
-    // Lakukan logika pemilihan lokasi, dan kemudian atur nilai isJalanSelected
-    setState(() {
-      isJalanSelected = true; // Mengubah nilai menjadi kebalikannya
-    });
+  // static Future<Complaint?> postData(String categoryId, String title,
+  //     String status, String content, File attachment) async {
+  //   try {
+  //     var response = await Dio()
+  //         .post('https://api.govcomplain.my.id/user/complaint', data: {
+  //       'categoryId': categoryId,
+  //       'title': title,
+  //       'status': status,
+  //       'content': content,
+  //       'attachment': attachment
+  //     });
+
+  //     if (response.statusCode == 201) {
+  //       return Complaint(
+  //         categoryId: response.data['categoryId'],
+  //         title: response.data['title'],
+  //         status: response.data['status'],
+  //         content: response.data['content'],
+  //         attachment: response.data['attachment'],
+  //       );
+  //     }
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
+
+  //====
+  // static Future<Complaint?> postData(String categoryId, String title,
+  //     String status, String content, File attachment) async {
+  //   try {
+  //     FormData formData = FormData.fromMap({
+  //       'categoryId': categoryId,
+  //       'title': title,
+  //       'status': status,
+  //       'content': content,
+  //       'attachment': await MultipartFile.fromFile(
+  //         attachment.path,
+  //         filename: _getImageOrVideoName(attachment),
+  //       ),
+  //     });
+
+  //     var response = await Dio().post(
+  //       'https://api.govcomplain.my.id/user/complaint',
+  //       data: formData,
+  //     );
+
+  //     if (response.statusCode == 201) {
+  //       return Complaint(
+  //         categoryId: response.data['categoryId'],
+  //         title: response.data['title'],
+  //         status: response.data['status'],
+  //         content: response.data['content'],
+  //         attachment: response.data['attachment'],
+  //       );
+  //     }
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
+  static Future<Complaint?> postData(String categoryId, String title,
+      String status, String content, File attachment) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'categoryId': categoryId,
+        'title': title,
+        'status': status,
+        'content': content,
+        'attachment': await MultipartFile.fromFile(
+          attachment.path,
+          filename: _getImageOrVideoName(attachment),
+        ),
+      });
+
+      var response = await Dio().post(
+        'https://api.govcomplain.my.id/user/complaint',
+        data: formData,
+      );
+
+      print(
+          'Request sent successfully!'); // Menambahkan log bahwa permintaan dikirim
+
+      if (response.statusCode == 201) {
+        print(
+            'Complaint successfully posted!'); // Menambahkan log bahwa keluhan berhasil diposting
+
+        return Complaint(
+          categoryId: response.data['categoryId'],
+          title: response.data['title'],
+          status: response.data['status'],
+          content: response.data['content'],
+          attachment: response.data['attachment'],
+        );
+      } else {
+        print('Failed to post complaint. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error posting complaint: $e');
+      throw Exception(e.toString());
+    }
+  }
+
+// Helper function to get image or video name
+  static String _getImageOrVideoName(File file) {
+    return file.path.split('/').last;
   }
 
   // Fungsi untuk memilih gambar dari galeri
@@ -106,8 +206,6 @@ class _AddComplaintState extends State<AddComplaint> {
 
   @override
   Widget build(BuildContext context) {
-    final complaintProvider = Provider.of<AddComplaintProvider>(context);
-    print(complaintProvider.selectedLocation);
     return MaterialApp(
       theme: ThemeData(
         iconTheme: const IconThemeData(
@@ -300,41 +398,20 @@ class _AddComplaintState extends State<AddComplaint> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {
-                          // Panggil fungsi handleLocationSelection saat tombol ditekan
-                          handleLocationSelection();
-
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ComplaintLocation(),
-                            ),
-                          );
-                        },
+                        onPressed: () {},
                         icon: Icon(Icons.location_on_outlined),
                       ),
-                      Visibility(
-                        visible: !isJalanSelected,
-                        child: Text(
-                          complaintProvider.selectedLocation,
-                          style: TextStyle(
-                            color: textColor,
-                           
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: "Tambah Alamat",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      Visibility(
-                        visible: isJalanSelected,
-                        child: Text(
-                          '${widget.selectedLocation2 ?? ''}, ${widget.selectedLocation ?? ''}',
-                          style: TextStyle(
-                            color: textColor,
-                           
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
                       ),
                     ],
                   ),
@@ -347,50 +424,98 @@ class _AddComplaintState extends State<AddComplaint> {
                 Container(
                   padding: EdgeInsets.only(left: 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.grid_view),
-                      Container(
-                        margin: EdgeInsets.all(8),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red, width: 0),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: DropdownButton<CategoryName?>(
-                          hint: Text(
-                            'Pilih Kategori',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: textColor,
-                            ),
-                          ),
-                          value: selectedValue,
-                          onChanged: (value) {
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedItem = '';
+                          });
+                        },
+                        child: PopupMenuButton<String>(
+                          itemBuilder: (BuildContext context) {
+                            return _items.map((String item) {
+                              return PopupMenuItem(
+                                value: item,
+                                child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width - 0,
+                                    child: Text(item,
+                                        style: TextStyle(color: Colors.red))),
+                              );
+                            }).toList();
+                          },
+                          onSelected: (String item) {
                             setState(() {
-                              selectedValue = value;
+                              _selectedItem = item;
                             });
                           },
-                          underline: SizedBox(),
-                          items: category
-                              .map<DropdownMenuItem<CategoryName>>(
-                                (e) => DropdownMenuItem(
-                                  child: Text((e.name ?? '').toString()),
-                                  value: e,
-                                ),
-                              )
-                              .toList(),
-                          dropdownColor: Colors.white,
-                          iconEnabledColor: Colors.red,
-                          style: TextStyle(color: Colors.black),
+                          child: Icon(Icons.grid_view, color: Colors.red),
                         ),
+                      ),
+                      SizedBox(width: 20),
+                      AnimatedSwitcher(
+                        duration: Duration(milliseconds: 250),
+                        child: _selectedItem.isEmpty
+                            ? Text('Pilih Kategori',
+                                style: TextStyle(color: Colors.red))
+                            : Text(
+                                _selectedItem,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
                       ),
                     ],
                   ),
                 ),
+                // Container(
+                //   padding: EdgeInsets.only(left: 10),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Icon(Icons.grid_view),
+                //       Container(
+                //         margin: EdgeInsets.all(8),
+                //         padding: EdgeInsets.symmetric(
+                //           horizontal: 10,
+                //         ),
+                //         decoration: BoxDecoration(
+                //           border: Border.all(color: Colors.red, width: 0),
+                //           color: Colors.white,
+                //           borderRadius: BorderRadius.circular(10),
+                //         ),
+                //         child: DropdownButton<CategoryName?>(
+                //           hint: Text(
+                //             'Pilih Kategori',
+                //             style: TextStyle(
+                //               fontSize: 14,
+                //               color: textColor,
+                //             ),
+                //           ),
+                //           value: selectedValue,
+                //           onChanged: (value) {
+                //             setState(() {
+                //               selectedValue = value;
+                //             });
+                //           },
+                //           underline: SizedBox(),
+                //           items: category
+                //               .map<DropdownMenuItem<CategoryName>>(
+                //                 (e) => DropdownMenuItem(
+                //                   child: Text((e?.name ?? '').toString()),
+                //                   value: e,
+                //                 ),
+                //               )
+                //               .toList(),
+                //           dropdownColor: Colors.white,
+                //           iconEnabledColor: Colors.red,
+                //           style: TextStyle(color: Colors.black),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 80,
                 ),
@@ -399,7 +524,33 @@ class _AddComplaintState extends State<AddComplaint> {
                   width: double.infinity,
                   height: 50.0,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      // Logika yang dijalankan saat tombol ditekan.
+                      try {
+                        String categoryId = _getCategoryIdByName(_selectedItem);
+                        String title = tulisKeluhanController.text;
+                        String status = 'open'; // Ubah status sesuai kebutuhan
+                        String content = tulisKeluhanController.text;
+
+                        if (_imageFile != null ||
+                            _videoPlayerController != null) {
+                          Complaint? result = await postData(
+                            categoryId,
+                            title,
+                            status,
+                            content,
+                            _imageFile != null
+                                ? File(_imageFile!.path)
+                                : File(_videoPath!),
+                          );
+
+                          if (result != null) {
+                            // Lakukan sesuatu setelah posting berhasil
+                          }
+                        }
+                      } catch (e) {
+                        print('Error posting complaint: $e');
+                      }
                       // Logika yang dijalankan saat tombol ditekan.
                     },
                     child: const Text(
@@ -554,12 +705,21 @@ class _AddComplaintState extends State<AddComplaint> {
       },
     );
   }
+
+  String _getCategoryIdByName(String categoryName) {
+    // Implementasi sesuai dengan kebutuhan
+    // Anda dapat memiliki daftar kategori dan mencocokkan nama dengan ID
+    // Contoh sederhana:
+    switch (categoryName) {
+      case 'Kekerasan':
+        return '1';
+      case 'Pelecehan':
+        return '2';
+      // tambahkan kategori lainnya...
+      default:
+        return '0'; // ID default jika tidak ditemukan
+    }
+  }
 }
 
-// Kelas yang mewakili kategori keluhan
-class CategoryName {
-  CategoryName({this.id, this.name});
 
-  int? id;
-  String? name;
-}
