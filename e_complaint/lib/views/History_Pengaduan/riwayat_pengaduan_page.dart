@@ -126,7 +126,7 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                             controller: _controller,
                             children: const [
                               terkirim_page(),
-                              diproses_page(),
+                              DiprosesPage(),
                               selesai_page(),
                             ],
                           ),

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:e_complaint/models/user_profile.dart';
+import 'package:e_complaint/viewModels/complaint_view_model.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
@@ -38,7 +39,12 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
+        ChangeNotifierProvider(
+            create: (context) => ComplaintsViewModel(
+                addComplaintProvider:
+                    AddComplaintProvider(bearerToken: 'token'))),
+        ChangeNotifierProvider(
+            create: (context) => AddComplaintProvider(bearerToken: 'token')),
       ],
       child: MyApp(),
     ),
