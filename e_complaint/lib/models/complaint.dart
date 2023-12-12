@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Complaint {
   final String categoryId;
   final String title;
@@ -11,16 +15,13 @@ class Complaint {
     required this.status,
     required this.content,
     required this.attachment,
+    required String nama,
+    required String imagePath,
+    required Color textColor,
+    required String tulisKeluhan,
+    required String alamat,
+    required String selectedCategory,
   });
-  
+
   // Metode untuk mengonversi objek ke map untuk dikirim sebagai formulir
-  Map<String, dynamic> toMap() {
-    return {
-      'categoryId': categoryId,
-      'title': title,
-      'status': status,
-      'content': content,
-      'attachment': attachment,
-    };
-  }
 }
