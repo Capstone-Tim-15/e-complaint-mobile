@@ -7,26 +7,45 @@ class detailPengaduan_page extends StatelessWidget {
   final TextEditingController _textEditingController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
+  final List<Pesan> pesan = List.generate(
+    8,
+    (index) => Pesan(
+      pengirim: 'Jelita Salsabila',
+      teks:
+          'Jalan di sekitar sini rusak parah! Banyak lubang bikin bahaya buat kendaraan. Tolong diperbaiki secepatnya dong biar nggak berisiko kecelakaan',
+    ),
+  );
+
+  final ValueNotifier<List<Pesan>> _pesanNotifier =
+      ValueNotifier<List<Pesan>>(List.generate(
+    8,
+    (index) => Pesan(
+      pengirim: 'Jelita Salsabila',
+      teks:
+          'Jalan di sekitar sini rusak parah! Banyak lubang bikin bahaya buat kendaraan. Tolong diperbaiki secepatnya dong biar nggak berisiko kecelakaan',
+    ),
+  ));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         shadowColor: const Color.fromARGB(255, 192, 192, 192),
         backgroundColor: const Color.fromARGB(255, 255, 253, 253),
-        title: Row(
+        title: const Row(
           children: [
-            const SizedBox(
+            SizedBox(
               width: 12,
             ),
-            IconButton(
-              iconSize: 25,
-              icon: const Icon(Icons.arrow_back),
-              color: const Color.fromARGB(255, 255, 0, 0),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            const Text(
+            // IconButton(
+            //   iconSize: 25,
+            //   icon: const Icon(Icons.arrow_back),
+            //   color: const Color.fromARGB(255, 255, 0, 0),
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
+            Text(
               "Postingan Keluhan",
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0),
@@ -35,6 +54,9 @@ class detailPengaduan_page extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        iconTheme: const IconThemeData(
+          color: Color.fromARGB(255, 255, 20, 4),
         ),
       ),
       body: SafeArea(
@@ -233,6 +255,8 @@ class detailPengaduan_page extends StatelessWidget {
                                         curve: Curves.easeOut,
                                       );
                                     },
+
+                                    //ingin menambahkan komentar dari text controller
                                     child: const Text('Balas'),
                                   )
                                 ],
@@ -266,10 +290,25 @@ class detailPengaduan_page extends StatelessWidget {
               const SizedBox(width: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Tambahkan logika untuk mengirim komentar
-                  // (misalnya, simpan komentar ke penyimpanan atau server)
+                  // Perbarui daftar pesan dengan pesan baru
+                  final pesanBaru = Pesan(
+                    pengirim:
+                        'Nama Anda', // Ganti ini dengan pengirim sebenarnya
+                    teks: _textEditingController.text,
+                  );
+                  pesan.add(pesanBaru);
+                  _pesanNotifier.value = List.from(pesan);
+
+                  // Bersihkan kolom teks dan unfocus
                   _textEditingController.clear();
                   _focusNode.unfocus();
+
+                  // Gulir ke bawah untuk menunjukkan pesan baru
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
                 },
                 child: const Text('Kirim'),
               ),
@@ -279,4 +318,11 @@ class detailPengaduan_page extends StatelessWidget {
       ),
     );
   }
+}
+
+class Pesan {
+  final String pengirim;
+  final String teks;
+
+  Pesan({required this.pengirim, required this.teks});
 }
