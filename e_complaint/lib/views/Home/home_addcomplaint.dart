@@ -21,8 +21,7 @@ class ComplaintApiService {
     await _initPrefs();
 
     try {
-      final response =
-          await _dio.get('https://api.govcomplain.my.id/user/category');
+      final response = await _dio.get('https://api.govcomplain.my.id/user/category');
       print('Category API Response: ${response.data}');
       return response;
     } catch (e) {
@@ -34,7 +33,7 @@ class ComplaintApiService {
   Future<Response> postComplaint({
     required String categoryId,
     required String title,
-    required String status,
+    // required String status,
     required String content,
     required XFile attachment,
   }) async {
@@ -49,8 +48,20 @@ class ComplaintApiService {
         throw ArgumentError('Invalid input data');
       }
 
-      var formData =
-          _createFormData(categoryId, title, status, content, attachment);
+      // print('Category ID: $categoryId');
+      // print('Title: $title');
+      // // print('Status: $status');
+      // print('Content: $content');
+      // print('Attachment: ${attachment.path}');
+
+      final bytes = await File(attachment.path).readAsBytes();
+
+      var formData = FormData.fromMap({
+        'categoryId': categoryId,
+        'title': title,
+        'content': content,
+        'attachment': MultipartFile.fromBytes(bytes, filename: attachment.name),
+      });
 
       final response = await _dio.post(
         'https://api.govcomplain.my.id/user/complaint',
@@ -73,14 +84,14 @@ class ComplaintApiService {
   FormData _createFormData(
     String categoryId,
     String title,
-    String status,
+    // String status,
     String content,
     XFile attachment,
   ) {
     return FormData.fromMap({
       'categoryId': categoryId,
       'title': title,
-      'status': status,
+      // 'status': status,
       'content': content,
       'attachment':
           MultipartFile.fromFile(attachment.path, filename: attachment.name),
@@ -126,9 +137,8 @@ class _AddComplaintState extends State<AddComplaint> {
         List<dynamic> results = response.data['results'];
 
         setState(() {
-          _categoryList = results
-              .map((category) => category['CategoryName'] as String)
-              .toList();
+          _categoryList =
+              results.map((category) => category['CategoryName'] as String).toList();
 
           if (_categoryList.isNotEmpty) {
             _selectedCategoryIndex = 0;
@@ -173,12 +183,11 @@ class _AddComplaintState extends State<AddComplaint> {
         source: ImageSource.gallery,
       );
       if (pickedFile != null) {
-        _videoPlayerController =
-            VideoPlayerController.file(File(pickedFile.path))
-              ..initialize().then((_) {
-                setState(() {});
-                _videoPlayerController!.play();
-              });
+        _videoPlayerController = VideoPlayerController.file(File(pickedFile.path))
+          ..initialize().then((_) {
+            setState(() {});
+            _videoPlayerController!.play();
+          });
 
         final String fileName =
             '${DateTime.now().millisecondsSinceEpoch}_${pickedFile.path.split('/').last}';
@@ -291,8 +300,8 @@ class _AddComplaintState extends State<AddComplaint> {
                                 alignment: Alignment.center,
                                 children: [
                                   AspectRatio(
-                                    aspectRatio: _videoPlayerController!
-                                        .value.aspectRatio,
+                                    aspectRatio:
+                                        _videoPlayerController!.value.aspectRatio,
                                     child: VideoPlayer(_videoPlayerController!),
                                   ),
                                   IconButton(
@@ -466,11 +475,10 @@ class _AddComplaintState extends State<AddComplaint> {
                     setState() {}
                     String categoryId = _getCategoryIdByName(_selectedItem);
                     try {
-                      Response response =
-                          await _complaintApiService.postComplaint(
-                        categoryId: categoryId,
+                      Response response = await _complaintApiService.postComplaint(
+                        categoryId: "1bKOCe",
                         title: alamatController.text,
-                        status: 'SEND',
+                        // status: 'SEND',
                         content: tulisKeluhanController.text,
                         attachment: _imageFile!,
                       );
@@ -567,8 +575,7 @@ class _AddComplaintState extends State<AddComplaint> {
           _videoName = fileName;
 
           // Inisialisasi controller video baru
-          _videoPlayerController =
-              VideoPlayerController.file(File(_videoPath!));
+          _videoPlayerController = VideoPlayerController.file(File(_videoPath!));
           print('Video Path: $_videoPath');
 
           _videoPlayerController!.initialize().then((_) {
