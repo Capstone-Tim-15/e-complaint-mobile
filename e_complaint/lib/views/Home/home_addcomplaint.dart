@@ -19,7 +19,6 @@ class ComplaintApiService {
 
   Future<Response> getCategory() async {
     await _initPrefs();
-    print('Bearer Token: $bearerToken');
 
     try {
       final response =
@@ -58,11 +57,11 @@ class ComplaintApiService {
         data: formData,
         options: Options(
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer $bearerToken',
           },
         ),
       );
-
       print('Post Complaint API Response: ${response.data}');
       return response;
     } catch (e) {
@@ -464,6 +463,7 @@ class _AddComplaintState extends State<AddComplaint> {
                 height: 50.0,
                 child: ElevatedButton(
                   onPressed: () async {
+                    setState() {}
                     String categoryId = _getCategoryIdByName(_selectedItem);
                     try {
                       Response response =
@@ -474,10 +474,12 @@ class _AddComplaintState extends State<AddComplaint> {
                         content: tulisKeluhanController.text,
                         attachment: _imageFile!,
                       );
+
                       if (response.statusCode == 201) {
                         print(response.data);
                       } else {
                         print(response.statusMessage);
+                        print('CategoryId: $categoryId');
                       }
                     } catch (e) {
                       print(e);
