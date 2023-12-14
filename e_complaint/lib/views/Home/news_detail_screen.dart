@@ -1,8 +1,7 @@
 import 'package:e_complaint/models/news.dart';
 import 'package:e_complaint/viewModels/news_view_model.dart';
+import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
-import 'package:e_complaint/views/Home/component/news_detail/comment_section.dart';
-import 'package:e_complaint/views/Home/component/news_detail/news_section.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,8 +9,9 @@ import 'package:intl/intl.dart';
 
 class NewsDetail extends StatefulWidget {
   final String id;
+  final news;
 
-  NewsDetail({required this.id});
+  NewsDetail({required this.id, this.news});
 
   @override
   State<NewsDetail> createState() => _NewsDetailState();
@@ -19,6 +19,7 @@ class NewsDetail extends StatefulWidget {
 
 class _NewsDetailState extends State<NewsDetail> {
   News? _news;
+  List<String> _comments = [];
 
   @override
   void didChangeDependencies() async {
@@ -28,8 +29,9 @@ class _NewsDetailState extends State<NewsDetail> {
 
     if (bearerToken != null && bearerToken.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        await Provider.of<NewsViewModel>(context, listen: false)
+        await Provider.of<NewsProvider>(context, listen: false)
             .getNewsById(widget.id);
+        // await getNewsData();
       });
     }
   }
@@ -41,20 +43,36 @@ class _NewsDetailState extends State<NewsDetail> {
   }
 
   void getNewsData() async {
-    final news = await Provider.of<NewsViewModel>(context, listen: false)
-        .getNewsById(widget.id);
-    if (news != null) {
-      setState(() {
-        _news = news;
-      });
-    } else {
-      return null;
+    try {
+      final news = await Provider.of<NewsProvider>(context, listen: false)
+          .getNewsById(widget.id);
+      if (news != null) {
+        setState(() {
+          _news = news;
+          print('News By ID from State: ${widget.news}');
+          print('_news: $_news'.toString());
+        });
+        print('News ID: ${_news?.id}');
+        print('News Content: ${_news?.content}');
+
+        // final comments = await newsProvider.getCommentsByNewsId(widget.id);
+        setState(() {
+          // _comments = comments;
+        });
+      } else {
+        // Handle the case when news is null
+      }
+    } catch (error) {
+      print('Error fetching news: $error');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_news == false) {
+    List<String> list = <String>['Terbaru', 'Terlama'];
+    String dropdownValue = list.first;
+
+    if (_news == null) {
       return const CircularProgressIndicator();
     } else {
       return Scaffold(
@@ -93,7 +111,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                 radius: 21,
                                 child: ClipOval(
                                   child: Image.asset(
-                                    'assets/images/circle_avatar.png',
+                                    'assets/images/circle_avatar_admin.png',
                                     fit: BoxFit.cover,
                                     width: 42,
                                     height: 42,
@@ -120,11 +138,21 @@ class _NewsDetailState extends State<NewsDetail> {
                                             letterSpacing: -0.5),
                                       ),
                                       const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/verified_logo.png',
+                                        width: 16,
+                                        height: 16,
+                                      ),
+                                      const SizedBox(
                                         width: 13,
                                       ),
                                       Text(
-                                        DateFormat('MM-dd').format(
-                                            DateTime.parse(_news!.date)),
+                                        // DateFormat('MM-ddTHH').format(
+                                        //   DateTime.parse(_news!.date),
+                                        // )
+                                        _news!.date,
                                         style: TextStyle(
                                             fontFamily: 'Nunito',
                                             fontWeight: FontWeight.w400,
@@ -150,7 +178,8 @@ class _NewsDetailState extends State<NewsDetail> {
                             ],
                           ),
                           Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            alignment: Alignment.topLeft,
                             child: Text(
                               _news!.content,
                               textAlign: TextAlign.justify,
@@ -187,9 +216,9 @@ class _NewsDetailState extends State<NewsDetail> {
                               const SizedBox(
                                 width: 8,
                               ),
-                              const Text(
-                                '1rb',
-                                style: TextStyle(
+                              Text(
+                                _news!.like.toString(),
+                                style: const TextStyle(
                                     fontFamily: 'Nunito',
                                     fontWeight: FontWeight.w400,
                                     fontSize: 10,
@@ -215,61 +244,60 @@ class _NewsDetailState extends State<NewsDetail> {
                               const SizedBox(
                                 width: 8,
                               ),
-                              const Text(
-                                '12',
-                                style: TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                    letterSpacing: -0.5,
-                                    color: Color.fromARGB(255, 153, 153, 153)),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child:
-                                    Image.asset('assets/icons/icon_save.png'),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              const Text(
-                                '35',
-                                style: TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                    letterSpacing: -0.5,
-                                    color: Color.fromARGB(255, 153, 153, 153)),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child:
-                                    Image.asset('assets/icons/icon_share.png'),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              const Text(
-                                '1.5rb',
-                                style: TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                    letterSpacing: -0.5,
-                                    color: Color.fromARGB(255, 153, 153, 153)),
+                              Text(
+                                _news!.like.toString(),
+                                style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10,
+                                  letterSpacing: -0.5,
+                                  color: Color.fromARGB(255, 153, 153, 153),
+                                ),
                               ),
                             ],
                           )
                         ],
                       ),
                     ),
-                    CommentSection()
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                          child: DropdownButton<String>(
+                            value: dropdownValue,
+                            icon: const ImageIcon(
+                              AssetImage('assets/icons/icon_arrow_down.png'),
+                            ),
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.black),
+                            underline: Container(
+                              height: 0,
+                            ),
+                            onChanged: (String? value) {
+                              setState(() {
+                                dropdownValue = value!;
+                              });
+                            },
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        buildCommentSection(),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -321,5 +349,84 @@ class _NewsDetailState extends State<NewsDetail> {
         ),
       );
     }
+  }
+
+  Widget buildCommentSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var comment in _comments)
+          Container(
+            padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Marshella',
+                      style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                          letterSpacing: -0.5),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Text(
+                      '06-20',
+                      style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 11,
+                          letterSpacing: -0.5),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: 262,
+                  child: Text(
+                    comment,
+                    style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: -0.5,
+                        fontSize: 12),
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Text(
+                    'Balas',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 12,
+                      letterSpacing: -0.5,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(255, 136, 136, 136),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Divider(
+                  indent: 20,
+                  endIndent: 20,
+                  color: Colors.black,
+                  height: 1,
+                ),
+              ],
+            ),
+          )
+      ],
+    );
   }
 }
