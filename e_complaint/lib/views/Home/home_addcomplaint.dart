@@ -476,19 +476,6 @@ class _AddComplaintState extends State<AddComplaint> {
                       ),
                     ),
                     SizedBox(width: 20),
-                    // AnimatedSwitcher(
-                    //   duration: Duration(milliseconds: 250),
-                    //   child: _selectedItem.isEmpty
-                    //       ? Text('Pilih Kategori',
-                    //           style: TextStyle(color: Colors.red))
-                    //       : Text(
-                    //           _selectedItem,
-                    //           style: TextStyle(
-                    //             fontWeight: FontWeight.bold,
-                    //             color: Colors.red,
-                    //           ),
-                    //         ),
-                    // ),
 
                     const SizedBox(
                       height: 80,
@@ -512,6 +499,7 @@ class _AddComplaintState extends State<AddComplaint> {
                             );
                             if (response.statusCode == 201) {
                               print(response.data);
+                              Navigator.popAndPushNamed(context, 'home');
                             } else {
                               print(response.statusMessage);
                             }
