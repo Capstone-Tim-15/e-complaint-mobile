@@ -20,6 +20,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
   bool isLoading = false;
   dynamic result;
   late SharedPreferences prefs;
+  String imageUrl = '';
 
   @override
   void initState() {
@@ -29,6 +30,9 @@ class _ChatbotBodyState extends State<ChatbotBody> {
 
   Future<void> initSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
+    setState(() {
+      imageUrl = prefs.getString('imageUrl') ?? '';
+    });
   }
 
   List<String> recommendedQuestions = [
@@ -141,21 +145,22 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                             ),
                             if (chatbotMessage[chatIndex].isSender)
                               Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: kPrimaryColor,
-                                    width: 2,
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: kPrimaryColor,
+                                      width: 2,
+                                    ),
                                   ),
-                                ),
-                                child: const Icon(
-                                  Icons.person,
-                                  size: 25,
-                                  color: kPrimaryColor,
-                                ),
-                              ),
+                                  child: imageUrl == ''
+                                      ? const Icon(
+                                          Icons.person,
+                                          size: 25,
+                                          color: kPrimaryColor,
+                                        )
+                                      : Image.network(imageUrl)),
                           ],
                         ),
                       ],
