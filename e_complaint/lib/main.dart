@@ -104,6 +104,8 @@ class MyApp extends StatelessWidget {
                 },
               ),
             );
+          case '/news':
+            return MaterialPageRoute(builder: (context) => BottomNavigation());
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':

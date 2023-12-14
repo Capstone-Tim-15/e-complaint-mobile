@@ -25,8 +25,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
     fetchUserProfile();
   }
 
-  Future<void> saveProfile(String id, String username, String name, String email,
-      String phone, String imageUrl) async {
+  Future<void> saveProfile(String id, String username, String name,
+      String email, String phone, String imageUrl) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('id', id);
     await prefs.setString('username', username);
@@ -91,15 +91,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
         ),
         backgroundColor: Colors.white,
         elevation: 1,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.amber,
-          ), // Replace with your desired icon
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.0),
           child: Container(
