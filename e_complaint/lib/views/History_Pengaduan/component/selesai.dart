@@ -23,6 +23,32 @@ class _selesai_pageState extends State<selesai_page> {
     await getComplaintStatus("Selesai");
   }
 
+  String baseUrl = "https://api.govcomplain.my.id";
+  List dataComplaintSelesai = [];
+  Future<Response> getComplaintStatus(String status) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String token = prefs.getString('token') ??
+          ""; // Jika token tidak ditemukan, set ke string kosong
+
+      // Set header bearer token;
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+      Response response = await _dio.get(
+        "$baseUrl/user/complaint?page=1",
+        queryParameters: {'status': status},
+      );
+      final responseData = response.data['results'];
+      setState(() {
+        dataComplaintSelesai = responseData;
+      });
+      return response;
+    } catch (error) {
+      print("Error fetching data: $error");
+      // Handle error gracefully, e.g., show an error message to the user.
+      throw error;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,31 +140,5 @@ class _selesai_pageState extends State<selesai_page> {
                         ]),
                       )
                     ])));
-  }
-
-  String baseUrl = "https://api.govcomplain.my.id";
-  List dataComplaintSelesai = [];
-  Future<Response> getComplaintStatus(String status) async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String token = prefs.getString('token') ??
-          ""; // Jika token tidak ditemukan, set ke string kosong
-
-      // Set header bearer token;
-      _dio.options.headers['Authorization'] = 'Bearer $token';
-      Response response = await _dio.get(
-        "$baseUrl/user/complaint?page=1",
-        queryParameters: {'status': status},
-      );
-      final responseData = response.data['results'];
-      setState(() {
-        dataComplaintSelesai = responseData;
-      });
-      return response;
-    } catch (error) {
-      print("Error fetching data: $error");
-      // Handle error gracefully, e.g., show an error message to the user.
-      throw error;
-    }
   }
 }

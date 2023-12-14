@@ -73,7 +73,7 @@ class _terkirim_pageState extends State<terkirim_page> {
                                           children: [
                                             const SizedBox(height: 20),
                                             Text(
-                                              "${dataList["title"]}",
+                                              "${dataList["name"]}",
                                               style:
                                                   const TextStyle(fontSize: 18),
                                             ),
