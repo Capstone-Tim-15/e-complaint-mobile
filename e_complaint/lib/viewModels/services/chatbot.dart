@@ -17,7 +17,7 @@ class ChatbotService {
     );
 
     try {
-      var url = Uri.parse('https://api.govcomplain.my.id/ai');
+      var url = Uri.parse('http://34.128.69.15:8000/ai');
 
       Map<String, String> headers = {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ class ChatbotService {
         aiData = aiModelFromJson(response.body);
       }
     } catch (e) {
-      throw Exception('Error occured when sending request');
+      throw Exception('Error occured when sending request $e');
     }
     return aiData;
   }
