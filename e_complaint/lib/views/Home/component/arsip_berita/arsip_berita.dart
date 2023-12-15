@@ -1,74 +1,60 @@
-import 'package:e_complaint/viewModels/news_view_model.dart';
-import 'package:e_complaint/viewModels/provider/news.dart';
-import 'package:e_complaint/views/Home/news_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class NewsScreen extends StatefulWidget {
-  const NewsScreen({super.key});
+import '../../../../viewModels/news_view_model.dart';
+import '../../news_detail_screen.dart';
+
+class ArsipBerita extends StatefulWidget {
+  const ArsipBerita({Key? key}) : super(key: key);
 
   @override
-  State<NewsScreen> createState() => _NewsScreenState();
+  _ArsipBeritaState createState() => _ArsipBeritaState();
 }
 
-class _NewsScreenState extends State<NewsScreen> {
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? bearerToken = prefs.getString('bearerToken');
-
-    if (bearerToken != null && bearerToken.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        await Provider.of<NewsViewModel>(context, listen: false).getAllNews();
-      });
-    }
-  }
-
-  // Future<List<String>> _getAdminNames() async {
-  //   final modelView = Provider.of<NewsViewModel>(context, listen: false);
-  //   final newsProvider = Provider.of<NewsProvider>(context, listen: false);
-
-  //   return Future.wait(modelView.news.map((news) async {
-  //     return await newsProvider.getAdminNameById(news.adminId) ??
-  //         'Unknown Admin';
-  //   }));
-  // }
-
+class _ArsipBeritaState extends State<ArsipBerita> {
   @override
   Widget build(BuildContext context) {
     final modelView = Provider.of<NewsViewModel>(context);
-    // final newsProvider = Provider.of<NewsProvider>(context);
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey,
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Arsip Berita'),
       ),
-      child: ListView.builder(
-        itemCount: modelView.news.length,
+      body: ListView.builder(
+        itemCount: modelView.getArchivedNews().length,
         itemBuilder: (context, index) {
-          final news = modelView.news[index];
+          final archivedNews = modelView.getArchivedNews()[index];
           String formattedDate = DateFormat('MM-dd').format(
-            DateTime.parse(news.date),
+            DateTime.parse(archivedNews.date),
           );
-          // String adminName = snapshot.data![index];
+
           return InkWell(
             onTap: () {
-              Navigator.of(context, rootNavigator: true).push(
+              Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => NewsDetail(
-                    id: news.id,
+                    id: archivedNews.id,
                   ),
                 ),
               );
             },
+            // child: ListTile(
+            //   title: Text(archivedNews.title),
+            //   subtitle: Text('Admin - $formattedDate'),
+            //   leading: CircleAvatar(
+            //     radius: 21,
+            //     child: ClipOval(
+            //       child: Image.asset(
+            //         'assets/images/circle_avatar.png',
+            //         fit: BoxFit.cover,
+            //         width: 42,
+            //         height: 42,
+            //       ),
+            //     ),
+            //   ),
+            //   // ... Lainnya sesuai kebutuhan tampilan berita
+            // ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -96,7 +82,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         children: [
                           const Text(
                             'Admin',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: 'Nunito',
                                 fontWeight: FontWeight.w600,
                                 fontSize: 13,
@@ -133,7 +119,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         height: 5,
                       ),
                       Text(
-                        news.title,
+                        archivedNews.title,
                         style: const TextStyle(
                           fontFamily: 'Nunito',
                           fontWeight: FontWeight.w400,
@@ -152,7 +138,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 'assets/images/news_image.jpg',
                               ),
                             )
-                          : const SizedBox(
+                          : SizedBox(
                               height: 0,
                             ),
                       const SizedBox(
@@ -201,7 +187,7 @@ class _NewsScreenState extends State<NewsScreen> {
                           InkWell(
                             onTap: () {
                               Provider.of<NewsViewModel>(context, listen: false)
-                                  .saveToArchive(news);
+                                  .removeFromArchive(archivedNews);
                             },
                             child: Image.asset('assets/icons/icon_save.png'),
                           ),
