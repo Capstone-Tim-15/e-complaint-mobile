@@ -8,8 +8,8 @@ class NewsSearchModel {
   final String content;
   final String date;
   final String imageUrl;
-  final String? feedback;
-  final String? likes;
+  final List<Map<String, dynamic>>? feedback;
+  final List<Map<String, dynamic>>? likes;
 
   NewsSearchModel({
     required this.id,
@@ -30,14 +30,14 @@ class NewsSearchModel {
       id: json['id'],
       adminId: json['adminId'],
       category: json['category'],
-      name: json['name'],
+      name: json['fullname'],
       photoImage: json['photoImage'],
       title: json['title'],
       content: json['content'],
       date: json['date'],
       imageUrl: json['imageUrl'],
-      feedback: json['feedback'],
-      likes: json['likes'],
+      feedback: List<Map<String, dynamic>>.from(json['feedback'] ?? []),
+      likes: List<Map<String, dynamic>>.from(json['likes'] ?? []),
     );
   }
 }

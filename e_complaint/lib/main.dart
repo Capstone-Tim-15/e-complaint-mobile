@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-                builder: (context) => const OnboardingScreen());
+                builder: (context) => const LoginPage());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':

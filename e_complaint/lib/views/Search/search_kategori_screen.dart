@@ -4,7 +4,6 @@ import 'package:e_complaint/views/Search/widget/kategori_button.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -14,9 +13,9 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  late final NewsSearchProvider newsProf;
+  late final NewsSearchProvider newsSearchProv;
   final TextEditingController _searchController = TextEditingController();
-  String jwt = '';
+  String idCategory = '';
   bool _isVisible = false;
   // ignore: unused_field
   bool _isIndexedVisible = true;
@@ -24,22 +23,17 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    initSharedPreferences();
-  }
-
-  Future<void> initSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      jwt = prefs.getString('token') ?? '';
+    newsSearchProv = context.read<NewsSearchProvider>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      newsSearchProv.fetchData();
     });
-
-    newsProf.fetchData(jwt);
   }
 
   List<String> searchHistory = ['History 1', 'History 2', 'History 3'];
 
   @override
   Widget build(BuildContext context) {
+    final newsSearchProv = Provider.of<NewsSearchProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -176,19 +170,28 @@ class _SearchPageState extends State<SearchPage> {
                               CustomElevatedButton(
                                 text: 'Kekerasan',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = '3DPTz6';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
                                 text: 'Bullying',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'lMJm4r';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
                                 text: 'Sampah',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'DA7CZu';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                             ],
@@ -202,19 +205,28 @@ class _SearchPageState extends State<SearchPage> {
                               CustomElevatedButton(
                                 text: 'Pungli',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'I2fnXf';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
                                 text: 'Infrastruktur',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = '1bKOCe';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
                                 text: 'Umum',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'ySJruI';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                             ],
@@ -228,19 +240,28 @@ class _SearchPageState extends State<SearchPage> {
                               CustomElevatedButton(
                                 text: 'Pelayanan',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'AstfNS';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
                                 text: 'Keamanan',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'jQBmPE';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
                                 text: 'Pelecehan',
                                 onPressed: () {
-                                  // Handle button press
+                                  setState(() {
+                                    idCategory = 'gcKUBm';
+                                  });
+                                  print(idCategory);
                                 },
                               ),
                             ],
@@ -264,62 +285,67 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(
                 height: 20,
               ),
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: newsItems.length,
-              //   itemBuilder: (context, index) {
-              //     return InkWell(
-              //       onTap: () {},
-              //       child: Card(
-              //         margin: const EdgeInsets.all(20),
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(15.0),
-              //           side: const BorderSide(width: 1, color: Colors.black12),
-              //         ),
-              //         child: Column(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: <Widget>[
-              //             Flexible(
-              //               child: Image.asset(
-              //                 newsItems[index]['image'],
-              //                 fit: BoxFit.cover,
-              //                 width: double.infinity,
-              //                 height: 200,
-              //               ),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.all(8.0),
-              //               child: Align(
-              //                 alignment: Alignment.centerLeft,
-              //                 child: Text(
-              //                   newsItems[index]['source'],
-              //                   style: const TextStyle(
-              //                     fontSize: 14,
-              //                     fontWeight: FontWeight.w300,
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.only(left: 8.0, bottom: 8),
-              //               child: Align(
-              //                 alignment: Alignment.centerLeft,
-              //                 child: Text(
-              //                   newsItems[index]['title'],
-              //                   style: const TextStyle(
-              //                     fontSize: 18,
-              //                     fontWeight: FontWeight.bold,
-              //                   ),
-              //                   textAlign: TextAlign.left,
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // ),
+              newsSearchProv.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 2,
+                      itemBuilder: (context, index) {
+                        final news = newsSearchProv.newsSearchData[index];
+                        return InkWell(
+                          onTap: () {},
+                          child: Card(
+                            margin: const EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              side:
+                                  const BorderSide(width: 1, color: Colors.black12),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Flexible(
+                                  child: Image.asset(
+                                    news.imageUrl,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 200,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      news.name,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8.0, bottom: 8),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      news.title,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
             ],
           ),
         ),

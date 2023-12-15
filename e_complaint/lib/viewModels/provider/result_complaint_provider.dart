@@ -1,24 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:e_complaint/models/news_search_model.dart';
+import 'package:e_complaint/models/result_complaint_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NewsSearchProvider with ChangeNotifier {
+class ResultComplaintProvider with ChangeNotifier {
   final Dio _dio = Dio();
 
-  List<NewsSearchModel> _newsSearchData = [];
-  List<NewsSearchModel> get newsSearchData => _newsSearchData;
+  List<ResultComplaintModel> _resultComplainData = [];
+  List<ResultComplaintModel> get resutComplaintData => _resultComplainData;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-
-
-  void fetchData() async {
+  void fetchData(String idCategory) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('bearerToken') ?? '';
 
-    String url = 'http://34.128.69.15:8000/user/news';
+    String url = 'http://34.128.69.15:8000/user/complaint/search?limit=10&category=$idCategory';
 
     print(jwt);
     Map<String, dynamic> headers = {
@@ -27,7 +26,6 @@ class NewsSearchProvider with ChangeNotifier {
     };
 
     try {
-
       _isLoading = true;
       notifyListeners();
 
@@ -39,9 +37,9 @@ class NewsSearchProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        _newsSearchData = List<NewsSearchModel>.from(
+        _resultComplainData = List<ResultComplaintModel>.from(
             (response.data['results'] as List)
-                .map((x) => NewsSearchModel.fromJson(x)));
+                .map((x) => ResultComplaintModel.fromJson(x)));
         print('Succes get data');
       } else {
         print('Failed to fetch data. Status code: ${response.statusCode}');
