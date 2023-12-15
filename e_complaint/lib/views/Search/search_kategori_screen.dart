@@ -1,7 +1,10 @@
+import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/views/Search/result/result.page.dart';
 import 'package:e_complaint/views/Search/widget/kategori_button.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -11,32 +14,29 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  late final NewsSearchProvider newsProf;
   final TextEditingController _searchController = TextEditingController();
-
+  String jwt = '';
   bool _isVisible = false;
+  // ignore: unused_field
   bool _isIndexedVisible = true;
 
   @override
   void initState() {
     super.initState();
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      jwt = prefs.getString('token') ?? '';
+    });
+
+    newsProf.fetchData(jwt);
   }
 
   List<String> searchHistory = ['History 1', 'History 2', 'History 3'];
-
-  final List<Map<String, dynamic>> newsItems = [
-    {
-      'image': 'assets/images/news1.png',
-      'source': 'Source: BBC News',
-      'title':
-          'LBP Resmikan Pabrik Daur Ulang Sampah Plastik jadi Coffe Maker di Batam',
-    },
-    {
-      'image': 'assets/images/news2.png',
-      'source': 'Source: suarabatam.id',
-      'title':
-          'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -105,47 +105,49 @@ class _SearchPageState extends State<SearchPage> {
                     child: Indexed(
                       index: 1,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 50.0, top: 33),
-                        child: Container(
-                          width: 360,
-                          height: 180,
-                          padding: const EdgeInsets.only(left: 8.0, right: 8),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            border: Border(
-                              bottom: BorderSide(color: Colors.red),
-                              left: BorderSide(color: Colors.red),
-                              right: BorderSide(color: Colors.red),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              const Divider(),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: searchHistory.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(searchHistory[index]),
-                                        InkWell(
-                                          child: const Text(
-                                            'Hapus',
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                          onTap: () {},
-                                        )
-                                      ],
-                                    ),
-                                    onTap: () {},
-                                  );
-                                },
+                        padding: const EdgeInsets.only(top: 34.0),
+                        child: Center(
+                          child: Container(
+                            width: 360,
+                            height: 180,
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                bottom: BorderSide(color: Colors.red),
+                                left: BorderSide(color: Colors.red),
+                                right: BorderSide(color: Colors.red),
                               ),
-                            ],
+                            ),
+                            child: Column(
+                              children: [
+                                const Divider(),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: searchHistory.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(searchHistory[index]),
+                                          InkWell(
+                                            child: const Text(
+                                              'Hapus',
+                                              style: TextStyle(color: Colors.red),
+                                            ),
+                                            onTap: () {},
+                                          )
+                                        ],
+                                      ),
+                                      onTap: () {},
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -262,63 +264,62 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(
                 height: 20,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: newsItems.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {},
-                    child: Card(
-                      margin: const EdgeInsets.all(20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        side: const BorderSide(width: 1, color: Colors.black12),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Flexible(
-                            child: Image.asset(
-                              newsItems[index]['image'],
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 200,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                newsItems[index]['source'],
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, bottom: 8),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                newsItems[index]['title'],
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   itemCount: newsItems.length,
+              //   itemBuilder: (context, index) {
+              //     return InkWell(
+              //       onTap: () {},
+              //       child: Card(
+              //         margin: const EdgeInsets.all(20),
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(15.0),
+              //           side: const BorderSide(width: 1, color: Colors.black12),
+              //         ),
+              //         child: Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: <Widget>[
+              //             Flexible(
+              //               child: Image.asset(
+              //                 newsItems[index]['image'],
+              //                 fit: BoxFit.cover,
+              //                 width: double.infinity,
+              //                 height: 200,
+              //               ),
+              //             ),
+              //             Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: Align(
+              //                 alignment: Alignment.centerLeft,
+              //                 child: Text(
+              //                   newsItems[index]['source'],
+              //                   style: const TextStyle(
+              //                     fontSize: 14,
+              //                     fontWeight: FontWeight.w300,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             Padding(
+              //               padding: const EdgeInsets.only(left: 8.0, bottom: 8),
+              //               child: Align(
+              //                 alignment: Alignment.centerLeft,
+              //                 child: Text(
+              //                   newsItems[index]['title'],
+              //                   style: const TextStyle(
+              //                     fontSize: 18,
+              //                     fontWeight: FontWeight.bold,
+              //                   ),
+              //                   textAlign: TextAlign.left,
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),

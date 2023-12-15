@@ -6,7 +6,7 @@ class AccountSuccess extends StatelessWidget {
   TextStyle getTextStyle() {
     return const TextStyle(
       fontFamily: "Nunito",
-      fontSize: 28,
+      fontSize: 24,
       fontWeight: FontWeight.w600,
     );
   }

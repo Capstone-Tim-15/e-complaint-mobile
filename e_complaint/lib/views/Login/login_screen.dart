@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
   bool rememberMe = false;
   final Dio _dio = Dio();
@@ -32,6 +33,11 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('bearerToken', token);
+  }
+
+  Future<void> saveName(String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', name);
   }
 
   @override
@@ -104,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -119,8 +126,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Username harus diisi';
+                          if (value == null || value.isEmpty) {
+                            return 'username harus diisi';
                           }
                           return null;
                         },
@@ -148,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         obscureText: !isPasswordVisible,
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null || value.isEmpty) {
                             return 'Password harus diisi';
                           }
                           return null;
@@ -204,51 +211,56 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            try {
-                              var response = await login(
-                                usernameController.text,
-                                passwordController.text,
-                              );
+                            if (_formKey.currentState!.validate()) {
+                              try {
+                                var response = await login(
+                                  usernameController.text,
+                                  passwordController.text,
+                                );
 
-                              if (response.statusCode == 200) {
-                                // Assuming response is in the format you provided
-                                Map<String, dynamic> responseData =
-                                    response.data;
+                                if (response.statusCode == 200) {
+                                  // Assuming response is in the format you provided
+                                  Map<String, dynamic> responseData =
+                                      response.data;
 
-                                // Check if 'meta' field indicates success
-                                if (responseData['meta']['success'] == true) {
-                                  // Extract token from the 'results' field
-                                  String? token =
-                                      responseData['results']['token'];
+                                  // Check if 'meta' field indicates success
+                                  if (responseData['meta']['success'] == true) {
+                                    // Extract token from the 'results' field
+                                    String? token =
+                                        responseData['results']['token'];
 
-                                  if (token != null) {
-                                    // Save token to Shared Preferences
-                                    await saveToken(token);
+                                    String? name =
+                                        responseData['results']['name'];
+                                    if (token != null && name != null) {
+                                      // Save token to Shared Preferences
+                                      await saveToken(token);
+                                      await saveName(name);
 
-                                    // Navigate to the home page and remove all previous routes
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              BottomNavigation()), // Gantilah dengan halaman beranda yang sesuai
-                                      (Route<dynamic> route) => false,
-                                    );
+                                      // Navigate to the home page and remove all previous routes
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                BottomNavigation()), // Gantilah dengan halaman beranda yang sesuai
+                                        (Route<dynamic> route) => false,
+                                      );
+                                    } else {
+                                      print('Token is null in the response');
+                                      // Handle the case where the token is null
+                                    }
                                   } else {
-                                    print('Token is null in the response');
-                                    // Handle the case where the token is null
+                                    print(
+                                        'Login failed: ${responseData['meta']['message']}');
+                                    // Handle login failure here
                                   }
                                 } else {
-                                  print(
-                                      'Login failed: ${responseData['meta']['message']}');
+                                  print('Login failed: ${response.statusCode}');
                                   // Handle login failure here
                                 }
-                              } else {
-                                print('Login failed: ${response.statusCode}');
-                                // Handle login failure here
+                              } catch (error) {
+                                print('Error during login: $error');
+                                // Handle other errors during login
                               }
-                            } catch (error) {
-                              print('Error during login: $error');
-                              // Handle other errors during login
                             }
                           },
                           style: ElevatedButton.styleFrom(
