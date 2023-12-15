@@ -2,6 +2,8 @@ import 'package:e_complaint/views/History_Pengaduan/component/diproses.dart';
 import 'package:e_complaint/views/History_Pengaduan/component/selesai.dart';
 import 'package:e_complaint/views/History_Pengaduan/component/terkirim.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class riwayat_pengaduan_page extends StatefulWidget {
   const riwayat_pengaduan_page({super.key});
@@ -23,17 +25,17 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
 
   @override
   void initState() {
-    _controller = TabController(
-        length: 3, vsync: this); //permasalahan pada vsync : context
+    _controller = TabController(length: 3, vsync: this);
     _controller.addListener(_handleTabSelection);
+    getComplaintStatus("Diproses");
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +52,7 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                 iconSize: 25,
                 icon: const Icon(Icons.arrow_back),
                 color: const Color.fromARGB(255, 255, 0, 0),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile');
-                },
+                onPressed: () => Navigator.pop(context),
               ),
               const Text(
                 "Riwayat Pengaduan",
@@ -123,7 +123,7 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                           height: MediaQuery.of(context).size.height,
                           child: TabBarView(
                             controller: _controller,
-                            children: const [
+                            children: [
                               terkirim_page(),
                               diproses_page(),
                               selesai_page(),
@@ -136,5 +136,32 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
             ),
           ),
         ));
+  }
+
+  String baseUrl = "https://api.govcomplain.my.id";
+  final Dio _dio = Dio();
+
+  Future<Response> getComplaintStatus(String status) async {
+    try {
+      // Mengambil token dari SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String token = prefs.getString('token') ??
+          ""; // Jika token tidak ditemukan, set ke string kosong
+
+      // Set header bearer token
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      // Membuat request
+      Response response = await _dio.get(
+        "$baseUrl/user/complaint?page=1",
+        queryParameters: {'status': status}, // Menambahkan parameter status
+      );
+      debugPrint("ini repp ${response.data}");
+      return response;
+    } catch (error) {
+      // Handle error
+      print("Error fetching data: $error");
+      throw error;
+    }
   }
 }

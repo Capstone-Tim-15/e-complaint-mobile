@@ -2,6 +2,9 @@
 
 import 'package:e_complaint/models/user_profile.dart';
 
+import 'package:e_complaint/viewModels/complaint_view_model.dart';
+import 'package:e_complaint/viewModels/provider/complaint.dart';
+
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
 
 import 'package:e_complaint/viewModels/news_view_model.dart';
