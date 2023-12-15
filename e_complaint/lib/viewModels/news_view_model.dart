@@ -13,33 +13,36 @@ class NewsViewModel with ChangeNotifier {
 
     if (bearerToken != null && bearerToken.isNotEmpty) {
       final newsProvider = NewsProvider(bearerToken: bearerToken);
-      await newsProvider.getNews();
+      await newsProvider.getNews(0);
       _news = newsProvider.newsList;
       notifyListeners();
     }
   }
 
-  Future<News?> getNewsById(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? bearerToken = prefs.getString('bearerToken');
+  // Future<News?> getNewsById(String id) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final String? bearerToken = prefs.getString('bearerToken');
 
-    if (bearerToken != null && bearerToken.isNotEmpty) {
-      final newsProvider = NewsProvider(bearerToken: bearerToken);
-      await newsProvider.getNews();
+  //   if (bearerToken != null && bearerToken.isNotEmpty) {
+  //     final newsProvider = NewsProvider(bearerToken: bearerToken);
+  //     await newsProvider.getNews(0);
 
-      final newsItem = newsProvider.newsList.firstWhere(
-        (news) => news.id == id,
-        orElse: () => News(
-            id: id,
-            adminId: '',
-            title: '',
-            content: '',
-            date: '',
-            feedback: '',
-            like: ''),
-      );
-      return newsItem;
-    }
-    return null;
-  }
+  //     print('News Provider: ${newsProvider.newsList}');
+
+  //     final newsItem = newsProvider.newsList.firstWhere(
+  //       (news) => news.id == id,
+  //       orElse: () => News(
+  //           id: id,
+  //           adminId: '',
+  //           title: '',
+  //           content: '',
+  //           date: '',
+  //           feedback: '',
+  //           like: ''),
+  //     );
+  //     print('News Item: $newsItem');
+  //     return newsItem;
+  //   }
+  //   return null;
+  // }
 }
