@@ -12,6 +12,7 @@ class selesai_page extends StatefulWidget {
 
 class _selesai_pageState extends State<selesai_page> {
   final Dio _dio = Dio();
+  List dataComplaintSelesai = [];
 
   @override
   void initState() {
@@ -24,24 +25,25 @@ class _selesai_pageState extends State<selesai_page> {
   }
 
   String baseUrl = "https://api.govcomplain.my.id";
-  List dataComplaintSelesai = [];
-  Future<Response> getComplaintStatus(String status) async {
+
+  Future<void> getComplaintStatus(String status) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String token = prefs.getString('token') ??
-          ""; // Jika token tidak ditemukan, set ke string kosong
+      String? token = prefs.getString('bearerToken');
 
-      // Set header bearer token;
+      // Set header bearer token
       _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      // Ganti endpoint dengan user/complaint/search?status=SEND
       Response response = await _dio.get(
-        "$baseUrl/user/complaint?page=1",
+        "$baseUrl/user/complaint/search",
         queryParameters: {'status': status},
       );
+
       final responseData = response.data['results'];
       setState(() {
-        dataComplaintSelesai = responseData;
+        dataComplaintSelesai = List.from(responseData);
       });
-      return response;
     } catch (error) {
       print("Error fetching data: $error");
       // Handle error gracefully, e.g., show an error message to the user.
@@ -98,7 +100,7 @@ class _selesai_pageState extends State<selesai_page> {
                                           children: [
                                             const SizedBox(height: 20),
                                             Text(
-                                              "${dataList["title"]}",
+                                              "${dataList["category"]}",
                                               style:
                                                   const TextStyle(fontSize: 18),
                                             ),

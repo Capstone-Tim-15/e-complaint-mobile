@@ -27,7 +27,7 @@ class AddComplaintProvider extends ChangeNotifier {
 
     try {
       final response = await Dio().get(
-          'https://api.govcomplain.my.id/user/complaint?page=1',
+          'https://api.govcomplain.my.id/user/complaint?page=6',
           options: Options(headers: {'Authorization': 'Bearer $bearerToken'}));
 
       final List<dynamic> data = response.data['results'];

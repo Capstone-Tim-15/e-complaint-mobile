@@ -44,7 +44,7 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
   @override
   void initState() {
     // TODO: implement initState
-    getComplaintById('ZiMdp8');
+    // getComplaintById('ZiMdp8');
     print('$complaintData');
     super.initState();
   }
