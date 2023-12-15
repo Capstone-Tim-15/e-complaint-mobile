@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:e_complaint/models/user_profile.dart';
+import 'package:e_complaint/viewModels/complaint_detail.dart';
 
 import 'package:e_complaint/viewModels/complaint_view_model.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
@@ -40,7 +41,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-
+        ChangeNotifierProvider(create: (context) => ComplaintViewModel()),
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
@@ -76,7 +77,8 @@ class MyApp extends StatelessWidget {
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
-            return MaterialPageRoute(builder: (context) => const HalamanDaftar());
+            return MaterialPageRoute(
+                builder: (context) => const HalamanDaftar());
           case '/forgotpwd':
             return MaterialPageRoute(builder: (context) => ForgotPassword());
           case '/resetpwd':
@@ -108,7 +110,8 @@ class MyApp extends StatelessWidget {
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
-            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
@@ -119,11 +122,14 @@ class MyApp extends StatelessWidget {
               ),
             );
           case '/riwayat-pengaduan':
-            return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
+            return MaterialPageRoute(
+                builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
-            return MaterialPageRoute(builder: (context) => const ChatBotScreen());
+            return MaterialPageRoute(
+                builder: (context) => const ChatBotScreen());
           case '/comment':
-            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => AddComplaint(),
