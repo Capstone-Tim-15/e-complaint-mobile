@@ -43,7 +43,9 @@ class ResultComplaintModel {
       imageUrl: json['imageUrl'],
       createdAt: json['createdAt'],
       updateAt: json['updateAt'],
-      comment: List<Map<String, dynamic>>.from(json['comment'] ?? []),
+      comment: json['comment'] != null
+          ? List<Map<String, dynamic>>.from(json['comment'])
+          : [],
     );
   }
 }

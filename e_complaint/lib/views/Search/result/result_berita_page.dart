@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class ResultBerita extends StatefulWidget {
-  const ResultBerita({super.key});
+  const ResultBerita({super.key, required String idCategory});
 
   @override
   State<ResultBerita> createState() => _ResultBeritaState();

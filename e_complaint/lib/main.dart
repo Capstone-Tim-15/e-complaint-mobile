@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unreachable_switch_case
 
 import 'package:e_complaint/models/user_profile.dart';
 
@@ -13,6 +13,7 @@ import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
+import 'package:e_complaint/viewModels/provider/result_complaint_provider.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
@@ -40,7 +41,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-
+        ChangeNotifierProvider(create: (context) => ResultComplaintProvider()),
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
@@ -71,8 +72,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(
-                builder: (context) => const LoginPage());
+            return MaterialPageRoute(builder: (context) => const LoginPage());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':

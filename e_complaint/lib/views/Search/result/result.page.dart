@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 
 class ResultPage extends StatefulWidget {
-  const ResultPage({Key? key}) : super(key: key);
+  final String idCategory;
+
+  const ResultPage({Key? key, required this.idCategory}) : super(key: key);
 
   @override
   State<ResultPage> createState() => _ResultPageState();
@@ -53,11 +55,11 @@ class _ResultPageState extends State<ResultPage> {
                           },
                           onSubmitted: (value) {
                             searchHistory.add(value);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ResultPage()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const ResultPage()),
+                            // );
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -182,9 +184,9 @@ class _ResultPageState extends State<ResultPage> {
                         height: MediaQuery.of(context).size.height * 0.777,
                         child: IndexedStack(
                           index: _navIndex,
-                          children: const <Widget>[
-                            ResultBerita(),
-                            ResultKeluhan(),
+                          children: <Widget>[
+                            ResultBerita(idCategory: widget.idCategory),
+                            ResultKeluhan(idCategory: widget.idCategory),
                           ],
                         ),
                       ),

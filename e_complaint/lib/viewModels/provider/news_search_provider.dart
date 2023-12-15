@@ -20,7 +20,7 @@ class NewsSearchProvider with ChangeNotifier {
 
     String url = 'http://34.128.69.15:8000/user/news';
 
-    print(jwt);
+    // print(jwt);
     Map<String, dynamic> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt',

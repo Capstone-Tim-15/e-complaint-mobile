@@ -68,11 +68,11 @@ class _SearchPageState extends State<SearchPage> {
                           },
                           onSubmitted: (value) {
                             searchHistory.add(value);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ResultPage()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const ResultPage()),
+                            // );
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -173,7 +173,11 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = '3DPTz6';
                                   });
-                                  print(idCategory);
+                                   Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>  ResultPage(idCategory: idCategory,)),
+                                  );
                                 },
                               ),
                               CustomElevatedButton(
@@ -182,7 +186,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'lMJm4r';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
@@ -191,7 +194,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'DA7CZu';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                             ],
@@ -208,7 +210,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'I2fnXf';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
@@ -217,7 +218,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = '1bKOCe';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
@@ -226,7 +226,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'ySJruI';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                             ],
@@ -243,7 +242,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'AstfNS';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
@@ -252,7 +250,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'jQBmPE';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                               CustomElevatedButton(
@@ -261,7 +258,6 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'gcKUBm';
                                   });
-                                  print(idCategory);
                                 },
                               ),
                             ],
@@ -304,14 +300,15 @@ class _SearchPageState extends State<SearchPage> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Flexible(
-                                  child: Image.asset(
-                                    news.imageUrl,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: 200,
+                                if (news.imageUrl != "")
+                                  Flexible(
+                                    child: Image.asset(
+                                      news.imageUrl,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 200,
+                                    ),
                                   ),
-                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Align(

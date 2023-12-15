@@ -17,9 +17,10 @@ class ResultComplaintProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('bearerToken') ?? '';
 
-    String url = 'http://34.128.69.15:8000/user/complaint/search?limit=10&category=$idCategory';
+    String url =
+        'http://34.128.69.15:8000/user/complaint/search?limit=10&category=$idCategory';
 
-    print(jwt);
+    // print(jwt);
     Map<String, dynamic> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt',
@@ -45,7 +46,7 @@ class ResultComplaintProvider with ChangeNotifier {
         print('Failed to fetch data. Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('An error occurred: $error');
+      print('An error occurred when fetching: $error');
     } finally {
       _isLoading = false;
       notifyListeners();
