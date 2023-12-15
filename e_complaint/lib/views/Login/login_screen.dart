@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 130,
+                  height: 150,
                 ),
                 Container(
                   width: 330,
@@ -203,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       SizedBox(
-                        height: 233,
+                        height: 220,
                       ),
                       SizedBox(
                         width: double.infinity,
