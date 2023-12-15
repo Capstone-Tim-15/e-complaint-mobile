@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:e_complaint/models/news.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Feedback;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -46,10 +46,25 @@ class NewsProvider extends ChangeNotifier {
               (item) => News(
                 id: item['id'],
                 adminId: item['adminId'],
+                category: item['category'],
+                name: item['name'],
+                photoImage: item['photoImage'],
                 title: item['title'],
                 content: item['content'],
                 date: item['date'],
-                feedback: item['feedback'] ?? '',
+                imageUrl: item['imageUrl'],
+                feedback: (item['feedback'] as List<dynamic>?)
+                    ?.map(
+                      (feedbackItem) => Feedback(
+                        id: feedbackItem['id'],
+                        fullname: feedbackItem['fullname'],
+                        role: feedbackItem['role'],
+                        photoImage: feedbackItem['photoImage'],
+                        newsId: feedbackItem['newsId'],
+                        content: feedbackItem['content'],
+                      ),
+                    )
+                    .toList(),
                 like: item['likes'] ?? '',
               ),
             )
@@ -63,7 +78,15 @@ class NewsProvider extends ChangeNotifier {
     }
   }
 
-  Future<News?> getNewsById(String id) async {
+  Future<News?> getNewsById(
+      String id,
+      String name,
+      String photoImage,
+      String content,
+      String date,
+      String imageUrl,
+      List<Feedback> feedback,
+      String like) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? bearerToken = prefs.getString('bearerToken');
 
@@ -75,13 +98,18 @@ class NewsProvider extends ChangeNotifier {
       final newsItem = newsProvider.newsList.firstWhere(
         (news) => news.id == id,
         orElse: () => News(
-            id: id,
-            adminId: '',
-            title: '',
-            content: '',
-            date: '',
-            feedback: '',
-            like: ''),
+          id: id,
+          adminId: '',
+          category: '',
+          name: name,
+          photoImage: photoImage,
+          title: '',
+          content: content,
+          date: date,
+          feedback: List<Feedback>.empty(),
+          imageUrl: imageUrl,
+          like: '',
+        ),
       );
       print('News Item: $newsItem');
       return newsItem;
@@ -116,18 +144,29 @@ class NewsProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<String>> getCommentsByNewsId(String newsId) async {
+  Future<List<Feedback>> getCommentsByNewsId(String newsId) async {
     try {
       final response = await Dio().get(
         'https://api.govcomplain.my.id/users/news/feedback/search?news_id=$newsId',
-        options: Options(headers: {'Authorization': 'Bearer $bearerToken'}),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $bearerToken',
+          },
+        ),
       );
 
-      final List<dynamic> data = response.data['results'];
+      final List<dynamic> data = response.data;
 
       return data
           .map(
-            (item) => item['Content'].toString(),
+            (item) => Feedback(
+              id: item['id'],
+              fullname: item['fullname'],
+              role: item['role'],
+              photoImage: item['photoImage'],
+              newsId: item['newsId'],
+              content: item['content'],
+            ),
           )
           .toList();
     } catch (error) {
@@ -148,9 +187,13 @@ class NewsProvider extends ChangeNotifier {
             (item) => News(
               id: item['id'],
               adminId: item['adminId'],
+              category: item['category'],
+              name: item['name'],
+              photoImage: item['photoImage'],
               title: item['title'],
               content: item['content'],
               date: item['date'],
+              imageUrl: item['imageUrl'],
               feedback: item['feedback'],
               like: item['like'],
             ),

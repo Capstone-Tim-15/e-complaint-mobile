@@ -2,16 +2,30 @@ import 'package:e_complaint/models/news.dart';
 import 'package:e_complaint/viewModels/news_view_model.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Feedback;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class NewsDetail extends StatefulWidget {
   final String id;
-  final news;
+  final name;
+  final content;
+  final photoImage;
+  final date;
+  final imageUrl;
+  final feedback;
+  final likes;
 
-  NewsDetail({required this.id, this.news});
+  NewsDetail(
+      {required this.id,
+      this.name,
+      this.content,
+      this.photoImage,
+      this.date,
+      this.imageUrl,
+      this.feedback,
+      this.likes});
 
   @override
   State<NewsDetail> createState() => _NewsDetailState();
@@ -19,22 +33,29 @@ class NewsDetail extends StatefulWidget {
 
 class _NewsDetailState extends State<NewsDetail> {
   News? _news;
-  List<String> _comments = [];
+  List<Feedback> _comments = [];
 
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? bearerToken = prefs.getString('bearerToken');
+  // @override
+  // void didChangeDependencies() async {
+  //   super.didChangeDependencies();
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final String? bearerToken = prefs.getString('bearerToken');
 
-    if (bearerToken != null && bearerToken.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        await Provider.of<NewsProvider>(context, listen: false)
-            .getNewsById(widget.id);
-        // await getNewsData();
-      });
-    }
-  }
+  //   if (bearerToken != null && bearerToken.isNotEmpty) {
+  //     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  //       await Provider.of<NewsProvider>(context, listen: false).getNewsById(
+  //           widget.id,
+  //           widget.name,
+  //           widget.photoImage,
+  //           widget.content,
+  //           widget.date,
+  //           widget.imageUrl,
+  //           widget.feedback,
+  //           widget.likes);
+  //       // await getNewsData();
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
@@ -43,27 +64,32 @@ class _NewsDetailState extends State<NewsDetail> {
   }
 
   void getNewsData() async {
-    try {
-      final news = await Provider.of<NewsProvider>(context, listen: false)
-          .getNewsById(widget.id);
-      if (news != null) {
-        setState(() {
-          _news = news;
-          print('News By ID from State: ${widget.news}');
-          print('_news: $_news'.toString());
-        });
-        print('News ID: ${_news?.id}');
-        print('News Content: ${_news?.content}');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? bearerToken = prefs.getString('bearerToken');
 
-        // final comments = await newsProvider.getCommentsByNewsId(widget.id);
-        setState(() {
-          // _comments = comments;
-        });
-      } else {
-        // Handle the case when news is null
+    if (bearerToken != null && bearerToken.isNotEmpty) {
+      try {
+        final newsProvider = Provider.of<NewsProvider>(context, listen: false);
+        final news = await newsProvider.getNewsById(
+            widget.id,
+            widget.name,
+            widget.photoImage,
+            widget.content,
+            widget.date,
+            widget.imageUrl,
+            widget.feedback,
+            widget.likes);
+        if (news != null) {
+          setState(() async {
+            _news = news;
+            _comments = await newsProvider.getCommentsByNewsId(news.id) ?? [];
+          });
+        } else {
+          // Handle the case when news is null
+        }
+      } catch (error) {
+        print('Error fetching news: $error');
       }
-    } catch (error) {
-      print('Error fetching news: $error');
     }
   }
 
@@ -106,18 +132,31 @@ class _NewsDetailState extends State<NewsDetail> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 21,
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    'assets/images/circle_avatar_admin.png',
-                                    fit: BoxFit.cover,
-                                    width: 42,
-                                    height: 42,
-                                  ),
-                                ),
-                              ),
+                              _news!.photoImage != ''
+                                  ? CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 21,
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                          _news!.photoImage,
+                                          fit: BoxFit.cover,
+                                          width: 42,
+                                          height: 42,
+                                        ),
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 21,
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                          'assets/images/circle_avatar_admin.png',
+                                          fit: BoxFit.cover,
+                                          width: 42,
+                                          height: 42,
+                                        ),
+                                      ),
+                                    ),
                               const SizedBox(
                                 width: 12,
                               ),
@@ -130,7 +169,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Admin',
+                                        _news!.name,
                                         style: TextStyle(
                                             fontFamily: 'Nunito',
                                             fontWeight: FontWeight.w600,
@@ -149,15 +188,17 @@ class _NewsDetailState extends State<NewsDetail> {
                                         width: 13,
                                       ),
                                       Text(
-                                        // DateFormat('MM-ddTHH').format(
-                                        //   DateTime.parse(_news!.date),
-                                        // )
-                                        _news!.date,
-                                        style: TextStyle(
-                                            fontFamily: 'Nunito',
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 11,
-                                            letterSpacing: -0.5),
+                                        DateFormat('MM-dd').format(
+                                          DateTime.parse(_news!.date),
+                                        ),
+                                        style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          letterSpacing: -0.5,
+                                          color: Color.fromARGB(
+                                              255, 204, 204, 204),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -183,18 +224,20 @@ class _NewsDetailState extends State<NewsDetail> {
                             child: Text(
                               _news!.content,
                               textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: -0.5),
+                              style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: -0.5,
+                                color: Color.fromARGB(255, 102, 102, 102),
+                              ),
                             ),
                           ),
-                          'assets/images/news_image.jpg' != null
+                          _news!.imageUrl != ''
                               ? ClipRRect(
                                   borderRadius: BorderRadius.circular(7.78),
                                   child: Image.asset(
-                                    'assets/images/news_image.jpg',
+                                    _news!.imageUrl,
                                   ),
                                 )
                               : SizedBox(
@@ -205,9 +248,6 @@ class _NewsDetailState extends State<NewsDetail> {
                           ),
                           Row(
                             children: [
-                              const SizedBox(
-                                width: 8,
-                              ),
                               InkWell(
                                 onTap: () {},
                                 child:
@@ -263,7 +303,7 @@ class _NewsDetailState extends State<NewsDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                          padding: EdgeInsets.fromLTRB(16, 0, 24, 0),
                           child: DropdownButton<String>(
                             value: dropdownValue,
                             icon: const ImageIcon(
@@ -352,10 +392,11 @@ class _NewsDetailState extends State<NewsDetail> {
   }
 
   Widget buildCommentSection() {
+    print('Feedback Data: ${_news!.feedback}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (var comment in _comments)
+        for (var feedback in _comments)
           Container(
             padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
             child: Column(
@@ -364,7 +405,7 @@ class _NewsDetailState extends State<NewsDetail> {
                 Row(
                   children: [
                     Text(
-                      'Marshella',
+                      feedback.fullname,
                       style: TextStyle(
                           fontFamily: 'Nunito',
                           fontWeight: FontWeight.w600,
@@ -374,14 +415,6 @@ class _NewsDetailState extends State<NewsDetail> {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      '06-20',
-                      style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 11,
-                          letterSpacing: -0.5),
-                    ),
                   ],
                 ),
                 SizedBox(
@@ -390,7 +423,7 @@ class _NewsDetailState extends State<NewsDetail> {
                 SizedBox(
                   width: 262,
                   child: Text(
-                    comment,
+                    feedback.content,
                     style: TextStyle(
                         fontFamily: 'Nunito',
                         fontWeight: FontWeight.w400,
@@ -425,7 +458,7 @@ class _NewsDetailState extends State<NewsDetail> {
                 ),
               ],
             ),
-          )
+          ),
       ],
     );
   }
