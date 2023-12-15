@@ -1,27 +1,25 @@
-import 'dart:ui';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 class Complaint {
-  final String categoryId;
+  final String id;
+  final String userId;
+  final String name;
+  final String photoImage;
+  final String category;
   final String title;
-  final String status;
   final String content;
-  final String attachment;
+  final String status;
+  final String imageUrl;
+  final String comment;
 
   Complaint({
-    required this.categoryId,
+    required this.id,
+    required this.userId,
+    required this.name,
+    required this.photoImage,
+    required this.category,
     required this.title,
-    required this.status,
     required this.content,
-    required this.attachment,
-    required String nama,
-    required String imagePath,
-    required Color textColor,
-    required String tulisKeluhan,
-    required String alamat,
-    required String selectedCategory,
+    required this.status,
+    required this.imageUrl,
+    required this.comment,
   });
-
-  // Metode untuk mengonversi objek ke map untuk dikirim sebagai formulir
 }

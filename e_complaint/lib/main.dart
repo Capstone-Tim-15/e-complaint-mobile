@@ -2,6 +2,9 @@
 
 import 'package:e_complaint/models/user_profile.dart';
 
+import 'package:e_complaint/viewModels/complaint_view_model.dart';
+import 'package:e_complaint/viewModels/provider/complaint.dart';
+
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
 
 import 'package:e_complaint/viewModels/news_view_model.dart';
@@ -14,7 +17,6 @@ import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
-
 // import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/account_success.dart';
 import 'package:e_complaint/views/Login/change_password.dart';
@@ -24,17 +26,10 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
-import 'package:e_complaint/views/Search/result/result.page.dart';
-import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'views/Search/search_kategori_screen.dart';
-
 import 'package:e_complaint/views/widget/bottom_nav.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'views/Register/register.dart';
 import 'views/Welcome/onboarding_screen.dart';
 // import 'views/Welcome/spalsh_screen.dart';
@@ -45,9 +40,11 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
+
         ChangeNotifierProvider(
           create: (_) => NewsViewModel(),
         ),
@@ -74,7 +71,8 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(builder: (context) => const LoginPage());
+            return MaterialPageRoute(
+                builder: (context) => const OnboardingScreen());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
@@ -105,6 +103,8 @@ class MyApp extends StatelessWidget {
                 },
               ),
             );
+          case '/news':
+            return MaterialPageRoute(builder: (context) => BottomNavigation());
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':

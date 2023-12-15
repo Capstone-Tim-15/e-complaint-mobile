@@ -1,5 +1,7 @@
 import 'package:e_complaint/views/Login/login_screen.dart';
+import 'package:e_complaint/views/Welcome/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class keluar extends StatelessWidget {
   const keluar({
@@ -31,11 +33,44 @@ class keluar extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginPage()));
+            showExitConfirmationDialog(context);
           },
         ),
       ),
+    );
+  }
+
+  void showExitConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi Keluar'),
+          content: Text('Apakah Anda yakin ingin keluar dari aplikasi?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Hapus token dari Shared Preferences
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove('bearerToken');
+
+                // Navigasi ke halaman awal aplikasi
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: Text('Keluar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

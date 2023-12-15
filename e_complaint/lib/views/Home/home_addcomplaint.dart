@@ -17,6 +17,11 @@ class ComplaintApiService {
     bearerToken ??= _prefs!.getString('bearerToken');
   }
 
+  Future<String?> getUserName() async {
+    await _initPrefs();
+    return _prefs!.getString('name');
+  }
+
   Future<Response> getCategory() async {
     await _initPrefs();
 
@@ -106,7 +111,7 @@ class _AddComplaintState extends State<AddComplaint> {
   TextEditingController tulisKeluhanController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
   List<Map<String, dynamic>> _categoryList = [];
-
+  String nama = '';
   String _selectedItem = '';
   int _selectedCategoryIndex = -1;
 
@@ -118,7 +123,7 @@ class _AddComplaintState extends State<AddComplaint> {
   String? _videoName;
 
   // Informasi pengguna
-  String nama = 'Jeon Jungkook';
+
   String imagePath = 'assets/image/jk.jpeg';
   Color textColor = Color.fromARGB(255, 249, 171, 167);
 
@@ -126,6 +131,21 @@ class _AddComplaintState extends State<AddComplaint> {
   void initState() {
     super.initState();
     _fetchCategories();
+    _fetchUserName(); // Fetch user name when the widget initializes
+  }
+
+  Future<void> _fetchUserName() async {
+    try {
+      final username = await _complaintApiService.getUserName();
+      if (username != null) {
+        setState(() {
+          nama = username;
+        });
+      }
+    } catch (e) {
+      print('Error loading user name: $e');
+      // Handle the error as needed
+    }
   }
 
   Future<void> _fetchCategories() async {
@@ -476,19 +496,6 @@ class _AddComplaintState extends State<AddComplaint> {
                       ),
                     ),
                     SizedBox(width: 20),
-                    // AnimatedSwitcher(
-                    //   duration: Duration(milliseconds: 250),
-                    //   child: _selectedItem.isEmpty
-                    //       ? Text('Pilih Kategori',
-                    //           style: TextStyle(color: Colors.red))
-                    //       : Text(
-                    //           _selectedItem,
-                    //           style: TextStyle(
-                    //             fontWeight: FontWeight.bold,
-                    //             color: Colors.red,
-                    //           ),
-                    //         ),
-                    // ),
 
                     const SizedBox(
                       height: 80,
@@ -512,6 +519,8 @@ class _AddComplaintState extends State<AddComplaint> {
                             );
                             if (response.statusCode == 201) {
                               print(response.data);
+
+                              Navigator.pushNamed(context, '/news');
                             } else {
                               print(response.statusMessage);
                             }

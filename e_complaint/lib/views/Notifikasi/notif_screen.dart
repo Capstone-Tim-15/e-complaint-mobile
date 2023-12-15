@@ -1,3 +1,4 @@
+import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
@@ -37,17 +38,23 @@ class Notifikasi extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          'Tandai Sudah Dibaca (1)',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 13,
-                            height: 3,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => riwayat_pengaduan_page(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Lihat Selengkapnya',
+                            style: TextStyle(color: Colors.red),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     SizedBox(
