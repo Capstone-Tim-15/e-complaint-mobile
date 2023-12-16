@@ -2,7 +2,7 @@
 
 import 'package:e_complaint/models/user_profile.dart';
 
-import 'package:e_complaint/viewModels/provider/complaint.dart';
+// import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
 
 import 'package:e_complaint/viewModels/news_view_model.dart';
@@ -13,6 +13,7 @@ import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
+import 'package:e_complaint/views/Home/component/arsip_berita/arsip_berita.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 
 // import 'package:e_complaint/views/Home/home_screen.dart';
@@ -88,7 +89,8 @@ class MyApp extends StatelessWidget {
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
-            return MaterialPageRoute(builder: (context) => const HalamanDaftar());
+            return MaterialPageRoute(
+                builder: (context) => const HalamanDaftar());
           case '/forgotpwd':
             return MaterialPageRoute(builder: (context) => ForgotPassword());
           case '/resetpwd':
@@ -118,7 +120,8 @@ class MyApp extends StatelessWidget {
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
-            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
@@ -129,11 +132,16 @@ class MyApp extends StatelessWidget {
               ),
             );
           case '/riwayat-pengaduan':
-            return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
+            return MaterialPageRoute(
+                builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
-            return MaterialPageRoute(builder: (context) => const ChatBotScreen());
+            return MaterialPageRoute(
+                builder: (context) => const ChatBotScreen());
           case '/comment':
-            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
+          case '/arsipBerita':
+            return MaterialPageRoute(builder: (context) => ArsipBerita());
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => const AddComplaint(

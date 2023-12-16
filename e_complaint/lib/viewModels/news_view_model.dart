@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class NewsViewModel with ChangeNotifier {
   List<News> _news = [];
   List<News> get news => _news;
+  List<News> archivedNews = [];
 
   Future<void> getAllNews() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -41,5 +42,23 @@ class NewsViewModel with ChangeNotifier {
       return newsItem;
     }
     return null;
+  }
+
+  //fungsi untuk menyimpan berita
+  void saveToArchive(News news) {
+    if (!archivedNews.contains(news)) {
+      archivedNews.add(news);
+      notifyListeners();
+    }
+  }
+
+  List<News> getArchivedNews() {
+    return archivedNews;
+  }
+
+  // Fungsi untuk menghapus berita dari arsip
+  void removeFromArchive(News news) {
+    archivedNews.remove(news);
+    notifyListeners();
   }
 }

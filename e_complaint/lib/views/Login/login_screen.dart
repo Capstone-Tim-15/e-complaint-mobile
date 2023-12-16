@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 150,
                 ),
                 Container(
-                  width: 265,
+                  width: 330,
                   height: 88,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
