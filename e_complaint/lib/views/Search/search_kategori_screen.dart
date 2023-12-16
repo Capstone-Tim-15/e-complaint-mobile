@@ -68,11 +68,14 @@ class _SearchPageState extends State<SearchPage> {
                           },
                           onSubmitted: (value) {
                             searchHistory.add(value);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const ResultPage()),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResultPage(
+                                        idCategory: value,
+                                        news: true,
+                                      )),
+                            );
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -178,6 +181,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -193,6 +197,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -208,6 +213,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -231,6 +237,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -246,6 +253,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -261,6 +269,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -284,6 +293,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -299,6 +309,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },
@@ -314,6 +325,7 @@ class _SearchPageState extends State<SearchPage> {
                                     MaterialPageRoute(
                                         builder: (context) => ResultPage(
                                               idCategory: idCategory,
+                                              news: false,
                                             )),
                                   );
                                 },

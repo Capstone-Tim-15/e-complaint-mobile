@@ -1,6 +1,8 @@
+import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ResultBerita extends StatefulWidget {
   const ResultBerita({super.key, required String idCategory});
@@ -10,51 +12,24 @@ class ResultBerita extends StatefulWidget {
 }
 
 class _ResultBeritaState extends State<ResultBerita> {
-  List<Map<String, dynamic>> posts = [
-    {
-      'userName': 'Arif Setiawan',
-      'userImage': 'https://picsum.photos/200/300.jpg',
-      'postDate': DateTime.now().subtract(const Duration(days: 1)),
-      'address': 'Jl Bangka Raya',
-      'postDescription':
-          'Kurikulum di SMK Negeri Batam perlu pembaruan. Perkembangan teknologi terbaru perlu diintegrasikan. Kami harap ada perbaikan segera. Terima kasih!',
-      'postImage': 'https://picsum.photos/200',
-      'likes': 10,
-      'comments': 5,
-      'save': 5,
-      'shares': 3,
-    },
-    {
-      'userName': 'User 2',
-      'userImage': 'https://picsum.photos/500/300.jpg',
-      'postDate': DateTime.now().subtract(const Duration(days: 2)),
-      'address': 'Jl Bangka Raya',
-      'postDescription': 'This is the second post.',
-      'postImage': null, // atau ''
-      'likes': 20,
-      'comments': 10,
-      'save': 5,
-      'shares': 6,
-    },
-    {
-      'userName': 'Arif Setiawan',
-      'userImage': 'https://picsum.photos/200/300.jpg',
-      'postDate': DateTime.now().subtract(const Duration(days: 1)),
-      'address': 'Jl Bangka Raya',
-      'postDescription':
-          'Kurikulum di SMK Negeri Batam perlu pembaruan. Perkembangan teknologi terbaru perlu diintegrasikan. Kami harap ada perbaikan segera. Terima kasih!',
-      'postImage': 'https://picsum.photos/200',
-      'likes': 10,
-      'comments': 5,
-      'save': 5,
-      'shares': 3,
-    },
-  ];
+  late final NewsSearchProvider newsSearchProv;
+
+  @override
+  void initState() {
+    super.initState();
+    newsSearchProv = context.read<NewsSearchProvider>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      newsSearchProv.fetchData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final newsSearchProv = Provider.of<NewsSearchProvider>(context);
     return ListView.builder(
-      itemCount: posts.length,
+      itemCount: newsSearchProv.newsSearchData.length,
       itemBuilder: (context, index) {
+        final news = newsSearchProv.newsSearchData[index];
         return Container(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -63,36 +38,30 @@ class _ResultBeritaState extends State<ResultBerita> {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(posts[index]['userImage']),
+                    backgroundImage: news.photoImage != "" &&
+                            news.photoImage.isNotEmpty
+                        ? NetworkImage(
+                            'https://res.cloudinary.com/dua3iphs9/image/upload/v1700572036/${news.photoImage}')
+                        : const AssetImage('assets/images/Contact.png')
+                            as ImageProvider,
                     radius: 20,
                   ),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(posts[index]['userName'],
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              )),
-                          const SizedBox(width: 10),
-                          Text(
-                            DateFormat('yyyy-MM-dd').format(
-                              posts[index]['postDate'],
-                            ),
-                            style: const TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
+                      Text(news.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )),
                       const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        posts[index]['address'],
+                        news.date != "" && news.date.isNotEmpty
+                            ? " tanggal ${news.date}"
+                            : "2023-12-18",
                         style: const TextStyle(color: Colors.red),
                       ),
                     ],
@@ -103,25 +72,25 @@ class _ResultBeritaState extends State<ResultBerita> {
                 height: 10,
               ),
               Text(
-                posts[index]['postDescription'],
+                news.content,
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(
                 height: 10,
               ),
-              posts[index]['postImage'] != null && posts[index]['postImage'] != ''
-                  ? Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        image: DecorationImage(
-                          image: NetworkImage(posts[index]['postImage']),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      width: 500,
-                      height: 200,
-                    )
-                  : const SizedBox.shrink(),
+              if (news.imageUrl != "")
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://res.cloudinary.com/dua3iphs9/image/upload/v1700572036/${news.imageUrl}'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  width: 500,
+                  height: 200,
+                ),
               const SizedBox(
                 height: 10,
               ),
@@ -138,7 +107,7 @@ class _ResultBeritaState extends State<ResultBerita> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text('${posts[index]['likes']}'),
+                  Text(news.feedback?.length.toString() ?? '0'),
                   const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {},
@@ -151,33 +120,8 @@ class _ResultBeritaState extends State<ResultBerita> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text('${posts[index]['comments']}'),
+                  Text(news.likes?.length.toString() ?? '0'),
                   const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      'assets/icons/save.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text('${posts[index]['save']}'),
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      'assets/icons/share.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text('${posts[index]['shares']}'),
                 ],
               ),
               const Divider(),

@@ -5,8 +5,10 @@ import 'package:indexed/indexed.dart';
 
 class ResultPage extends StatefulWidget {
   final String idCategory;
+  final bool news;
 
-  const ResultPage({Key? key, required this.idCategory}) : super(key: key);
+  const ResultPage({Key? key, required this.idCategory, required this.news})
+      : super(key: key);
 
   @override
   State<ResultPage> createState() => _ResultPageState();
@@ -18,6 +20,16 @@ class _ResultPageState extends State<ResultPage> {
   List<String> searchHistory = ['History 1', 'History 2', 'History 3'];
   bool _isVisible = false;
   bool _isIndexedVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.news == true) {
+      setState(() {
+        _navIndex = 1;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
