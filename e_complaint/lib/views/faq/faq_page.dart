@@ -9,6 +9,10 @@ class FAQPage extends StatefulWidget {
 class _FAQPageState extends State<FAQPage> {
   Dio dio = Dio();
   List<Map<String, dynamic>> faqList = [];
+  bool isLoading =
+      true; // Tambahkan state untuk menandai apakah sedang loading atau tidak
+  String errorMessage =
+      ''; // Tambahkan state untuk menyimpan pesan error jika ada
 
   @override
   void initState() {
@@ -18,12 +22,29 @@ class _FAQPageState extends State<FAQPage> {
 
   Future<void> fetchDataFromApi() async {
     try {
-      Response response = await dio.get('https://api.govcomplain.my.id/user/faq');
-      setState(() {
-        faqList = List<Map<String, dynamic>>.from(response.data['results']);
-      });
+      Response response =
+          await dio.get('https://api.govcomplain.my.id/user/faq');
+      if (response.statusCode == 200) {
+        setState(() {
+          isLoading = false;
+          faqList = List<Map<String, dynamic>>.from(response.data['results']);
+        });
+        // Pernyataan berhasil di console
+        print('FAQ data fetched successfully!');
+      } else {
+        setState(() {
+          isLoading = false;
+          errorMessage =
+              'Error fetching FAQ data: Status Code ${response.statusCode}';
+        });
+        print(errorMessage);
+      }
     } catch (e) {
-      print('Error fetching FAQ data: $e');
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Error fetching FAQ data: $e';
+      });
+      print(errorMessage);
     }
   }
 
@@ -31,7 +52,8 @@ class _FAQPageState extends State<FAQPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FAQ', style: TextStyle(color: Colors.black, fontFamily: 'Nunito')),
+        title: Text('FAQ',
+            style: TextStyle(color: Colors.black, fontFamily: 'Nunito')),
         shadowColor: Color.fromARGB(255, 255, 255, 255),
         elevation: 1,
         backgroundColor: Colors.white,
@@ -44,15 +66,22 @@ class _FAQPageState extends State<FAQPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: faqList.length,
-          itemBuilder: (context, index) {
-            return FAQCard(
-              title: faqList[index]['title'],
-              
-            );
-          },
-        ),
+        child: isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : errorMessage.isNotEmpty
+                ? Center(
+                    child: Text(errorMessage),
+                  )
+                : ListView.builder(
+                    itemCount: faqList.length,
+                    itemBuilder: (context, index) {
+                      return FAQCard(
+                        title: faqList[index]['title'],
+                      );
+                    },
+                  ),
       ),
       backgroundColor: Colors.white,
     );
@@ -61,7 +90,6 @@ class _FAQPageState extends State<FAQPage> {
 
 class FAQCard extends StatelessWidget {
   final String title;
-  
 
   FAQCard({required this.title});
 
@@ -88,7 +116,6 @@ class FAQCard extends StatelessWidget {
               ),
               textAlign: TextAlign.left,
             ),
-          
             trailing: CircleAvatar(
               backgroundColor: Color(0xFFFFDBCF),
               radius: 12,
