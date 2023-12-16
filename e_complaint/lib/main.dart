@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/faq_page',
+      initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
