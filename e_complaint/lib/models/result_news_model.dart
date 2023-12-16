@@ -1,49 +1,43 @@
-class ResultNewsComplaint {
+class ResultNewsModel {
   final String id;
-  final String userId;
-  final String name;
-  final String photoImage;
+  final String adminId;
   final String category;
+  final String fullname;
+  final String photoImage;
   final String title;
   final String content;
-  final String address;
-  final String status;
+  final String date;
   final String imageUrl;
-  final String createdAt;
-  final String updateAt;
-  final List<Map<String, dynamic>>? comment;
+  final List<Map<String, dynamic>>? feedback;
+  final List<Map<String, dynamic>>? likes;
 
-  ResultNewsComplaint({
+  ResultNewsModel({
     required this.id,
-    required this.userId,
-    required this.name,
-    required this.photoImage,
+    required this.adminId,
     required this.category,
+    required this.fullname,
+    required this.photoImage,
     required this.title,
     required this.content,
-    required this.address,
-    required this.status,
+    required this.date,
     required this.imageUrl,
-    required this.createdAt,
-    required this.updateAt,
-    this.comment,
+    this.feedback,
+    this.likes,
   });
 
-  factory ResultNewsComplaint.fromJson(Map<String, dynamic> json) {
-    return ResultNewsComplaint(
+  factory ResultNewsModel.fromJson(Map<String, dynamic> json) {
+    return ResultNewsModel(
       id: json['id'],
-      userId: json['userId'],
-      name: json['name'],
-      photoImage: json['photoImage'],
+      adminId: json['adminId'],
       category: json['category'],
+      fullname: json['fullname'],
+      photoImage: json['photoImage'],
       title: json['title'],
       content: json['content'],
-      address: json['address'],
-      status: json['status'],
+      date: json['date'],
       imageUrl: json['imageUrl'],
-      createdAt: json['createdAt'],
-      updateAt: json['updateAt'],
-      comment: List<Map<String, dynamic>>.from(json['comment'] ?? []),
+      feedback: List<Map<String, dynamic>>.from(json['feedback'] ?? []),
+      likes: List<Map<String, dynamic>>.from(json['likes'] ?? []),
     );
   }
 }

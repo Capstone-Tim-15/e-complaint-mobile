@@ -27,7 +27,7 @@ class _ResultKeluhanState extends State<ResultKeluhan> {
   Widget build(BuildContext context) {
     final resultComplaintPorvider = Provider.of<ResultComplaintProvider>(context);
     return resultComplaintPorvider.resutComplaintData.isEmpty
-        ? Text('tidak ada data')
+        ? const Center(child: Text('Tidak dapat menemukan data keluhan'))
         : ListView.builder(
             itemCount: resultComplaintPorvider.resutComplaintData.length,
             itemBuilder: (context, index) {

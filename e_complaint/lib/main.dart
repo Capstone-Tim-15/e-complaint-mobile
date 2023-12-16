@@ -14,6 +14,7 @@ import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/viewModels/provider/result_complaint_provider.dart';
+import 'package:e_complaint/viewModels/provider/result_news_provider.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
@@ -42,6 +43,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
         ChangeNotifierProvider(create: (context) => ResultComplaintProvider()),
+        ChangeNotifierProvider(create: (context) => ResultNewsProvider()),
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),

@@ -4,6 +4,7 @@ import 'package:e_complaint/views/Search/widget/kategori_button.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -29,7 +30,34 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
-  List<String> searchHistory = ['History 1', 'History 2', 'History 3'];
+  // Clear History Search
+  Future<void> deleteValue(int index) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String>? savedValues = preferences.getStringList('values');
+    if (savedValues != null && savedValues.length > index) {
+      savedValues.removeAt(index);
+      await preferences.setStringList('values', savedValues);
+      // You might want to update the UI after deletion
+      setState(() {});
+    }
+  }
+
+  // Add History Search
+  Future<void> saveValue(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? savedValues = prefs.getStringList('values');
+    savedValues ??= [];
+    savedValues.add(value);
+    await prefs.setStringList('values', savedValues);
+  }
+
+  // Get History Search
+  Future<List<String>> getValues() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? values = prefs.getStringList('values');
+    values ??= [];
+    return values;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +94,9 @@ class _SearchPageState extends State<SearchPage> {
                               _isVisible = true;
                             });
                           },
-                          onSubmitted: (value) {
-                            searchHistory.add(value);
+                          onSubmitted: (value) async {
+                            await saveValue(value);
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -97,58 +126,88 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     )),
                   ),
-                  Visibility(
-                    visible: _isVisible,
-                    child: Indexed(
-                      index: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 34.0),
-                        child: Center(
-                          child: Container(
-                            width: 360,
-                            height: 180,
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              border: Border(
-                                bottom: BorderSide(color: Colors.red),
-                                left: BorderSide(color: Colors.red),
-                                right: BorderSide(color: Colors.red),
+                  FutureBuilder<List<String>>(
+                    future: getValues(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+                          // Reverse the order of the list to display the most recent data at the top
+                          List<String> reversedValues =
+                              snapshot.data!.reversed.toList();
+
+                          return Visibility(
+                            visible: _isVisible,
+                            child: Indexed(
+                              index: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 34.0),
+                                child: Center(
+                                  child: Container(
+                                    width: 360,
+                                    height: 180,
+                                    padding:
+                                        const EdgeInsets.only(left: 8.0, right: 8),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border(
+                                        bottom: BorderSide(color: Colors.red),
+                                        left: BorderSide(color: Colors.red),
+                                        right: BorderSide(color: Colors.red),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        const Divider(),
+                                        ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: reversedValues.length > 3
+                                              ? 3
+                                              : reversedValues.length,
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              title: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(reversedValues[index]),
+                                                  InkWell(
+                                                    child: const Text(
+                                                      'Hapus',
+                                                      style: TextStyle(
+                                                          color: Colors.red),
+                                                    ),
+                                                    onTap: () async {
+                                                      await deleteValue(index);
+                                                      setState(() {
+                                                        _isVisible = !_isVisible;
+                                                      });
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                // Implement tap logic here
+                                              },
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                            child: Column(
-                              children: [
-                                const Divider(),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: searchHistory.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      title: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(searchHistory[index]),
-                                          InkWell(
-                                            child: const Text(
-                                              'Hapus',
-                                              style: TextStyle(color: Colors.red),
-                                            ),
-                                            onTap: () {},
-                                          )
-                                        ],
-                                      ),
-                                      onTap: () {},
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                          );
+                        } else {
+                          // Jika data tidak ada, tidak tampilkan widget
+                          return Container();
+                        }
+                      }
+                    },
                   ),
                   Indexed(
                     index: 0,
