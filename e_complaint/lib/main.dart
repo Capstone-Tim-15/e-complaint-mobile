@@ -1,15 +1,10 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:e_complaint/models/user_profile.dart';
+// import 'package:e_complaint/models/user_profile.dart';
 import 'package:e_complaint/viewModels/complaint_detail.dart';
-
-import 'package:e_complaint/viewModels/complaint_view_model.dart';
-import 'package:e_complaint/viewModels/provider/complaint.dart';
-
+// import 'package:e_complaint/viewModels/complaint_view_model.dart';
+// import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
-
 import 'package:e_complaint/viewModels/news_view_model.dart';
-
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
@@ -27,6 +22,7 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
+import 'package:e_complaint/views/faq/faq_page.dart';
 import 'package:flutter/material.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:provider/provider.dart';
@@ -107,6 +103,8 @@ class MyApp extends StatelessWidget {
             );
           case '/news':
             return MaterialPageRoute(builder: (context) => BottomNavigation());
+          case '/faq':
+            return MaterialPageRoute(builder: (context) => FAQPage());
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':

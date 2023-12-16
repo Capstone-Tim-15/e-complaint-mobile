@@ -11,6 +11,36 @@ class ComplaintViewModel extends ChangeNotifier {
   String baseUrl = "https://api.govcomplain.my.id";
   late ComplaintModel complaintData;
 
+  Future<void> postComment(String complaintId, String message) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('bearerToken');
+
+      // Set header bearer token
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      // Prepare the comment data
+      Map<String, dynamic> commentData = {
+        "complaintId": complaintId,
+        "role": "user",
+        "message": message,
+      };
+
+      Response response =
+          await _dio.post('$baseUrl/user/comment', data: commentData);
+
+      if (response.statusCode == 201) {
+        print("Comment posted successfully");
+        // Optionally, you can update the complaintData or perform any other necessary actions.
+      } else {
+        print("Error posting comment: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("Error posting comment: $error");
+      // Handle error gracefully, e.g., show an error message to the user.
+    }
+  }
+
   Future<void> getComplaintById(String id) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

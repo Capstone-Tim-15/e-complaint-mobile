@@ -78,7 +78,9 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
               const SizedBox(width: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Simpan komentar ke server atau tempat penyimpanan yang sesuai di sini
+                  // Panggil fungsi postComment dari ViewModel dengan menggunakan complaintId yang sesuai
+                  _viewModel.postComment(
+                      widget.complaintId, _textEditingController.text);
 
                   // Bersihkan teks di TextField setelah mengirim komentar
                   _textEditingController.clear();
@@ -147,8 +149,8 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
                     )),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12, right: 12),
+                SizedBox(
+                  width: 100,
                   child: Text(
                     viewModel.complaintData.content,
                     style: const TextStyle(
@@ -173,56 +175,7 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
                   ],
                 ),
                 const SizedBox(
-                  height: 25,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 60,
-                      width: 30,
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            isLiked
-                                ? Icons.thumb_up
-                                : Icons.thumb_up_alt_outlined,
-                            color: isLiked ? Colors.red : null,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isLiked = !isLiked;
-                            });
-                          },
-                        ),
-                        const Text('100'),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.comment),
-                          onPressed: () {
-                            _focusNode.requestFocus();
-                            _scrollController.animateTo(
-                              _scrollController.position.maxScrollExtent,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            );
-                          },
-                        ),
-                        const Text('50'),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  ],
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -293,7 +246,7 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const SizedBox(height: 20),
+                                      const SizedBox(height: 10),
                                       Text(
                                         comment['fullname'],
                                         style: const TextStyle(fontSize: 18),
