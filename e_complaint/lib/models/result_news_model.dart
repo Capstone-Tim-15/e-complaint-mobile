@@ -1,4 +1,4 @@
-class ResultComplaintModel {
+class ResultNewsComplaint {
   final String id;
   final String userId;
   final String name;
@@ -13,7 +13,7 @@ class ResultComplaintModel {
   final String updateAt;
   final List<Map<String, dynamic>>? comment;
 
-  ResultComplaintModel({
+  ResultNewsComplaint({
     required this.id,
     required this.userId,
     required this.name,
@@ -29,8 +29,8 @@ class ResultComplaintModel {
     this.comment,
   });
 
-  factory ResultComplaintModel.fromJson(Map<String, dynamic> json) {
-    return ResultComplaintModel(
+  factory ResultNewsComplaint.fromJson(Map<String, dynamic> json) {
+    return ResultNewsComplaint(
       id: json['id'],
       userId: json['userId'],
       name: json['name'],

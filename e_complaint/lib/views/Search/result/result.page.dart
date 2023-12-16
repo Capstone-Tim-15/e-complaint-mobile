@@ -138,8 +138,8 @@ class _ResultPageState extends State<ResultPage> {
                       padding: const EdgeInsets.only(top: 60),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: ['Berita', 'Keluhan'].map((label) {
-                          int index = ['Berita', 'Keluhan'].indexOf(label);
+                        children: ['Keluhan', 'Berita'].map((label) {
+                          int index = ['Keluhan', 'Berita'].indexOf(label);
                           return TextButton(
                             child: Text(
                               label,
@@ -185,8 +185,8 @@ class _ResultPageState extends State<ResultPage> {
                         child: IndexedStack(
                           index: _navIndex,
                           children: <Widget>[
-                            ResultBerita(idCategory: widget.idCategory),
                             ResultKeluhan(idCategory: widget.idCategory),
+                            ResultBerita(idCategory: widget.idCategory),
                           ],
                         ),
                       ),

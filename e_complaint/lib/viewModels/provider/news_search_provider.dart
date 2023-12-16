@@ -12,8 +12,6 @@ class NewsSearchProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-
-
   void fetchData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString('bearerToken') ?? '';
@@ -27,7 +25,6 @@ class NewsSearchProvider with ChangeNotifier {
     };
 
     try {
-
       _isLoading = true;
       notifyListeners();
 

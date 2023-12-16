@@ -173,10 +173,12 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = '3DPTz6';
                                   });
-                                   Navigator.push(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>  ResultPage(idCategory: idCategory,)),
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
                                   );
                                 },
                               ),
@@ -186,6 +188,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'lMJm4r';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                               CustomElevatedButton(
@@ -194,6 +203,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'DA7CZu';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                             ],
@@ -210,6 +226,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'I2fnXf';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                               CustomElevatedButton(
@@ -218,6 +241,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = '1bKOCe';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                               CustomElevatedButton(
@@ -226,6 +256,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'ySJruI';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                             ],
@@ -242,6 +279,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'AstfNS';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                               CustomElevatedButton(
@@ -250,6 +294,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'jQBmPE';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                               CustomElevatedButton(
@@ -258,6 +309,13 @@ class _SearchPageState extends State<SearchPage> {
                                   setState(() {
                                     idCategory = 'gcKUBm';
                                   });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                              idCategory: idCategory,
+                                            )),
+                                  );
                                 },
                               ),
                             ],
@@ -302,8 +360,8 @@ class _SearchPageState extends State<SearchPage> {
                               children: <Widget>[
                                 if (news.imageUrl != "")
                                   Flexible(
-                                    child: Image.asset(
-                                      news.imageUrl,
+                                    child: Image.network(
+                                      'https://res.cloudinary.com/dua3iphs9/image/upload/v1700572036/${news.imageUrl}',
                                       fit: BoxFit.cover,
                                       width: double.infinity,
                                       height: 200,

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:e_complaint/models/news_search_model.dart';
 import 'package:e_complaint/models/result_complaint_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,10 +37,18 @@ class ResultComplaintProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        _resultComplainData = List<ResultComplaintModel>.from(
-            (response.data['results'] as List)
-                .map((x) => ResultComplaintModel.fromJson(x)));
-        print('Succes get data');
+        if (response.statusCode == 200) {
+          if (response.data['results'] != null) {
+            _resultComplainData = List<ResultComplaintModel>.from(
+                (response.data['results'] as List)
+                    .map((x) => ResultComplaintModel.fromJson(x)));
+          } else {
+            _resultComplainData = [];
+          }
+          print('Success get data');
+        } else {
+          print('Failed to fetch data. Status code: ${response.statusCode}');
+        }
       } else {
         print('Failed to fetch data. Status code: ${response.statusCode}');
       }
