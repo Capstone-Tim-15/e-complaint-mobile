@@ -94,7 +94,10 @@ class _diproses_pageState extends State<diproses_page> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        detailPengaduan_page(),
+                                                        detailPengaduan_page(
+                                                      complaintId:
+                                                          dataList['id'],
+                                                    ),
                                                   ),
                                                 );
                                               },
