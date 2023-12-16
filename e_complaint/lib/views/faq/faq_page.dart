@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 class FAQPage extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _FAQPageState extends State<FAQPage> {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color(0xFFBF0024)),
+          icon: Icon(Icons.arrow_back, color: Colors.red),
           onPressed: () {
             Navigator.pushNamed(context, '/profile');
           },
@@ -79,6 +80,7 @@ class _FAQPageState extends State<FAQPage> {
                     itemBuilder: (context, index) {
                       return FAQCard(
                         title: faqList[index]['title'],
+                        content: faqList[index]['content'],
                       );
                     },
                   ),
@@ -90,21 +92,32 @@ class _FAQPageState extends State<FAQPage> {
 
 class FAQCard extends StatelessWidget {
   final String title;
+  final String content;
 
-  FAQCard({required this.title});
+  FAQCard({required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 9.0),
       child: Card(
+        elevation: 2, // Sesuaikan dengan tinggi elevasi yang diinginkan
+        shadowColor: Colors.black, // Ganti dengan warna bayangan yang diinginkan
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 0.3,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(15.0, 12.0, 0.0, 12.0),
-          child: ListTile(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 205, 205, 205),
+                blurRadius: 0, // Sesuaikan dengan radius blur yang diinginkan
+                offset: Offset(0, 1), // Sesuaikan dengan offset yang diinginkan
+              ),
+            ],
+          ),
+          child: ExpansionTileCard(
             title: Text(
               title,
               style: TextStyle(
@@ -114,22 +127,33 @@ class FAQCard extends StatelessWidget {
                 height: 1.43,
                 letterSpacing: -0.5,
               ),
-              textAlign: TextAlign.left,
             ),
-            trailing: CircleAvatar(
-              backgroundColor: Color(0xFFFFDBCF),
-              radius: 12,
-              child: Icon(Icons.keyboard_arrow_right, color: Color(0xFFBF0024)),
-            ),
-            onTap: () {
-              // Handle the tap event for the FAQ item
-            },
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  content,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              // Tambahkan konten lain sesuai kebutuhan
+            ],
+            elevation: 0, // Sesuaikan dengan tinggi elevasi yang diinginkan
+            borderRadius: BorderRadius.circular(
+                10), // Sesuaikan dengan radius sudut yang diinginkan
+            expandedTextColor: Colors
+                .red, // Ganti dengan warna teks judul saat diperluas yang diinginkan
+            baseColor: Colors
+                .white, // Ganti dengan warna dasar saat dalam keadaan biasa yang diinginkan
+            contentPadding: EdgeInsets.all(
+                8), // Sesuaikan dengan padding konten yang diinginkan
           ),
         ),
       ),
     );
   }
 }
+
 
 void main() {
   runApp(MaterialApp(
