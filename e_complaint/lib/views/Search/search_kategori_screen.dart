@@ -1,7 +1,10 @@
+import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/views/Search/result/result.page.dart';
 import 'package:e_complaint/views/Search/widget/kategori_button.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -11,14 +14,26 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  late final NewsSearchProvider newsProf;
   final TextEditingController _searchController = TextEditingController();
-
+  String jwt = '';
   bool _isVisible = false;
+  // ignore: unused_field
   bool _isIndexedVisible = true;
 
   @override
   void initState() {
     super.initState();
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      jwt = prefs.getString('token') ?? '';
+    });
+
+    newsProf.fetchData(jwt);
   }
 
   List<String> searchHistory = ['History 1', 'History 2', 'History 3'];

@@ -70,15 +70,6 @@ class _ProfiledetailState extends State<Profiledetail> {
       appBar: AppBar(
         title: const Text('Profile Detail'),
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.amber,
-          ), // Replace with your desired icon
-          onPressed: () {
-            Navigator.pushNamed(context, '/profile');
-          },
-        ),
         toolbarTextStyle: const TextTheme(
           titleLarge: TextStyle(
             color: Colors.grey,
@@ -122,7 +113,8 @@ class _ProfiledetailState extends State<Profiledetail> {
                   GestureDetector(
                     onTap: () {
                       _pickImage(ImageSource.gallery, false);
-                      print("Profile image ditekan, ubah gambar jika diperlukan");
+                      print(
+                          "Profile image ditekan, ubah gambar jika diperlukan");
                     },
                     child: Container(
                       width: 90,
@@ -160,8 +152,8 @@ class _ProfiledetailState extends State<Profiledetail> {
             // nama
             Container(
               height: 45,
-              padding:
-                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              padding: const EdgeInsets.only(
+                  right: 16, left: 16, top: 10, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -188,8 +180,8 @@ class _ProfiledetailState extends State<Profiledetail> {
             //bio
             Container(
               height: 45,
-              padding:
-                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              padding: const EdgeInsets.only(
+                  right: 16, left: 16, top: 10, bottom: 10),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,8 +210,8 @@ class _ProfiledetailState extends State<Profiledetail> {
             //no hp
             Container(
               height: 45,
-              padding:
-                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              padding: const EdgeInsets.only(
+                  right: 16, left: 16, top: 10, bottom: 10),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -248,8 +240,8 @@ class _ProfiledetailState extends State<Profiledetail> {
             //email
             Container(
               height: 45,
-              padding:
-                  const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+              padding: const EdgeInsets.only(
+                  right: 16, left: 16, top: 10, bottom: 10),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,7 +287,8 @@ class _ProfiledetailState extends State<Profiledetail> {
     String jwt = prefs.getString('token') ?? '';
 
     // ignore: use_build_context_synchronously
-    final editUserProvider = Provider.of<EditUserProvider>(context, listen: false);
+    final editUserProvider =
+        Provider.of<EditUserProvider>(context, listen: false);
     editUserProvider.nameCtrl.text = name;
     editUserProvider.phoneCtrl.text = phone;
     editUserProvider.emailCtrl.text = email;
@@ -335,7 +328,8 @@ class _ProfiledetailState extends State<Profiledetail> {
                   ),
                   TextFormField(
                     controller: editUserProvider.phoneCtrl,
-                    decoration: const InputDecoration(labelText: 'Phone Number'),
+                    decoration:
+                        const InputDecoration(labelText: 'Phone Number'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a phone number';
@@ -382,11 +376,19 @@ class _ProfiledetailState extends State<Profiledetail> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             String newName = editUserProvider.nameCtrl.text;
-                            String newPhoneNumber = editUserProvider.phoneCtrl.text;
+                            String newPhoneNumber =
+                                editUserProvider.phoneCtrl.text;
                             String newEmail = editUserProvider.emailCtrl.text;
-                            String password = editUserProvider.passwordCtrl.text;
-                            EditUserProvider().updateUser(userId, username, newName,
-                                newPhoneNumber, newEmail, jwt, password);
+                            String password =
+                                editUserProvider.passwordCtrl.text;
+                            EditUserProvider().updateUser(
+                                userId,
+                                username,
+                                newName,
+                                newPhoneNumber,
+                                newEmail,
+                                jwt,
+                                password);
                             prefs.remove('id');
                             prefs.setString('name', newName);
                             prefs.remove('username');
@@ -398,7 +400,8 @@ class _ProfiledetailState extends State<Profiledetail> {
                             });
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => EditSuccess()),
+                              MaterialPageRoute(
+                                  builder: (context) => EditSuccess()),
                             );
                           }
                         },
@@ -414,8 +417,8 @@ class _ProfiledetailState extends State<Profiledetail> {
     );
   }
 
-  Future<void> saveProfile(String id, String username, String name, String email,
-      String phone, String imageUrl) async {
+  Future<void> saveProfile(String id, String username, String name,
+      String email, String phone, String imageUrl) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('id', id);
     await prefs.setString('username', username);
@@ -428,7 +431,7 @@ class _ProfiledetailState extends State<Profiledetail> {
   Future<void> fetchUserProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = prefs.getString('id') ?? '';
-    String jwt = prefs.getString('token') ?? '';
+    String? jwt = prefs.getString('beareToken') ?? '';
 
     try {
       Map<String, dynamic> userData =

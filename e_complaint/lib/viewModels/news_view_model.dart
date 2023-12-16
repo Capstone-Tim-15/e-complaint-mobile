@@ -14,7 +14,7 @@ class NewsViewModel with ChangeNotifier {
 
     if (bearerToken != null && bearerToken.isNotEmpty) {
       final newsProvider = NewsProvider(bearerToken: bearerToken);
-      await newsProvider.getNews();
+      await newsProvider.getNews(0);
       _news = newsProvider.newsList;
       notifyListeners();
     }
@@ -26,32 +26,41 @@ class NewsViewModel with ChangeNotifier {
 
     if (bearerToken != null && bearerToken.isNotEmpty) {
       final newsProvider = NewsProvider(bearerToken: bearerToken);
-      await newsProvider.getNews();
+      await newsProvider.getNews(0);
+
+      print('News Provider: ${newsProvider.newsList}');
 
       final newsItem = newsProvider.newsList.firstWhere(
         (news) => news.id == id,
         orElse: () => News(
-            id: id,
-            adminId: '',
-            title: '',
-            content: '',
-            date: '',
-            feedback: '',
-            like: ''),
+          id: id,
+          adminId: '',
+          title: '',
+          content: '',
+          date: '',
+          feedback: [], // Sesuaikan dengan struktur data sebenarnya
+          like: '',
+          category: '',
+          name: '',
+          photoImage: '',
+          imageUrl: '',
+        ),
       );
+      print('News Item: $newsItem');
       return newsItem;
     }
     return null;
   }
 
-  //fungsi untuk menyimpan berita
+  // Fungsi untuk menyimpan berita ke dalam arsip
   void saveToArchive(News news) {
-    if (!archivedNews.contains(news)) {
+    if (!archivedNews.any((item) => item.id == news.id)) {
       archivedNews.add(news);
       notifyListeners();
     }
   }
 
+  // Mendapatkan berita yang ada di arsip
   List<News> getArchivedNews() {
     return archivedNews;
   }

@@ -17,9 +17,7 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-
   int currentPageIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {

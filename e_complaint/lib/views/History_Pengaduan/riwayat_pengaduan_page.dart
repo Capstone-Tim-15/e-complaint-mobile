@@ -2,6 +2,8 @@ import 'package:e_complaint/views/History_Pengaduan/component/diproses.dart';
 import 'package:e_complaint/views/History_Pengaduan/component/selesai.dart';
 import 'package:e_complaint/views/History_Pengaduan/component/terkirim.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class riwayat_pengaduan_page extends StatefulWidget {
   const riwayat_pengaduan_page({super.key});
@@ -23,17 +25,17 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
 
   @override
   void initState() {
-    _controller = TabController(
-        length: 3, vsync: this); //permasalahan pada vsync : context
+    _controller = TabController(length: 3, vsync: this);
     _controller.addListener(_handleTabSelection);
+    // getComplaintStatus("Diproses");
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +49,12 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               IconButton(
-                iconSize: 25,
-                icon: const Icon(Icons.arrow_back),
-                color: const Color.fromARGB(255, 255, 0, 0),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile');
-                },
-              ),
+                  iconSize: 25,
+                  icon: const Icon(Icons.arrow_back),
+                  color: const Color.fromARGB(255, 255, 0, 0),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/news');
+                  }),
               const Text(
                 "Riwayat Pengaduan",
                 style: TextStyle(
@@ -100,7 +101,7 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                         TabBar(
                           isScrollable: true,
                           labelPadding:
-                              const EdgeInsets.symmetric(horizontal: 100),
+                              const EdgeInsets.symmetric(horizontal: 40),
                           controller: _controller,
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           indicatorColor: Colors.blue,
@@ -123,8 +124,8 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
                           height: MediaQuery.of(context).size.height,
                           child: TabBarView(
                             controller: _controller,
-                            children: const [
-                              terkirim_page(),
+                            children: [
+                              TerkirimPage(),
                               diproses_page(),
                               selesai_page(),
                             ],
@@ -136,5 +137,48 @@ class _RiwayatPengaduan extends State<riwayat_pengaduan_page>
             ),
           ),
         ));
+  }
+
+  String baseUrl = "https://api.govcomplain.my.id";
+  final Dio _dio = Dio();
+
+  Future<Response> _fetchComplaintStatus(String status) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String token = prefs.getString('token') ?? "";
+
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+
+      Response response = await _dio.get(
+        "$baseUrl/user/complaint?page=1",
+        queryParameters: {'status': status},
+      );
+
+      debugPrint("Ini response ${response.data}");
+
+      return response;
+    } catch (error) {
+      if (error is DioError && error.response?.statusCode == 401) {
+        // Token kadaluwarsa atau tidak valid
+        await _refreshToken(); // Panggil metode untuk mendapatkan token baru
+        return _fetchComplaintStatus(
+            status); // Ulangi panggilan setelah mendapatkan token baru
+      } else {
+        print("Error fetching data: $error");
+        throw error;
+      }
+    }
+  }
+
+  Future<void> _refreshToken() async {
+    try {
+      // Implementasikan logika untuk mendapatkan token baru
+      // Misalnya, lakukan permintaan HTTP untuk mendapatkan token baru
+      // Simpan token baru ke SharedPreferences
+      // ...
+    } catch (error) {
+      print("Error refreshing token: $error");
+      throw error;
+    }
   }
 }

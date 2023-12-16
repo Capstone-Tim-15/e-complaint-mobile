@@ -1,21 +1,19 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:e_complaint/models/user_profile.dart';
-
+// import 'package:e_complaint/models/user_profile.dart';
+import 'package:e_complaint/viewModels/complaint_detail.dart';
+// import 'package:e_complaint/viewModels/complaint_view_model.dart';
 // import 'package:e_complaint/viewModels/provider/complaint.dart';
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
-
 import 'package:e_complaint/viewModels/news_view_model.dart';
-
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
+import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
 import 'package:e_complaint/views/Home/component/arsip_berita/arsip_berita.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
-
 // import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/account_success.dart';
 import 'package:e_complaint/views/Login/change_password.dart';
@@ -25,17 +23,11 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
-import 'package:e_complaint/views/Search/result/result.page.dart';
-import 'package:e_complaint/views/Welcome/onboarding_page1.dart';
+import 'package:e_complaint/views/faq/faq_page.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'views/Search/search_kategori_screen.dart';
-
 import 'package:e_complaint/views/widget/bottom_nav.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'views/Register/register.dart';
 import 'views/Welcome/onboarding_screen.dart';
 // import 'views/Welcome/spalsh_screen.dart';
@@ -46,7 +38,11 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => ComplaintViewModel()),
+        ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
+
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
+
         ChangeNotifierProvider(
           create: (_) => NewsViewModel(),
         ),
@@ -60,18 +56,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // final UserProfile user = UserProfile(
-  //   id: '',
-
-  //   name: 'Jelita Salsabila',
-  //   profileImageUrl:
-  //       'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
-  //   coverImageUrl:
-  //       'https://res.cloudinary.com/dtvwbspq9/image/upload/v1698682685/WhatsApp_Image_2023-10-30_at_22.29.11_wvlup7.jpg',
-  //   email: 'JelitaS@gmail.com',
-  //   phoneNumber: '080987278935',
-  // );
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -81,7 +65,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
@@ -117,6 +101,10 @@ class MyApp extends StatelessWidget {
                 },
               ),
             );
+          case '/news':
+            return MaterialPageRoute(builder: (context) => BottomNavigation());
+          case '/faq':
+            return MaterialPageRoute(builder: (context) => FAQPage());
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
@@ -140,14 +128,9 @@ class MyApp extends StatelessWidget {
           case '/comment':
             return MaterialPageRoute(
                 builder: (context) => FullScreenCommentPage());
-          case '/arsipBerita':
-            return MaterialPageRoute(builder: (context) => ArsipBerita());
           case '/addcomplaint':
             return MaterialPageRoute(
-              builder: (context) => const AddComplaint(
-                selectedLocation: '',
-                selectedLocation2: '',
-              ),
+              builder: (context) => AddComplaint(),
             );
           default:
             return MaterialPageRoute(builder: (context) => UnknownRoutePage());
