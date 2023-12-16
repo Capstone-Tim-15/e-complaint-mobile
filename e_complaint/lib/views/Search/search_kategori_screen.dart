@@ -38,6 +38,21 @@ class _SearchPageState extends State<SearchPage> {
 
   List<String> searchHistory = ['History 1', 'History 2', 'History 3'];
 
+  final List<Map<String, dynamic>> newsItems = [
+    {
+      'image': 'assets/images/news1.png',
+      'source': 'Source: BBC News',
+      'title':
+          'LBP Resmikan Pabrik Daur Ulang Sampah Plastik jadi Coffe Maker di Batam',
+    },
+    {
+      'image': 'assets/images/news2.png',
+      'source': 'Source: suarabatam.id',
+      'title':
+          'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
                     child: Center(
                         child: Container(
                       width: 360,
-                      height: 45,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.circular(10.0),
@@ -136,7 +151,8 @@ class _SearchPageState extends State<SearchPage> {
                                           InkWell(
                                             child: const Text(
                                               'Hapus',
-                                              style: TextStyle(color: Colors.red),
+                                              style:
+                                                  TextStyle(color: Colors.red),
                                             ),
                                             onTap: () {},
                                           )
@@ -264,62 +280,63 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(
                 height: 20,
               ),
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: newsItems.length,
-              //   itemBuilder: (context, index) {
-              //     return InkWell(
-              //       onTap: () {},
-              //       child: Card(
-              //         margin: const EdgeInsets.all(20),
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(15.0),
-              //           side: const BorderSide(width: 1, color: Colors.black12),
-              //         ),
-              //         child: Column(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: <Widget>[
-              //             Flexible(
-              //               child: Image.asset(
-              //                 newsItems[index]['image'],
-              //                 fit: BoxFit.cover,
-              //                 width: double.infinity,
-              //                 height: 200,
-              //               ),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.all(8.0),
-              //               child: Align(
-              //                 alignment: Alignment.centerLeft,
-              //                 child: Text(
-              //                   newsItems[index]['source'],
-              //                   style: const TextStyle(
-              //                     fontSize: 14,
-              //                     fontWeight: FontWeight.w300,
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.only(left: 8.0, bottom: 8),
-              //               child: Align(
-              //                 alignment: Alignment.centerLeft,
-              //                 child: Text(
-              //                   newsItems[index]['title'],
-              //                   style: const TextStyle(
-              //                     fontSize: 18,
-              //                     fontWeight: FontWeight.bold,
-              //                   ),
-              //                   textAlign: TextAlign.left,
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: newsItems.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {},
+                    child: Card(
+                      margin: const EdgeInsets.all(20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        side: const BorderSide(width: 1, color: Colors.black12),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Flexible(
+                            child: Image.asset(
+                              newsItems[index]['image'],
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: 200,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                newsItems[index]['source'],
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 8.0, bottom: 8),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                newsItems[index]['title'],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

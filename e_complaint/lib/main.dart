@@ -12,6 +12,7 @@ import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
+import 'package:e_complaint/views/Home/component/arsip_berita/arsip_berita.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 // import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/account_success.dart';
