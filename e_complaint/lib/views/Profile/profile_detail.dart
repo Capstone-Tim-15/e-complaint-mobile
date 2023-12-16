@@ -72,13 +72,13 @@ class _ProfiledetailState extends State<Profiledetail> {
         backgroundColor: Colors.white,
         toolbarTextStyle: const TextTheme(
           titleLarge: TextStyle(
-            color: Colors.grey,
+            color: Colors.black,
             fontSize: 18.0,
           ),
         ).bodyMedium,
         titleTextStyle: const TextTheme(
           titleLarge: TextStyle(
-            color: Colors.grey,
+            color: Colors.black,
             fontSize: 18.0,
           ),
         ).titleLarge,

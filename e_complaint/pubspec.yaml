@@ -116,6 +116,7 @@ flutter:
       fonts:
         # - asset: fonts/Nunito/Nunito-italic.ttf
         - asset: assets/fonts/Nunito/static/Nunito-SemiBold.ttf
+        - asset: assets/fonts/Nunito/static/Nunito-Bold.ttf
 
   #
   # For details regarding fonts from package dependencies,

@@ -30,7 +30,7 @@ class _diproses_pageState extends State<diproses_page> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: dataComplaintDiproses.isEmpty
-            ? const CircularProgressIndicator()
+            ? Center(child: const CircularProgressIndicator())
             : SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Column(

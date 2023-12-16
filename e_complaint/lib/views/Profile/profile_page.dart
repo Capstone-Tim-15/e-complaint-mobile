@@ -84,8 +84,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
         title: const Text(
           'Profil',
           style: TextStyle(
-            color: Colors.deepOrangeAccent,
-            fontSize: 32,
+            fontFamily: 'Nunito',
+            color: Color(0xFFE02216),
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),

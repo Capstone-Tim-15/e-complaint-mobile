@@ -56,7 +56,7 @@ class _selesai_pageState extends State<selesai_page> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: dataComplaintSelesai.isEmpty
-            ? const CircularProgressIndicator()
+            ? Center(child: const CircularProgressIndicator())
             : SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Column(

@@ -25,7 +25,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar: NavigationBar(
         elevation: 20,
         indicatorColor: const Color.fromARGB(255, 255, 219, 207),
-        height: 52,
+        height: 60,
         backgroundColor: Colors.white,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         onDestinationSelected: (int index) {
