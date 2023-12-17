@@ -31,13 +31,13 @@ class _ArsipBeritaState extends State<ArsipBerita> {
 
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => NewsDetail(
-                    id: archivedNews.id,
-                  ),
-                ),
-              );
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) => NewsDetail(
+              //       id: archivedNews.id,
+              //     ),
+              //   ),
+              // );
             },
             // child: ListTile(
             //   title: Text(archivedNews.title),
