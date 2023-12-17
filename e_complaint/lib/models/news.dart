@@ -45,6 +45,8 @@ class Feedback {
     required this.newsId,
     required this.content,
   });
+
+  static fromJson(i) {}
 }
 
 class Likes {

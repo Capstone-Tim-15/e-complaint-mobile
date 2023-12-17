@@ -120,7 +120,10 @@ class _selesai_pageState extends State<selesai_page> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        detailPengaduan_page(),
+                                                        detailPengaduan_page(
+                                                      complaintId:
+                                                          dataList['id'],
+                                                    ),
                                                   ),
                                                 );
                                               },

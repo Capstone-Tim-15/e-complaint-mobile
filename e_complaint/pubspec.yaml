@@ -42,7 +42,7 @@ dependencies:
   shared_preferences: ^2.2.2
   image_picker: ^1.0.4
   file_picker: ^6.1.1
-  envied: ^0.5.1
+  envied: ^0.5.2
   envied_generator: ^0.5.1
   build_runner: ^2.4.6
   http: ^1.1.0

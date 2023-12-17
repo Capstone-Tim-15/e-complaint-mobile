@@ -1,6 +1,6 @@
 
 import 'package:e_complaint/views/Chatbot/components/body.dart';
-import 'package:e_complaint/views/Chatbot/constants.dart';
+import 'package:e_complaint/views/Chatbot/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
