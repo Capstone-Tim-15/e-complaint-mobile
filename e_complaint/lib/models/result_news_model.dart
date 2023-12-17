@@ -1,8 +1,8 @@
-class NewsSearchModel {
+class ResultNewsModel {
   final String id;
   final String adminId;
   final String category;
-  final String name;
+  final String fullname;
   final String photoImage;
   final String title;
   final String content;
@@ -11,11 +11,11 @@ class NewsSearchModel {
   final List<Map<String, dynamic>>? feedback;
   final List<Map<String, dynamic>>? likes;
 
-  NewsSearchModel({
+  ResultNewsModel({
     required this.id,
     required this.adminId,
     required this.category,
-    required this.name,
+    required this.fullname,
     required this.photoImage,
     required this.title,
     required this.content,
@@ -25,12 +25,12 @@ class NewsSearchModel {
     this.likes,
   });
 
-  factory NewsSearchModel.fromJson(Map<String, dynamic> json) {
-    return NewsSearchModel(
+  factory ResultNewsModel.fromJson(Map<String, dynamic> json) {
+    return ResultNewsModel(
       id: json['id'],
       adminId: json['adminId'],
       category: json['category'],
-      name: json['fullname'],
+      fullname: json['fullname'],
       photoImage: json['photoImage'],
       title: json['title'],
       content: json['content'],
