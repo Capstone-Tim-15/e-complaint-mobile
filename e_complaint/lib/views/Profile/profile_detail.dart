@@ -431,7 +431,7 @@ class _ProfiledetailState extends State<Profiledetail> {
   Future<void> fetchUserProfile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = prefs.getString('id') ?? '';
-    String jwt = prefs.getString('token') ?? '';
+    String? jwt = prefs.getString('beareToken') ?? '';
 
     try {
       Map<String, dynamic> userData =

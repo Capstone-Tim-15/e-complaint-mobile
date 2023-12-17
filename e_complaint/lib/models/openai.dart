@@ -1,111 +1,75 @@
+// To parse this JSON data, do
+//
+//     final aiModel = aiModelFromJson(jsonString);
+
 import 'dart:convert';
 
-GptData gptDataFromJson(String str) => GptData.fromJson(json.decode(str));
+AiModel aiModelFromJson(String str) => AiModel.fromJson(json.decode(str));
 
-String gptDataToJson(GptData data) => json.encode(data.toJson());
+String aiModelToJson(AiModel data) => json.encode(data.toJson());
 
-class GptData {
-  String id;
-  String object;
-  int created;
-  String model;
-  List<Choice> choices;
-  Usage usage;
+class AiModel {
+  Meta meta;
+  Results results;
 
-  GptData({
-    required this.id,
-    required this.object,
-    required this.created,
-    required this.model,
-    required this.choices,
-    required this.usage,
+  AiModel({
+    required this.meta,
+    required this.results,
   });
 
-  factory GptData.fromJson(Map<String, dynamic> json) => GptData(
-        id: json["id"],
-        object: json["object"],
-        created: json["created"],
-        model: json["model"],
-        choices: List<Choice>.from(json["choices"].map((x) => Choice.fromJson(x))),
-        usage: Usage.fromJson(json["usage"]),
+  factory AiModel.fromJson(Map<String, dynamic> json) => AiModel(
+        meta: Meta.fromJson(json["meta"]),
+        results: Results.fromJson(json["results"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "object": object,
-        "created": created,
-        "model": model,
-        "choices": List<dynamic>.from(choices.map((x) => x.toJson())),
-        "usage": usage.toJson(),
+        "meta": meta.toJson(),
+        "results": results.toJson(),
       };
 }
 
-class Choice {
-  int index;
-  Message message;
-  String finishReason;
+class Meta {
+  bool success;
+  String message;
 
-  Choice({
-    required this.index,
+  Meta({
+    required this.success,
     required this.message,
-    required this.finishReason,
   });
 
-  String get text => message.content;
-
-  factory Choice.fromJson(Map<String, dynamic> json) => Choice(
-        index: json["index"],
-        message: Message.fromJson(json["message"]),
-        finishReason: json["finish_reason"],
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        success: json["success"],
+        message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "index": index,
-        "message": message.toJson(),
-        "finish_reason": finishReason,
+        "success": success,
+        "message": message,
       };
 }
 
-class Message {
-  String role;
-  String content;
+class Results {
+  String complaint;
+  String recommendation;
+  DateTime timestamp;
 
-  Message({
-    required this.role,
-    required this.content,
+  Results({
+    required this.complaint,
+    required this.recommendation,
+    required this.timestamp,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) => Message(
-        role: json["role"],
-        content: json["content"],
+  String get text => recommendation;  
+
+  factory Results.fromJson(Map<String, dynamic> json) => Results(
+        complaint: json["complaint"],
+        recommendation: json["recommendation"],
+        timestamp: DateTime.parse(json["timestamp"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "role": role,
-        "content": content,
-      };
-}
-
-class Usage {
-  int promptTokens;
-  int completionTokens;
-  int totalTokens;
-
-  Usage({
-    required this.promptTokens,
-    required this.completionTokens,
-    required this.totalTokens,
-  });
-
-  factory Usage.fromJson(Map<String, dynamic> json) => Usage(
-        promptTokens: json["prompt_tokens"],
-        completionTokens: json["completion_tokens"],
-        totalTokens: json["total_tokens"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "prompt_tokens": promptTokens,
-        "completion_tokens": completionTokens,
-        "total_tokens": totalTokens,
+        "complaint": complaint,
+        "recommendation": recommendation,
+        "timestamp": timestamp.toIso8601String(),
       };
 }

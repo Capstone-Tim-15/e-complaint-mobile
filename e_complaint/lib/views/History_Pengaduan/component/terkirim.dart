@@ -101,7 +101,9 @@ class _TerkirimPageState extends State<TerkirimPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      detailPengaduan_page(),
+                                                      detailPengaduan_page(
+                                                          complaintId:
+                                                              dataList['id'],),
                                                 ),
                                               );
                                             },

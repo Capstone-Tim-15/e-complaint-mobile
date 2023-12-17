@@ -2,29 +2,31 @@ class News {
   final String id;
   final String adminId;
   final String category;
-  final String name;
+  final String fullname;
   final String photoImage;
   final String title;
   final String content;
   final String date;
   final String imageUrl;
   final List<Feedback>? feedback;
-  final String like;
-  int commentCount;
+  final List<Likes>? likes;
+  int feedbackCount;
+  int likesCount;
 
   News(
       {required this.id,
       required this.adminId,
       required this.category,
-      required this.name,
+      required this.fullname,
       required this.photoImage,
       required this.title,
       required this.content,
       required this.date,
       required this.imageUrl,
       required this.feedback,
-      required this.like,
-      this.commentCount = 0});
+      required this.likes,
+      this.feedbackCount = 0,
+      this.likesCount = 0});
 }
 
 class Feedback {
@@ -42,5 +44,21 @@ class Feedback {
     required this.photoImage,
     required this.newsId,
     required this.content,
+  });
+
+  static fromJson(i) {}
+}
+
+class Likes {
+  final String id;
+  final String userId;
+  final String newsId;
+  final String status;
+
+  Likes({
+    required this.id,
+    required this.userId,
+    required this.newsId,
+    required this.status,
   });
 }
