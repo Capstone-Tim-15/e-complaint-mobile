@@ -1,14 +1,18 @@
-// ignore_for_file: prefer_const_constructors
-// import 'package:e_complaint/models/user_profile.dart';
+import 'package:e_complaint/models/user_profile.dart';
+
+import 'package:e_complaint/viewModels/complaint_view_model.dart';
+import 'package:e_complaint/viewModels/provider/complaint.dart';
+
 import 'package:e_complaint/viewModels/complaint_detail.dart';
-// import 'package:e_complaint/viewModels/complaint_view_model.dart';
-// import 'package:e_complaint/viewModels/provider/complaint.dart';
+
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
 import 'package:e_complaint/viewModels/news_view_model.dart';
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
+import 'package:e_complaint/viewModels/provider/result_complaint_provider.dart';
+import 'package:e_complaint/viewModels/provider/result_news_provider.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
@@ -23,6 +27,9 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
+
+import 'package:e_complaint/views/Profile/widgets/arsip_berita_widget.dart';
+
 import 'package:e_complaint/views/faq/faq_page.dart';
 import 'package:flutter/material.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
@@ -38,7 +45,11 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+
+        ChangeNotifierProvider(create: (context) => ResultComplaintProvider()),
+        ChangeNotifierProvider(create: (context) => ResultNewsProvider()),
         ChangeNotifierProvider(create: (context) => ComplaintViewModel()),
+
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
@@ -65,11 +76,12 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/login',
+      initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(builder: (context) => const LoginPage());
+            return MaterialPageRoute(
+                builder: (context) => const OnboardingScreen());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
@@ -103,13 +115,19 @@ class MyApp extends StatelessWidget {
             );
           case '/news':
             return MaterialPageRoute(builder: (context) => BottomNavigation());
+          case '/arsip-berita':
+            return MaterialPageRoute(builder: (context) => ArsipBerita());
           case '/faq':
             return MaterialPageRoute(builder: (context) => FAQPage());
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
             return MaterialPageRoute(
-                builder: (context) => FullScreenCommentPage());
+                builder: (context) => FullScreenCommentPage(
+                      id: '',
+                      onReplyComplete: () {},
+                      onRefresh: () {},
+                    ));
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
@@ -127,11 +145,17 @@ class MyApp extends StatelessWidget {
                 builder: (context) => const ChatBotScreen());
           case '/comment':
             return MaterialPageRoute(
-                builder: (context) => FullScreenCommentPage());
+                builder: (context) => FullScreenCommentPage(
+                      id: '',
+                      onReplyComplete: () {},
+                      onRefresh: () {},
+                    ));
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => AddComplaint(),
             );
+          case '/faq_page':
+            return MaterialPageRoute(builder: (context) => FAQPage());
           default:
             return MaterialPageRoute(builder: (context) => UnknownRoutePage());
         }

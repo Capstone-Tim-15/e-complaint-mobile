@@ -30,7 +30,7 @@ class arsip_berita extends StatelessWidget {
           ),
           trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
           onTap: () {
-            Navigator.pushNamed(context, '/arsipBerita');
+            Navigator.pushNamed(context, '/arsip-berita');
           },
         ),
       ),

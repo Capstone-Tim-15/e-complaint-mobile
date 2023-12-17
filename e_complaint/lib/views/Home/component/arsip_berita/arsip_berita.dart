@@ -35,6 +35,9 @@ class _ArsipBeritaState extends State<ArsipBerita> {
                 MaterialPageRoute(
                   builder: (context) => NewsDetail(
                     id: archivedNews.id,
+                    feedbackCounts: '',
+                    likeCounts: '',
+                    onRefresh: () {},
                   ),
                 ),
               );
@@ -131,6 +134,7 @@ class _ArsipBeritaState extends State<ArsipBerita> {
                       const SizedBox(
                         height: 5,
                       ),
+                      // ignore: unnecessary_null_comparison
                       'assets/images/news_image.jpg' != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(7),
