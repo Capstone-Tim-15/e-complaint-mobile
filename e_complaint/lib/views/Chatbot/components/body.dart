@@ -15,7 +15,7 @@ class ChatbotBody extends StatefulWidget {
 }
 
 class _ChatbotBodyState extends State<ChatbotBody> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController question = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   dynamic result;
@@ -63,7 +63,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _controller.text = recommendedQuestions[index];
+                              question.text = recommendedQuestions[index];
                             },
                             child: Container(
                               height: 40,
@@ -179,7 +179,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      controller: _controller,
+                      controller: question,
                       decoration: const InputDecoration(
                         hintText: 'Tulis pesan',
                       ),
@@ -193,9 +193,9 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                     onPressed: () {
                       setState(() {
                         chatbotMessage.add(
-                            ChatBotMessage(text: _controller.text, isSender: true));
+                            ChatBotMessage(text: question.text, isSender: true));
                         _getRecommendation();
-                        _controller.clear();
+                        question.clear();
                       });
                     },
                   ),
@@ -213,13 +213,13 @@ class _ChatbotBodyState extends State<ChatbotBody> {
       isLoading = true;
     });
 
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('bearerToken') ?? '';
 
     try {
       final result = await ChatbotService.getRecommendation(
-          question: _controller.value.text, jwt: jwtToken);
+          question: question.value.text, jwt: jwtToken);
 
-      print('Question: ${_controller.value.text}');
+      print('Question: ${question.value.text}');
       print('JWT Token: $jwtToken');
 
       setState(() {
@@ -229,7 +229,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
       });
     } catch (e) {
       print('Exception: $e');
-      print('Question: ${_controller.value.text}');
+      print('Question: ${question.value.text}');
       print('JWT Token: $jwtToken');
       const snackBar = SnackBar(
         content: Text('Failed to send a request'),
