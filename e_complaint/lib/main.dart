@@ -74,11 +74,12 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/riwayat-pengaduan',
+      initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(builder: (context) => const LoginPage());
+            return MaterialPageRoute(
+                builder: (context) => const OnboardingScreen());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
