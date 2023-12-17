@@ -1,13 +1,13 @@
 import 'package:e_complaint/models/user_profile.dart';
-import 'package:e_complaint/views/widget/arsip_berita_widget.dart';
-import 'package:e_complaint/views/widget/faq_widget.dart';
-import 'package:e_complaint/views/widget/keluar_widget.dart';
 import 'package:e_complaint/views/widget/profile_image_widget.dart';
-import 'package:e_complaint/views/widget/status_pengaduan_widget.dart';
+import 'package:e_complaint/views/Profile/widgets/status_pengaduan_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../viewModels/provider/profile.dart';
+import 'widgets/arsip_berita_widget.dart';
+import 'widgets/faq_widget.dart';
+import 'widgets/keluar_widget.dart';
 
 class UserProfilePage extends StatefulWidget {
   @override

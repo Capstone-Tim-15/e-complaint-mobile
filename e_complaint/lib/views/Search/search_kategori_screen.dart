@@ -59,6 +59,21 @@ class _SearchPageState extends State<SearchPage> {
     return values;
   }
 
+  final List<Map<String, dynamic>> newsItems = [
+    {
+      'image': 'assets/images/news1.png',
+      'source': 'Source: BBC News',
+      'title':
+          'LBP Resmikan Pabrik Daur Ulang Sampah Plastik jadi Coffe Maker di Batam',
+    },
+    {
+      'image': 'assets/images/news2.png',
+      'source': 'Source: suarabatam.id',
+      'title':
+          'Gangguan Pipa, Ini Wilayah Terdampak Mati Air di Batam Hari Ini',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final newsSearchProv = Provider.of<NewsSearchProvider>(context);
@@ -76,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
                     child: Center(
                         child: Container(
                       width: 360,
-                      height: 45,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.circular(10.0),
@@ -126,6 +141,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     )),
                   ),
+
                   FutureBuilder<List<String>>(
                     future: getValues(),
                     builder: (context, snapshot) {
@@ -155,6 +171,7 @@ class _SearchPageState extends State<SearchPage> {
                                         bottom: BorderSide(color: Colors.red),
                                         left: BorderSide(color: Colors.red),
                                         right: BorderSide(color: Colors.red),
+
                                       ),
                                     ),
                                     child: Column(
@@ -410,6 +427,7 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(
                 height: 20,
               ),
+
               newsSearchProv.isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(

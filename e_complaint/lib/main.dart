@@ -1,14 +1,13 @@
-// ignore_for_file: prefer_const_constructors, unreachable_switch_case
 
 import 'package:e_complaint/models/user_profile.dart';
 
 import 'package:e_complaint/viewModels/complaint_view_model.dart';
 import 'package:e_complaint/viewModels/provider/complaint.dart';
 
+import 'package:e_complaint/viewModels/complaint_detail.dart';
+
 import 'package:e_complaint/viewModels/provider/edit_profile.dart';
-
 import 'package:e_complaint/viewModels/news_view_model.dart';
-
 import 'package:e_complaint/viewModels/provider/login.dart';
 import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
@@ -18,6 +17,7 @@ import 'package:e_complaint/viewModels/provider/result_news_provider.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
+import 'package:e_complaint/views/Home/component/arsip_berita/arsip_berita.dart';
 import 'package:e_complaint/views/Home/home_addcomplaint.dart';
 // import 'package:e_complaint/views/Home/home_screen.dart';
 import 'package:e_complaint/views/Login/account_success.dart';
@@ -28,6 +28,7 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
+import 'package:e_complaint/views/faq/faq_page.dart';
 import 'package:flutter/material.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +43,11 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+
         ChangeNotifierProvider(create: (context) => ResultComplaintProvider()),
         ChangeNotifierProvider(create: (context) => ResultNewsProvider()),
+        ChangeNotifierProvider(create: (context) => ComplaintViewModel()),
+
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
         //ChangeNotifierProvider(create: (context) => AddComplaintProvider()),
@@ -70,7 +74,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
@@ -78,7 +82,8 @@ class MyApp extends StatelessWidget {
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
-            return MaterialPageRoute(builder: (context) => const HalamanDaftar());
+            return MaterialPageRoute(
+                builder: (context) => const HalamanDaftar());
           case '/forgotpwd':
             return MaterialPageRoute(builder: (context) => ForgotPassword());
           case '/resetpwd':
@@ -107,10 +112,13 @@ class MyApp extends StatelessWidget {
             );
           case '/news':
             return MaterialPageRoute(builder: (context) => BottomNavigation());
+          case '/faq':
+            return MaterialPageRoute(builder: (context) => FAQPage());
           case '/notifikasi':
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
-            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
@@ -121,11 +129,14 @@ class MyApp extends StatelessWidget {
               ),
             );
           case '/riwayat-pengaduan':
-            return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
+            return MaterialPageRoute(
+                builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
-            return MaterialPageRoute(builder: (context) => const ChatBotScreen());
+            return MaterialPageRoute(
+                builder: (context) => const ChatBotScreen());
           case '/comment':
-            return MaterialPageRoute(builder: (context) => FullScreenCommentPage());
+            return MaterialPageRoute(
+                builder: (context) => FullScreenCommentPage());
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => AddComplaint(),
