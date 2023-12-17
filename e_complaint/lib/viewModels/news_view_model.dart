@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsViewModel with ChangeNotifier {
-
   List<News> archivedNews = [];
-
 
   // Future<void> getAllNews() async {
   //   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,9 +37,9 @@ class NewsViewModel with ChangeNotifier {
           content: '',
           date: '',
           feedback: [], // Sesuaikan dengan struktur data sebenarnya
-          like: '',
+          likes: [],
           category: '',
-          name: '',
+          fullname: '',
           photoImage: '',
           imageUrl: '',
         ),

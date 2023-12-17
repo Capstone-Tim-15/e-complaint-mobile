@@ -149,14 +149,11 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
                     )),
                   ],
                 ),
-                SizedBox(
-                  width: 100,
-                  child: Text(
-                    viewModel.complaintData.content,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                    ),
+                Text(
+                  viewModel.complaintData.content,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
                   ),
                 ),
                 const SizedBox(

@@ -28,9 +28,11 @@ class ProfileImageWidget extends StatelessWidget {
                 Container(
                   height: 230,
                   decoration: BoxDecoration(
+                    // ignore: unnecessary_null_comparison
                     image: user.coverImageUrl != null
                         ? DecorationImage(
-                            image: NetworkImage(user.coverImageUrl!),
+                            image: NetworkImage(
+                                'https://res.cloudinary.com/dua3iphs9/image/upload/v1700572036/${user.coverImageUrl}'),
                             fit: BoxFit.cover,
                           )
                         : null,

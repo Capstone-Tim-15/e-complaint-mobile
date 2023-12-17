@@ -1,4 +1,3 @@
-
 import 'package:e_complaint/models/user_profile.dart';
 
 import 'package:e_complaint/viewModels/complaint_view_model.dart';
@@ -75,7 +74,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/login',
+      initialRoute: '/riwayat-pengaduan',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
