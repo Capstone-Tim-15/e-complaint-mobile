@@ -519,8 +519,21 @@ class _AddComplaintState extends State<AddComplaint> {
                             );
                             if (response.statusCode == 201) {
                               print(response.data);
+// Show a Snackbar
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                      Text('Complaint posted successfully!'),
+                                  duration: Duration(
+                                      seconds:
+                                          2), // You can adjust the duration
+                                ),
+                              );
 
-                              Navigator.pushNamed(context, '/news');
+                              // Navigate to home after a delay (to give time for the user to read the Snackbar)
+                              Future.delayed(Duration(seconds: 2), () {
+                                Navigator.pushNamed(context, '/news');
+                              });
                             } else {
                               print(response.statusMessage);
                             }
