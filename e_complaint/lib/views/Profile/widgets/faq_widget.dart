@@ -30,7 +30,7 @@ class faq extends StatelessWidget {
           ),
           trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
           onTap: () {
-            Navigator.pushNamed(context, '/faq');
+            Navigator.pushNamed(context, '/faq_page');
           },
         ),
       ),

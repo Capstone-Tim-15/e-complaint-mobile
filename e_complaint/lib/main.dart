@@ -27,7 +27,9 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
+
 import 'package:e_complaint/views/Profile/widgets/arsip_berita_widget.dart';
+
 import 'package:e_complaint/views/faq/faq_page.dart';
 import 'package:flutter/material.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
@@ -152,6 +154,8 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) => AddComplaint(),
             );
+          case '/faq_page':
+            return MaterialPageRoute(builder: (context) => FAQPage());
           default:
             return MaterialPageRoute(builder: (context) => UnknownRoutePage());
         }
