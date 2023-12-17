@@ -1,11 +1,25 @@
+import 'package:e_complaint/viewModels/provider/news.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FullScreenCommentPage extends StatefulWidget {
+  final String id;
+  final void Function() onReplyComplete;
+  final void Function() onRefresh;
+
+  FullScreenCommentPage({
+    required this.id,
+    required this.onReplyComplete,
+    required this.onRefresh,
+  });
+
   @override
   _FullScreenCommentPageState createState() => _FullScreenCommentPageState();
 }
 
 class _FullScreenCommentPageState extends State<FullScreenCommentPage> {
+  NewsProvider _newsProvider = NewsProvider(bearerToken: 'bearerToken');
+
   final FocusNode _commentFocusNode = FocusNode();
 
   final TextEditingController _commentController = TextEditingController();
@@ -53,7 +67,8 @@ class _FullScreenCommentPageState extends State<FullScreenCommentPage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              onReplyPressed(_commentController.text);
+              print('Comment Content: ${_commentController.text}');
             },
             child: Text(
               'Reply',
@@ -125,5 +140,28 @@ class _FullScreenCommentPageState extends State<FullScreenCommentPage> {
         ),
       ),
     );
+  }
+
+  void onReplyPressed(String commentContent) async {
+    try {
+      String newsId = widget.id;
+
+      if (commentContent.isNotEmpty) {
+        var feedback =
+            await _newsProvider.createFeedback(newsId, commentContent);
+        if (feedback != null) {
+          print('Feedback created successfully: $feedback');
+          widget.onReplyComplete();
+          widget.onRefresh();
+          Navigator.of(context).pop();
+        } else {
+          print('Failed to create feedback: feedback is null');
+        }
+      } else {
+        print('Comment content is empty or userId is null');
+      }
+    } catch (error) {
+      print('Error during create feedback: $error');
+    }
   }
 }

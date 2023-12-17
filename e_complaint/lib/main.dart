@@ -118,7 +118,11 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => Notifikasi());
           case '/comment':
             return MaterialPageRoute(
-                builder: (context) => FullScreenCommentPage());
+                builder: (context) => FullScreenCommentPage(
+                      id: '',
+                      onReplyComplete: () {},
+                      onRefresh: () {},
+                    ));
           case '/profile':
             return MaterialPageRoute(builder: (context) => UserProfilePage());
           case '/profile-detail':
@@ -136,7 +140,11 @@ class MyApp extends StatelessWidget {
                 builder: (context) => const ChatBotScreen());
           case '/comment':
             return MaterialPageRoute(
-                builder: (context) => FullScreenCommentPage());
+                builder: (context) => FullScreenCommentPage(
+                      id: '',
+                      onReplyComplete: () {},
+                      onRefresh: () {},
+                    ));
           case '/addcomplaint':
             return MaterialPageRoute(
               builder: (context) => AddComplaint(),

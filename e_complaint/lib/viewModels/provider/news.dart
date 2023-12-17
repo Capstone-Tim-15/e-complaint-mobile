@@ -30,7 +30,7 @@ class NewsProvider extends ChangeNotifier {
     }
     try {
       final response = await Dio().get(
-        'https://api.govcomplain.my.id/users/news',
+        'https://api.govcomplain.my.id/user/news',
         options: Options(headers: {'Authorization': 'Bearer $bearerToken'}),
         queryParameters: {'page': pageKey, 'limit': _pageSize},
       );
@@ -47,7 +47,7 @@ class NewsProvider extends ChangeNotifier {
                 id: item['id'],
                 adminId: item['adminId'],
                 category: item['category'],
-                name: item['name'],
+                fullname: item['fullname'],
                 photoImage: item['photoImage'],
                 title: item['title'],
                 content: item['content'],
@@ -65,7 +65,16 @@ class NewsProvider extends ChangeNotifier {
                       ),
                     )
                     .toList(),
-                like: item['likes'] ?? '',
+                likes: (item['likes'] as List<dynamic>?)
+                    ?.map(
+                      (likesItem) => Likes(
+                        id: likesItem['id'],
+                        userId: likesItem['userId'],
+                        newsId: likesItem['newsId'],
+                        status: likesItem['status'],
+                      ),
+                    )
+                    .toList(),
               ),
             )
             .toList();
@@ -79,40 +88,72 @@ class NewsProvider extends ChangeNotifier {
   }
 
   Future<News?> getNewsById(
-      String id,
-      String name,
-      String photoImage,
-      String content,
-      String date,
-      String imageUrl,
-      List<Feedback> feedback,
-      String like) async {
+      String id, String feedbackCounts, String likesCounts) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? bearerToken = prefs.getString('bearerToken');
 
     if (bearerToken != null && bearerToken.isNotEmpty) {
-      final newsProvider = NewsProvider(bearerToken: bearerToken);
-      print(newsList.toString());
-      await newsProvider.getNews(0);
+      try {
+        final response = await Dio().get(
+          'https://api.govcomplain.my.id/user/news/search?id=$id',
+          options: Options(
+            headers: {'Authorization': 'Bearer $bearerToken'},
+          ),
+        );
 
-      final newsItem = newsProvider.newsList.firstWhere(
-        (news) => news.id == id,
-        orElse: () => News(
-          id: id,
-          adminId: '',
-          category: '',
-          name: name,
-          photoImage: photoImage,
-          title: '',
-          content: content,
-          date: date,
-          feedback: List<Feedback>.empty(),
-          imageUrl: imageUrl,
-          like: '',
-        ),
-      );
-      print('News Item: $newsItem');
-      return newsItem;
+        final dynamic responseData = response.data;
+        print('Response Data: $responseData');
+
+        if (responseData != null) {
+          final dynamic results = responseData['results'];
+          if (results is Map<String, dynamic> && results.isNotEmpty) {
+            final Map<String, dynamic> item = results;
+
+            final News newsItem = News(
+              id: item['id'],
+              adminId: item['adminId'],
+              category: item['category'],
+              fullname: item['fullname'],
+              photoImage: item['photoImage'],
+              title: item['title'],
+              content: item['content'],
+              date: item['date'],
+              imageUrl: item['imageUrl'],
+              feedback: (item['feedback'] as List<dynamic>?)
+                      ?.map(
+                        (feedbackItem) => Feedback(
+                          id: feedbackItem['id'],
+                          fullname: feedbackItem['fullname'],
+                          role: feedbackItem['role'],
+                          photoImage: feedbackItem['photoImage'],
+                          newsId: feedbackItem['newsId'],
+                          content: feedbackItem['content'],
+                        ),
+                      )
+                      .toList() ??
+                  List<Feedback>.empty(),
+              likes: (item['likes'] as List<dynamic>?)
+                      ?.map(
+                        (likesItem) => Likes(
+                          id: likesItem['id'],
+                          userId: likesItem['userId'],
+                          newsId: likesItem['newsId'],
+                          status: likesItem['status'],
+                        ),
+                      )
+                      .toList() ??
+                  List<Likes>.empty(),
+            );
+            return newsItem;
+          } else {
+            print('Results is either not a Map or is empty');
+          }
+        } else {
+          print('Response data does not contain results');
+        }
+      } catch (error) {
+        print('Error fetching news details: $error');
+      }
     }
     return null;
   }
@@ -122,86 +163,173 @@ class NewsProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<String?> getAdminNameById(String adminId) async {
+  Future<List<Feedback>> getCommentsByNewsId(String newsId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? bearerToken = prefs.getString('bearerToken');
 
     if (bearerToken != null && bearerToken.isNotEmpty) {
       try {
         final response = await Dio().get(
-          'https://api.govcomplain.my.id/admin/$adminId',
-          options: Options(headers: {'Authorization': 'Bearer $bearerToken'}),
+          'https://api.govcomplain.my.id/user/news/feedback/search?news_id=$newsId',
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $bearerToken',
+            },
+          ),
         );
-        final Map<String, dynamic> adminData = response.data;
-        return adminData['name'];
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = response.data['results'];
+
+          return data
+              .map(
+                (item) => Feedback(
+                  id: item['id'],
+                  fullname: item['fullname'],
+                  role: item['role'],
+                  photoImage: item['photoImage'] ?? '',
+                  newsId: item['newsId'],
+                  content: item['content'],
+                ),
+              )
+              .toList();
+        } else if (response.statusCode == 404) {
+          // Handle 404 Not Found error
+          print('Feedback Not Found');
+          return [];
+        } else {
+          // Handle other error cases
+          print('Error fetching comments. Status code: ${response.statusCode}');
+          return [];
+        }
       } catch (error) {
-        print('Error fetching admin details: $error');
-        return null;
+        print('Error fetching comments: $error');
+        return [];
       }
-    } else {
-      print('Bearer token is null or empty');
-      return null;
     }
+    return [];
   }
 
-  Future<List<Feedback>> getCommentsByNewsId(String newsId) async {
-    try {
-      final response = await Dio().get(
-        'https://api.govcomplain.my.id/users/news/feedback/search?news_id=$newsId',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $bearerToken',
+  Future<Feedback?> createFeedback(
+    String newsId,
+    String content,
+  ) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? bearerToken = prefs.getString('bearerToken');
+
+    if (bearerToken != null && bearerToken.isNotEmpty) {
+      try {
+        final response = await Dio().post(
+          'https://api.govcomplain.my.id/user/news/feedback',
+          options: Options(
+            headers: {'Authorization': 'Bearer $bearerToken'},
+          ),
+          data: {
+            'newsId': newsId,
+            'content': content,
           },
-        ),
-      );
+        );
 
-      final List<dynamic> data = response.data;
+        if (response.statusCode == 200) {
+          final dynamic responseData = response.data;
+          final dynamic results = responseData['results'];
 
-      return data
-          .map(
-            (item) => Feedback(
-              id: item['id'],
-              fullname: item['fullname'],
-              role: item['role'],
-              photoImage: item['photoImage'],
-              newsId: item['newsId'],
-              content: item['content'],
-            ),
-          )
-          .toList();
-    } catch (error) {
-      print('Error fetching comments: $error');
-      return [];
+          if (results is Map<String, dynamic> && results.isNotEmpty) {
+            final Map<String, dynamic> feedbackData = results;
+
+            final Feedback feedback = Feedback(
+              id: feedbackData['id'],
+              fullname: feedbackData['fullname'],
+              role: feedbackData['role'],
+              photoImage: feedbackData['photoImage'] ?? '',
+              newsId: feedbackData['newsId'],
+              content: feedbackData['content'],
+            );
+
+            return feedback;
+          } else {
+            print('Results is either not a Map or is empty');
+          }
+        } else {
+          print('Error creating feedback. Status code: ${response.statusCode}');
+        }
+      } catch (error) {
+        print('Error creating feedback: $error');
+      }
     }
+    return null;
   }
 
-  Future<void> searchNews(String query) async {
-    try {
-      final response = await Dio().get(
-        'https://api.govcomplain.my.id/news/search?id=$query',
-        queryParameters: {'id': query},
-      );
-      final List<dynamic> data = response.data['results'];
-      _newsList = data
-          .map(
-            (item) => News(
-              id: item['id'],
-              adminId: item['adminId'],
-              category: item['category'],
-              name: item['name'],
-              photoImage: item['photoImage'],
-              title: item['title'],
-              content: item['content'],
-              date: item['date'],
-              imageUrl: item['imageUrl'],
-              feedback: item['feedback'],
-              like: item['like'],
-            ),
-          )
-          .toList();
-      notifyListeners();
-    } catch (error) {
-      print('Error fetching news: $error');
+  Future<Likes?> createLikes(
+    String newsId,
+    String status,
+  ) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? bearerToken = prefs.getString('bearerToken');
+
+    if (bearerToken != null && bearerToken.isNotEmpty) {
+      try {
+        final response = await Dio().post(
+          'https://api.govcomplain.my.id/user/news/like',
+          options: Options(
+            headers: {'Authorization': 'Bearer $bearerToken'},
+          ),
+          data: {
+            'newsId': newsId,
+            'status': status,
+          },
+        );
+
+        if (response.statusCode == 200) {
+          final dynamic responseData = response.data;
+          final dynamic results = responseData['results'];
+
+          if (results is Map<String, dynamic> && results.isNotEmpty) {
+            final Map<String, dynamic> likesData = results;
+
+            final Likes likes = Likes(
+              id: likesData['id'],
+              userId: likesData['userId'],
+              newsId: likesData['newsId'],
+              status: likesData['status'],
+            );
+
+            return likes;
+          } else {
+            print('Results is either not a Map or is empty');
+          }
+        } else {
+          print('Error creating likes. Status code: ${response.statusCode}');
+        }
+      } catch (error) {
+        print('Error creating likes: $error');
+      }
+    }
+    return null;
+  }
+
+  Future<void> deleteLikes(String likeId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? bearerToken = prefs.getString('bearerToken');
+
+    if (bearerToken != null && bearerToken.isNotEmpty) {
+      try {
+        final response = await Dio().delete(
+          'https://api.govcomplain.my.id/user/news/like/$likeId',
+          options: Options(
+            headers: {'Authorization': 'Bearer $bearerToken'},
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          // Handle successful deletion, if needed
+          print('Likes deleted successfully.');
+        } else {
+          print('Error deleting likes. Status code: ${response.statusCode}');
+        }
+      } catch (error) {
+        print('Error deleting likes: $error');
+      }
     }
   }
 }
