@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatbotBody extends StatefulWidget {
@@ -195,6 +196,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                         chatbotMessage.add(
                             ChatBotMessage(text: question.text, isSender: true));
                         _getRecommendation();
+                        print('Question: ${question.value.text}');
                         question.clear();
                       });
                     },
@@ -215,16 +217,18 @@ class _ChatbotBodyState extends State<ChatbotBody> {
 
     String jwtToken = prefs.getString('bearerToken') ?? '';
 
+    // Create a variable to store the instance of the provider
+    var chatbotService = Provider.of<ChatbotServiceProvider>(context, listen: false);
+
     try {
-      final result = await ChatbotService.getRecommendation(
+      await chatbotService.getRecommendation(
           question: question.value.text, jwt: jwtToken);
 
-      print('Question: ${question.value.text}');
       print('JWT Token: $jwtToken');
 
       setState(() {
-        chatbotMessage.add(
-            ChatBotMessage(text: result.results.recommendation, isSender: false));
+        chatbotMessage.add(ChatBotMessage(
+            text: chatbotService.aiData.results.recommendation, isSender: false));
         isLoading = false;
       });
     } catch (e) {
