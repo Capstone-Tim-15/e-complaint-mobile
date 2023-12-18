@@ -1,4 +1,3 @@
-
 import 'package:e_complaint/models/user_profile.dart';
 
 import 'package:e_complaint/viewModels/complaint_view_model.dart';
@@ -28,7 +27,9 @@ import 'package:e_complaint/views/Login/resetpassword_screen.dart';
 import 'package:e_complaint/views/Notifikasi/notif_screen.dart';
 import 'package:e_complaint/views/Profile/profile_detail.dart';
 import 'package:e_complaint/views/Profile/profile_page.dart';
+
 import 'package:e_complaint/views/Profile/widgets/arsip_berita_widget.dart';
+
 import 'package:e_complaint/views/faq/faq_page.dart';
 import 'package:flutter/material.dart';
 import 'package:e_complaint/views/widget/bottom_nav.dart';
@@ -75,16 +76,15 @@ class MyApp extends StatelessWidget {
         fontFamily: "Nunito",
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFDF2216)),
       ),
-      initialRoute: '/login',
+      initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(builder: (context) => const LoginPage());
+            return MaterialPageRoute(builder: (context) => const OnboardingScreen());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
-            return MaterialPageRoute(
-                builder: (context) => const HalamanDaftar());
+            return MaterialPageRoute(builder: (context) => const HalamanDaftar());
           case '/forgotpwd':
             return MaterialPageRoute(builder: (context) => ForgotPassword());
           case '/resetpwd':
@@ -136,11 +136,9 @@ class MyApp extends StatelessWidget {
               ),
             );
           case '/riwayat-pengaduan':
-            return MaterialPageRoute(
-                builder: (context) => riwayat_pengaduan_page());
+            return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
-            return MaterialPageRoute(
-                builder: (context) => const ChatBotScreen());
+            return MaterialPageRoute(builder: (context) => const ChatBotScreen());
           case '/comment':
             return MaterialPageRoute(
                 builder: (context) => FullScreenCommentPage(
@@ -152,6 +150,8 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) => AddComplaint(),
             );
+          case '/faq_page':
+            return MaterialPageRoute(builder: (context) => FAQPage());
           default:
             return MaterialPageRoute(builder: (context) => UnknownRoutePage());
         }
