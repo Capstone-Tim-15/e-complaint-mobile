@@ -56,7 +56,7 @@ class _selesai_pageState extends State<selesai_page> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: dataComplaintSelesai.isEmpty
-            ? const CircularProgressIndicator()
+            ? const Center(child: Text('Tidak ada Data Keluhan'))
             : SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Column(
