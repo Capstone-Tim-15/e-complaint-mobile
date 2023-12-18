@@ -18,6 +18,8 @@ class ChatbotBody extends StatefulWidget {
 class _ChatbotBodyState extends State<ChatbotBody> {
   final TextEditingController question = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  ScrollController _scrollController = ScrollController();
+
   bool isLoading = false;
   dynamic result;
   late SharedPreferences prefs;
@@ -27,6 +29,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
   void initState() {
     super.initState();
     initSharedPreferences();
+    _scrollController.dispose();
   }
 
   Future<void> initSharedPreferences() async {
@@ -54,6 +57,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
               color: kBodyBg,
               padding: const EdgeInsets.all(kDefaultPadding),
               child: ListView.builder(
+                controller: _scrollController,
                 shrinkWrap: true,
                 itemCount: chatbotMessage.length + recommendedQuestions.length,
                 itemBuilder: (context, index) {
@@ -224,17 +228,24 @@ class _ChatbotBodyState extends State<ChatbotBody> {
       await chatbotService.getRecommendation(
           question: question.value.text, jwt: jwtToken);
 
-      print('JWT Token: $jwtToken');
+      // print('JWT Token: $jwtToken');
 
       setState(() {
         chatbotMessage.add(ChatBotMessage(
             text: chatbotService.aiData.results.recommendation, isSender: false));
         isLoading = false;
       });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeOut,
+        );
+      });
     } catch (e) {
       print('Exception: $e');
-      print('Question: ${question.value.text}');
-      print('JWT Token: $jwtToken');
+      // print('JWT Token: $jwtToken');
       const snackBar = SnackBar(
         content: Text('Failed to send a request'),
       );
