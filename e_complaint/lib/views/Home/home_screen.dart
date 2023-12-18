@@ -1,4 +1,5 @@
 //import 'package:e_complaint/views/widget/bottom_nav.dart';
+import 'package:e_complaint/views/ChatAdmin/chat_admin_screen.dart';
 import 'package:e_complaint/views/Home/component/news/news_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +22,15 @@ class HomePage extends StatelessWidget {
                 backgroundColor: Colors.white,
                 radius: 12,
                 child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/circle_avatar.png',
-                    fit: BoxFit.cover,
-                    width: 24,
-                    height: 24,
-                  ),
-                ),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ChatAdminScreen()),
+                          );
+                        },
+                        icon: const Icon(Icons.admin_panel_settings_rounded))),
               ),
               const Text(
                 'GOV-Complaint',

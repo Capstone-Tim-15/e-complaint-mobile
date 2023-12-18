@@ -30,6 +30,21 @@ class NewsViewModel with ChangeNotifier {
 
       final newsItem = newsProvider.newsList.firstWhere(
         (news) => news.id == id,
+
+        // orElse: () => News(
+        //   id: id,
+        //   adminId: '',
+        //   title: '',
+        //   content: '',
+        //   date: '',
+        //   feedback: [], // Sesuaikan dengan struktur data sebenarnya
+        //   like: '',
+        //   category: '',
+        //   name: '',
+        //   photoImage: '',
+        //   imageUrl: '',
+        // ),
+
         orElse: () => News(
           id: id,
           adminId: '',
@@ -43,6 +58,7 @@ class NewsViewModel with ChangeNotifier {
           photoImage: '',
           imageUrl: '',
         ),
+
       );
       print('News Item: $newsItem');
       return newsItem;
