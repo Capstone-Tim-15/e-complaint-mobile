@@ -13,7 +13,7 @@ class Notifikasi extends StatelessWidget {
       appBar: AppBar(
         shadowColor: Color.fromARGB(255, 255, 255, 255),
         elevation: 0.2,
-        backgroundColor: const Color.fromARGB(255, 255, 224, 224),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         title: const Text(
           "Notifikasi",
           style: TextStyle(

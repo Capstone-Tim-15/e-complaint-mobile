@@ -68,20 +68,29 @@ class _ProfiledetailState extends State<Profiledetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Detail'),
-        backgroundColor: Colors.white,
-        toolbarTextStyle: const TextTheme(
-          titleLarge: TextStyle(
-            color: Colors.grey,
-            fontSize: 18.0,
-          ),
-        ).bodyMedium,
-        titleTextStyle: const TextTheme(
-          titleLarge: TextStyle(
-            color: Colors.grey,
-            fontSize: 18.0,
-          ),
-        ).titleLarge,
+        automaticallyImplyLeading: false,
+        shadowColor: const Color.fromARGB(255, 248, 248, 248),
+        backgroundColor: const Color.fromARGB(255, 255, 253, 253),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+                iconSize: 25,
+                icon: const Icon(Icons.arrow_back),
+                color: const Color.fromARGB(255, 255, 0, 0),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                }),
+            const Text(
+              "Detail Profil",
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 19,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

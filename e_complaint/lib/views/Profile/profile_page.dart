@@ -1,5 +1,6 @@
 import 'package:e_complaint/models/user_profile.dart';
-import 'package:e_complaint/views/widget/profile_image_widget.dart';
+import 'package:e_complaint/views/Profile/widgets/card_contact_widget.dart';
+import 'package:e_complaint/views/Profile/widgets/profile_image_widget.dart';
 import 'package:e_complaint/views/Profile/widgets/status_pengaduan_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -102,9 +103,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (user != null) ProfileImageWidget(user: user!),
+            CardContact(user: user!),
+            // if (user != null) ProfileImageWidget(user: user!),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             const arsip_berita(),
             const SizedBox(
@@ -112,16 +114,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ),
             const status_pengaduan(),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             const faq(),
             const SizedBox(
-              height: 20,
+              height: 130,
             ),
             const keluar(),
-            const SizedBox(
-              height: 15,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
           ],
         ),
       ),
