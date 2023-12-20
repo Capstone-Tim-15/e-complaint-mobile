@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatbotBody extends StatefulWidget {
@@ -15,8 +16,10 @@ class ChatbotBody extends StatefulWidget {
 }
 
 class _ChatbotBodyState extends State<ChatbotBody> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController question = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  ScrollController _scrollController = ScrollController();
+
   bool isLoading = false;
   dynamic result;
   late SharedPreferences prefs;
@@ -26,6 +29,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
   void initState() {
     super.initState();
     initSharedPreferences();
+    _scrollController.dispose();
   }
 
   Future<void> initSharedPreferences() async {
@@ -53,6 +57,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
               color: kBodyBg,
               padding: const EdgeInsets.all(kDefaultPadding),
               child: ListView.builder(
+                controller: _scrollController,
                 shrinkWrap: true,
                 itemCount: chatbotMessage.length + recommendedQuestions.length,
                 itemBuilder: (context, index) {
@@ -63,7 +68,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _controller.text = recommendedQuestions[index];
+                              question.text = recommendedQuestions[index];
                             },
                             child: Container(
                               height: 40,
@@ -179,7 +184,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      controller: _controller,
+                      controller: question,
                       decoration: const InputDecoration(
                         hintText: 'Tulis pesan',
                       ),
@@ -193,9 +198,10 @@ class _ChatbotBodyState extends State<ChatbotBody> {
                     onPressed: () {
                       setState(() {
                         chatbotMessage.add(
-                            ChatBotMessage(text: _controller.text, isSender: true));
+                            ChatBotMessage(text: question.text, isSender: true));
                         _getRecommendation();
-                        _controller.clear();
+                        print('Question: ${question.value.text}');
+                        question.clear();
                       });
                     },
                   ),
@@ -213,24 +219,33 @@ class _ChatbotBodyState extends State<ChatbotBody> {
       isLoading = true;
     });
 
-    String jwtToken = prefs.getString('token') ?? '';
+    String jwtToken = prefs.getString('bearerToken') ?? '';
+
+    // Create a variable to store the instance of the provider
+    var chatbotService = Provider.of<ChatbotServiceProvider>(context, listen: false);
 
     try {
-      final result = await ChatbotService.getRecommendation(
-          question: _controller.value.text, jwt: jwtToken);
+      await chatbotService.getRecommendation(
+          question: question.value.text, jwt: jwtToken);
 
-      print('Question: ${_controller.value.text}');
-      print('JWT Token: $jwtToken');
+      // print('JWT Token: $jwtToken');
 
       setState(() {
-        chatbotMessage.add(
-            ChatBotMessage(text: result.results.recommendation, isSender: false));
+        chatbotMessage.add(ChatBotMessage(
+            text: chatbotService.aiData.results.recommendation, isSender: false));
         isLoading = false;
+      });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeOut,
+        );
       });
     } catch (e) {
       print('Exception: $e');
-      print('Question: ${_controller.value.text}');
-      print('JWT Token: $jwtToken');
+      // print('JWT Token: $jwtToken');
       const snackBar = SnackBar(
         content: Text('Failed to send a request'),
       );

@@ -34,7 +34,7 @@ class _TerkirimPageState extends State<TerkirimPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: dataComplaintSend.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: Text('Tidak ada Data Keluhan'))
           : SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Column(
@@ -102,8 +102,8 @@ class _TerkirimPageState extends State<TerkirimPage> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       detailPengaduan_page(
-                                                          complaintId:
-                                                              dataList['id'],),
+                                                    complaintId: dataList['id'],
+                                                  ),
                                                 ),
                                               );
                                             },

@@ -13,6 +13,7 @@ import 'package:e_complaint/viewModels/provider/news_search_provider.dart';
 import 'package:e_complaint/viewModels/provider/register.dart';
 import 'package:e_complaint/viewModels/provider/result_complaint_provider.dart';
 import 'package:e_complaint/viewModels/provider/result_news_provider.dart';
+import 'package:e_complaint/viewModels/services/chatbot.dart';
 import 'package:e_complaint/views/Chatbot/chatbot_screen.dart';
 import 'package:e_complaint/views/History_Pengaduan/riwayat_pengaduan_page.dart';
 import 'package:e_complaint/views/Home/click_comment.dart';
@@ -49,6 +50,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => ResultComplaintProvider()),
         ChangeNotifierProvider(create: (context) => ResultNewsProvider()),
         ChangeNotifierProvider(create: (context) => ComplaintViewModel()),
+        ChangeNotifierProvider(create: (context) => ChatbotServiceProvider()),
 
         ChangeNotifierProvider(create: (context) => NewsSearchProvider()),
 
@@ -80,13 +82,11 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return MaterialPageRoute(
-                builder: (context) => const OnboardingScreen());
+            return MaterialPageRoute(builder: (context) => const OnboardingScreen());
           case '/login':
             return MaterialPageRoute(builder: (context) => LoginPage());
           case '/register':
-            return MaterialPageRoute(
-                builder: (context) => const HalamanDaftar());
+            return MaterialPageRoute(builder: (context) => const HalamanDaftar());
           case '/forgotpwd':
             return MaterialPageRoute(builder: (context) => ForgotPassword());
           case '/resetpwd':
@@ -138,11 +138,9 @@ class MyApp extends StatelessWidget {
               ),
             );
           case '/riwayat-pengaduan':
-            return MaterialPageRoute(
-                builder: (context) => riwayat_pengaduan_page());
+            return MaterialPageRoute(builder: (context) => riwayat_pengaduan_page());
           case '/chatbot':
-            return MaterialPageRoute(
-                builder: (context) => const ChatBotScreen());
+            return MaterialPageRoute(builder: (context) => const ChatBotScreen());
           case '/comment':
             return MaterialPageRoute(
                 builder: (context) => FullScreenCommentPage(

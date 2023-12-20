@@ -233,7 +233,9 @@ class _detailPengaduan_pageState extends State<detailPengaduan_page> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Image.asset(
-                                  'assets/images/Contact.png',
+                                  comment['role'] == 'admin'
+                                      ? 'assets/images/circle_avatar_admin.png'
+                                      : 'assets/images/Contact.png',
                                   width: 45,
                                   height: 90,
                                 ),
