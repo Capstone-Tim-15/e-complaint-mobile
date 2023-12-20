@@ -230,7 +230,7 @@ class NewsProvider extends ChangeNotifier {
           },
         );
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 201) {
           final dynamic responseData = response.data;
           final dynamic results = responseData['results'];
 
