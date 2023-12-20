@@ -124,7 +124,6 @@ class _AddComplaintState extends State<AddComplaint> {
 
   // Informasi pengguna
 
-  String imagePath = 'assets/image/jk.jpeg';
   Color textColor = Color.fromARGB(255, 249, 171, 167);
 
   @override
@@ -257,8 +256,16 @@ class _AddComplaintState extends State<AddComplaint> {
                     Row(
                       children: [
                         CircleAvatar(
-                          radius: 25.0,
-                          backgroundImage: AssetImage(imagePath),
+                          backgroundColor: Colors.white,
+                          radius: 12,
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/user.png',
+                              fit: BoxFit.cover,
+                              width: 24,
+                              height: 24,
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           width: 15,
