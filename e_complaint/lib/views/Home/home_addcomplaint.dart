@@ -7,21 +7,25 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
+// Kelas untuk berinteraksi dengan API keluhan
 class ComplaintApiService {
   final Dio _dio = Dio();
   SharedPreferences? _prefs;
   String? bearerToken;
 
+  // Inisialisasi shared preferences dan token
   Future<void> _initPrefs() async {
     _prefs ??= await SharedPreferences.getInstance();
     bearerToken ??= _prefs!.getString('bearerToken');
   }
 
+  // Mendapatkan nama pengguna dari shared preferences
   Future<String?> getUserName() async {
     await _initPrefs();
     return _prefs!.getString('name');
   }
 
+// Mendapatkan kategori dari API
   Future<Response> getCategory() async {
     await _initPrefs();
 
@@ -36,6 +40,7 @@ class ComplaintApiService {
     }
   }
 
+  // Mengirim keluhan ke API
   Future<Response> postComplaint({
     required String categoryId,
     required String title,
@@ -47,6 +52,7 @@ class ComplaintApiService {
       await _initPrefs();
       print('Bearer Token: $bearerToken');
 
+      // Memastikan data input valid
       if (categoryId.isEmpty ||
           title.isEmpty ||
           content.isEmpty ||
@@ -54,8 +60,10 @@ class ComplaintApiService {
         throw ArgumentError('Invalid input data');
       }
 
+// Membaca file attachment sebagai bytes
       final bytes = await File(attachment.path).readAsBytes();
 
+      // Membuat FormData untuk dikirim ke API
       var formData = FormData.fromMap({
         'categoryId': categoryId,
         'title': title,
@@ -63,6 +71,7 @@ class ComplaintApiService {
         'attachment': MultipartFile.fromBytes(bytes, filename: attachment.name),
       });
 
+// Mengirim data ke API menggunakan metode POST
       final response = await _dio.post(
         'https://api.govcomplain.my.id/user/complaint',
         data: formData,
@@ -83,6 +92,7 @@ class ComplaintApiService {
     }
   }
 
+// Membuat FormData untuk keluhan
   FormData _createFormData(
     String categoryId,
     String title,
@@ -101,6 +111,7 @@ class ComplaintApiService {
   }
 }
 
+// Kelas Stateful untuk halaman penambahan keluhan
 class AddComplaint extends StatefulWidget {
   @override
   State<AddComplaint> createState() => _AddComplaintState();
@@ -131,9 +142,10 @@ class _AddComplaintState extends State<AddComplaint> {
   void initState() {
     super.initState();
     _fetchCategories();
-    _fetchUserName(); // Fetch user name when the widget initializes
+    _fetchUserName(); // Mengambil nama pengguna ketika widget diinisialisasi
   }
 
+// Mengambil nama pengguna dari API
   Future<void> _fetchUserName() async {
     try {
       final username = await _complaintApiService.getUserName();
@@ -148,6 +160,7 @@ class _AddComplaintState extends State<AddComplaint> {
     }
   }
 
+  // Mengambil kategori dari API
   Future<void> _fetchCategories() async {
     try {
       final response = await _complaintApiService.getCategory();
@@ -174,7 +187,7 @@ class _AddComplaintState extends State<AddComplaint> {
     }
   }
 
-  // Helper function to get image or video name
+  // Fungsi untuk mendapatkan nama gambar atau video
   static String _getImageOrVideoName(File file) {
     return file.path.split('/').last;
   }
@@ -197,6 +210,7 @@ class _AddComplaintState extends State<AddComplaint> {
     }
   }
 
+// Fungsi untuk memilih video dari galeri
   Future<void> _pickVideo() async {
     try {
       final XFile? pickedFile = await ImagePicker().pickVideo(
@@ -224,6 +238,7 @@ class _AddComplaintState extends State<AddComplaint> {
     }
   }
 
+// Membuat tampilan untuk halaman penambahan keluhan
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -304,7 +319,7 @@ class _AddComplaintState extends State<AddComplaint> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Menampilkan gambar yang dipilih
+                    // Menampilkan gambar atau video yang dipilih
                     Center(
                       child: Visibility(
                         visible: _imageFile != null ||
@@ -583,28 +598,31 @@ class _AddComplaintState extends State<AddComplaint> {
     });
   }
 
+// Fungsi untuk mengedit media (gambar atau video) yang dipilih
   void _editMedia() async {
     if (_imageFile != null) {
-      // Implementasi logika edit untuk gambar
+      // Jika gambar dipilih, implementasikan logika edit gambar
       _editImage();
     } else if (_videoPath != null) {
-      // Implementasi logika edit untuk video
+      // Jika video dipilih, implementasikan logika edit video
       _editVideo();
     }
   }
 
+// Fungsi untuk menghapus media (gambar atau video) yang dipilih
   void _deleteMedia() {
     setState(() {
       if (_imageFile != null) {
-        // Implementasi logika delete untuk gambar
+        // Jika gambar dipilih, implementasikan logika delete gambar
         _deleteImage();
       } else if (_videoPlayerController != null) {
-        // Implementasi logika delete untuk video
+        // Jika video dipilih, implementasikan logika delete video
         _deleteVideo();
       }
     });
   }
 
+// Fungsi untuk mengedit video yang dipilih
   void _editVideo() async {
     try {
       final XFile? pickedFile = await ImagePicker().pickVideo(
@@ -645,6 +663,7 @@ class _AddComplaintState extends State<AddComplaint> {
     });
   }
 
+// Fungsi untuk memutar atau menghentikan video
   void _toggleVideoPlayPause() {
     setState(() {
       if (_videoPlayerController!.value.isPlaying) {
@@ -655,6 +674,7 @@ class _AddComplaintState extends State<AddComplaint> {
     });
   }
 
+// Menampilkan opsi pemilihan gambar atau video dalam BottomSheet
   void _showImageOptions() {
     showModalBottomSheet(
       context: context,
@@ -685,6 +705,7 @@ class _AddComplaintState extends State<AddComplaint> {
     );
   }
 
+// Mendapatkan ID kategori berdasarkan nama kategori
   String _getCategoryIdByName(String categoryName) {
     // Mencari kategori berdasarkan nama
     Map<String, dynamic>? selectedCategory = _categoryList.firstWhere(
