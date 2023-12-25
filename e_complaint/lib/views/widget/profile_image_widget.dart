@@ -55,11 +55,16 @@ class ProfileImageWidget extends StatelessWidget {
                           Container(
                             child: Center(
                               child: CircleAvatar(
+                                backgroundColor: Colors.white,
                                 radius: 50,
-                                // ignore: unnecessary_null_comparison
-                                backgroundImage: user.profileImageUrl != null
-                                    ? NetworkImage(user.profileImageUrl)
-                                    : null,
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    'assets/images/user.png',
+                                    fit: BoxFit.cover,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                ),
                               ),
                             ),
                           ),

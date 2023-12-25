@@ -427,7 +427,7 @@ class _NewsDetailState extends State<NewsDetail> {
                             radius: 12,
                             child: ClipOval(
                               child: Image.asset(
-                                'assets/images/circle_avatar_admin.png',
+                                'assets/images/user.png',
                                 fit: BoxFit.cover,
                                 width: 24,
                                 height: 24,
